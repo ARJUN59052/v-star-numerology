@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Environment Variables & Secrets
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# Application Data & Customer Records (PII)
+data/
+*.xlsx
+*.csv
+
+# Temporary and Backup Files
+*.bak
+*.old
+*.orig
+*.tmp
+*.save
+*.swp
+*.swo
+*~
+*.log

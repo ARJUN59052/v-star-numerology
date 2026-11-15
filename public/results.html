@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Cosmic Snapshot | V STAR Numerology & Astrology</title>
+  <meta name="description" content="Your complete personalized Cosmic Snapshot & Reading — Sun Sign, Life Path Number, Destiny vibration, Career Tendencies, and Lucky Resonance.">
+
+  <!-- Google Fonts: DM Serif Display, Plus Jakarta Sans & Cinzel -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    /* Cosmic Results Page Dedicated Styling */
+    :root {
+      --cosmic-bg-card: rgba(18, 13, 43, 0.80);
+      --cosmic-border: rgba(165, 140, 245, 0.15);
+      --cosmic-border-hover: rgba(223, 184, 114, 0.35);
+      --cosmic-gold: #dfb872;
+      --cosmic-gold-gradient: linear-gradient(135deg, #dfb872 0%, #f6deb4 50%, #c4994e 100%);
+      --cosmic-text-light: #f1f3f9;
+      --cosmic-text-muted: rgba(220, 225, 245, 0.72);
+    }
+
+    body.cosmic-results-body {
+      background: radial-gradient(ellipse at 50% 0%, #150d36 0%, #080516 60%, #030209 100%);
+      color: var(--cosmic-text-light);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Container for the 9 vertical sections */
+    .results-page-container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 120px 24px 80px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Glassmorphic Card Archetype */
+    .cosmic-card {
+      background: var(--cosmic-bg-card);
+      border: 1px solid var(--cosmic-border);
+      border-radius: 18px;
+      padding: 28px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 16px 40px rgba(4, 2, 14, 0.6);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cosmic-card:hover {
+      border-color: var(--cosmic-border-hover);
+      box-shadow: 0 20px 50px rgba(138, 75, 255, 0.15);
+      transform: translateY(-2px);
+    }
+
+    /* Gold Serif Section Header */
+    .cosmic-section-header {
+      font-family: 'Cinzel', serif;
+      color: var(--cosmic-gold);
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      margin: 44px 0 18px 4px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .cosmic-section-header::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(223, 184, 114, 0.35), transparent);
+    }
+
+    /* ========================================================
+       SECTION 1: HERO HEADER ("YOUR COSMIC SNAPSHOT")
+       ======================================================== */
+    .snapshot-hero {
+      text-align: center;
+      padding: 30px 10px 10px;
+      margin-bottom: 30px;
+    }
+
+    .snapshot-eyebrow {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: var(--cosmic-gold);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .snapshot-headline {
+      font-family: 'Cinzel', serif;
+      font-size: 2.25rem;
+      font-weight: 700;
+      line-height: 1.3;
+      color: #ffffff;
+      margin-bottom: 14px;
+      letter-spacing: 0.5px;
+    }
+
+    .gold-highlight-sign {
+      background: var(--cosmic-gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 30px rgba(223, 184, 114, 0.4);
+    }
+
+    .snapshot-subtitle {
+      font-size: 0.98rem;
+      color: var(--cosmic-text-muted);
+      margin-bottom: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .snapshot-subtitle i {
+      color: var(--cosmic-gold);
+    }
+
+    .snapshot-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .pill-btn {
+      padding: 10px 22px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.25s ease;
+      text-decoration: none;
+      outline: none;
+    }
+
+    .pill-btn-gold {
+      background: var(--cosmic-gold-gradient);
+      color: #0b071c;
+      border: 1px solid #dfb872;
+      box-shadow: 0 4px 18px rgba(223, 184, 114, 0.25);
+    }
+
+    .pill-btn-gold:hover {
+      box-shadow: 0 6px 24px rgba(223, 184, 114, 0.45);
+      transform: translateY(-2px);
+    }
+
+    .pill-btn-ghost {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(165, 140, 245, 0.25);
+      color: #f1f3f9;
+    }
+
+    .pill-btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: var(--cosmic-gold);
+      color: var(--cosmic-gold);
+      transform: translateY(-2px);
+    }
+
+    /* ========================================================
+       SECTION 2: CORE NUMBER HIGHLIGHT CARDS (STACKED FULL-WIDTH)
+       ======================================================== */
+    .core-highlight-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin-bottom: 10px;
+    }
+
+    .core-highlight-card {
+      background: var(--cosmic-bg-card);
+      border: 1px solid var(--cosmic-border);
+      border-radius: 20px;
+      padding: 30px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(20px);
+    }
+
+    .core-highlight-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 20%;
+      right: 20%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(223, 184, 114, 0.6), transparent);
+    }
+
+    .core-highlight-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--cosmic-gold);
+      margin-bottom: 8px;
+    }
+
+    .core-highlight-numeral {
+      font-family: 'DM Serif Display', serif;
+      font-size: 4.5rem;
+      line-height: 1;
+      color: #ffffff;
+      margin-bottom: 8px;
+      text-shadow: 0 0 40px rgba(165, 140, 245, 0.35);
+    }
+
+    .core-highlight-subtitle {
+      font-size: 1.05rem;
+      color: var(--cosmic-text-muted);
+      font-weight: 500;
+    }
+
+    /* ========================================================
+       SECTION 3: ZODIAC OVERVIEW
+       ======================================================== */
+    .zodiac-centered-card {
+      text-align: center;
+      padding: 36px 28px;
+    }
+
+    .zodiac-emblem-badge {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(223, 184, 114, 0.2) 0%, rgba(18, 13, 43, 0.9) 70%);
+      border: 2px solid var(--cosmic-gold);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      color: var(--cosmic-gold);
+      box-shadow: 0 0 30px rgba(223, 184, 114, 0.25);
+      margin-bottom: 16px;
+    }
+
+    .zodiac-name-serif {
+      font-family: 'Cinzel', serif;
+      font-size: 1.85rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #ffffff;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .zodiac-meta-pill {
+      display: inline-block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: var(--cosmic-gold);
+      text-transform: uppercase;
+      margin-bottom: 22px;
+    }
+
+    .zodiac-below-block {
+      border-top: 1px solid rgba(165, 140, 245, 0.15);
+      padding-top: 22px;
+      text-align: left;
+    }
+
+    .zodiac-core-desc {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--cosmic-text-light);
+      margin-bottom: 16px;
+    }
+
+    .zodiac-trait-row {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 0.92rem;
+      line-height: 1.5;
+      margin-bottom: 10px;
+      color: var(--cosmic-text-muted);
+    }
+
+    .zodiac-trait-row strong {
+      color: var(--cosmic-gold);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    /* ========================================================
+       SECTION 4: NUMEROLOGY SUMMARY
+       ======================================================== */
+    .num-summary-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    .num-summary-card {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding: 24px 28px;
+    }
+
+    .solid-gold-circle-badge {
+      flex-shrink: 0;
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: var(--cosmic-gold-gradient);
+      color: #0d0722;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.1rem;
+      font-weight: 700;
+      box-shadow: 0 8px 24px rgba(223, 184, 114, 0.35);
+    }
+
+    .num-summary-content {
+      flex: 1;
+      text-align: left;
+    }
+
+    .num-summary-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--cosmic-gold);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .num-summary-archetype {
+      font-family: 'Cinzel', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+
+    .num-summary-text {
+      font-size: 0.9rem;
+      line-height: 1.55;
+      color: var(--cosmic-text-muted);
+    }
+
+    /* ========================================================
+       SECTION 5: CAREER TENDENCIES
+       ======================================================== */
+    .career-insight-card {
+      padding: 28px;
+      text-align: left;
+    }
+
+    .career-insight-para {
+      font-size: 0.98rem;
+      line-height: 1.7;
+      color: var(--cosmic-text-light);
+      margin-bottom: 22px;
+    }
+
+    .career-meta-row {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      font-size: 0.92rem;
+      line-height: 1.6;
+      margin-bottom: 10px;
+      color: var(--cosmic-text-muted);
+      border-top: 1px solid rgba(165, 140, 245, 0.12);
+      padding-top: 14px;
+    }
+
+    .career-meta-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .career-meta-row strong {
+      color: var(--cosmic-gold);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    /* ========================================================
+       SECTION 6: LIFE PATH INDICATORS (ACCORDION)
+       ======================================================== */
+    .accordion-card {
+      padding: 8px 16px;
+    }
+
+    .accordion-item {
+      border-bottom: 1px solid rgba(165, 140, 245, 0.15);
+    }
+
+    .accordion-item:last-child {
+      border-bottom: none;
+    }
+
+    .accordion-trigger {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 20px 10px;
+      text-align: left;
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #ffffff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: color 0.25s ease;
+      outline: none;
+    }
+
+    .accordion-trigger:hover {
+      color: var(--cosmic-gold);
+    }
+
+    .accordion-chevron {
+      font-size: 0.85rem;
+      color: var(--cosmic-gold);
+      transition: transform 0.3s ease;
+    }
+
+    .accordion-item.active .accordion-chevron {
+      transform: rotate(180deg);
+    }
+
+    .accordion-item.active .accordion-trigger {
+      color: var(--cosmic-gold);
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.35s ease;
+      padding: 0 10px;
+      text-align: left;
+    }
+
+    .accordion-item.active .accordion-content {
+      max-height: 300px;
+      padding-bottom: 22px;
+    }
+
+    .accordion-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .accordion-list li {
+      position: relative;
+      padding-left: 24px;
+      margin-bottom: 10px;
+      font-size: 0.92rem;
+      line-height: 1.55;
+      color: var(--cosmic-text-muted);
+    }
+
+    .accordion-list li::before {
+      content: '✦';
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--cosmic-gold);
+      font-size: 0.85rem;
+    }
+
+    .accordion-essence-text {
+      font-size: 0.95rem;
+      line-height: 1.65;
+      color: var(--cosmic-text-muted);
+      font-style: italic;
+    }
+
+    /* ========================================================
+       SECTION 7: LUCKY NUMBERS & COLORS
+       ======================================================== */
+    .lucky-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 680px) {
+      .lucky-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .lucky-card-inner {
+      padding: 24px;
+      text-align: center;
+    }
+
+    .lucky-card-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--cosmic-gold);
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .lucky-numbers-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .gold-gradient-pill {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--cosmic-gold-gradient);
+      color: #0f0926;
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.45rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 18px rgba(223, 184, 114, 0.3);
+      transition: transform 0.25s ease;
+    }
+
+    .gold-gradient-pill:hover {
+      transform: scale(1.12);
+    }
+
+    .lucky-colors-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      text-align: left;
+    }
+
+    .lucky-color-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 0.95rem;
+      color: var(--cosmic-text-light);
+    }
+
+    .color-swatch-dot {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      flex-shrink: 0;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.25);
+    }
+
+    /* ========================================================
+       SECTION 8: PERSONALIZED GUIDANCE
+       ======================================================== */
+    .guidance-card {
+      text-align: center;
+      padding: 38px 30px;
+    }
+
+    .guidance-sparkle-icon {
+      font-size: 2.2rem;
+      color: var(--cosmic-gold);
+      margin-bottom: 16px;
+      display: inline-block;
+      filter: drop-shadow(0 0 16px rgba(223, 184, 114, 0.6));
+      animation: pulseGlow 3s infinite ease-in-out;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { transform: scale(1); opacity: 0.9; }
+      50% { transform: scale(1.1); opacity: 1; filter: drop-shadow(0 0 24px rgba(223, 184, 114, 0.9)); }
+    }
+
+    .guidance-quote {
+      font-family: 'Cinzel', serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      line-height: 1.6;
+      letter-spacing: 1.5px;
+      color: #ffffff;
+      text-transform: uppercase;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    /* ========================================================
+       SECTION 9: FOOTER DISCLAIMER
+       ======================================================== */
+    .results-disclaimer {
+      text-align: center;
+      font-size: 0.78rem;
+      line-height: 1.5;
+      color: rgba(220, 225, 245, 0.45);
+      margin: 40px auto 20px;
+      max-width: 640px;
+    }
+
+    /* Next Steps Consultation Card */
+    .consultation-cta-card {
+      background: linear-gradient(135deg, rgba(224, 109, 45, 0.15) 0%, rgba(18, 13, 43, 0.9) 100%);
+      border: 1px solid rgba(224, 109, 45, 0.35);
+      border-radius: 20px;
+      padding: 32px;
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .consultation-cta-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.4rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+
+    .consultation-cta-title span {
+      color: #e06d2d;
+    }
+
+    .consultation-cta-desc {
+      font-size: 0.92rem;
+      color: var(--cosmic-text-muted);
+      max-width: 580px;
+      margin: 0 auto 20px;
+      line-height: 1.6;
+    }
+
+    /* Toast Notification */
+    .cosmic-toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: rgba(18, 13, 43, 0.95);
+      border: 1px solid var(--cosmic-gold);
+      color: #ffffff;
+      padding: 14px 22px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 20px rgba(223, 184, 114, 0.25);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      z-index: 9999;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+
+    .cosmic-toast.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .cosmic-toast i {
+      color: var(--cosmic-gold);
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 600px) {
+      .results-page-container {
+        padding: 100px 16px 60px;
+      }
+      .snapshot-headline {
+        font-size: 1.7rem;
+      }
+      .core-highlight-numeral {
+        font-size: 3.6rem;
+      }
+      .num-summary-card {
+        flex-direction: column;
+        text-align: center;
+      }
+      .num-summary-content {
+        text-align: center;
+      }
+      .guidance-quote {
+        font-size: 1.05rem;
+      }
+    }
+  </style>
+</head>
+<body class="mystic-theme cosmic-results-body">
+
+  <!-- Ambient Starry Background -->
+  <canvas id="starsCanvas"></canvas>
+  <div class="celestial-ambient-glow glow-top"></div>
+  <div class="celestial-ambient-glow glow-bottom"></div>
+
+  <!-- Navigation Bar -->
+  <header class="navbar" id="mainNavbar">
+    <div class="container nav-container">
+      <a href="/" class="brand-logo" aria-label="V STAR Numerology &amp; Astrology">
+        <div class="logo-symbol">
+          <img src="images/vstar-zodiac-logo.png" alt="V STAR Zodiac Sun Emblem" class="brand-logo-emblem">
+        </div>
+        <div class="logo-text">
+          <span class="brand-name">V STAR NUMEROLOGY</span>
+          <span class="brand-tag">&amp; ASTROLOGY</span>
+        </div>
+      </a>
+
+      <nav class="nav-links">
+        <a href="/"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="/#zodiac-belt"><i class="fa-solid fa-certificate"></i> Zodiac</a>
+        <a href="/#calculator"><i class="fa-solid fa-calculator"></i> Life Path</a>
+        <a href="/#services"><i class="fa-solid fa-shapes"></i> Services</a>
+        <a href="/#destiny"><i class="fa-solid fa-compass"></i> Destiny</a>
+        <a href="/#faq"><i class="fa-solid fa-circle-question"></i> FAQ</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="/#appointment" class="btn-nav-book"><i class="fa-solid fa-calendar-check"></i> Book Consultation</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container: 9 Vertically Ordered Sections -->
+  <main class="results-page-container" id="resultsContent">
+
+    <!-- ========================================================
+         1. HERO HEADER ("YOUR COSMIC SNAPSHOT")
+         ======================================================== -->
+    <header class="snapshot-hero">
+      <div class="snapshot-eyebrow">YOUR COSMIC SNAPSHOT</div>
+      <h1 class="snapshot-headline" id="heroHeadline">
+        <!-- Injected: [NAME], THE COSMOS SEES YOU AS A/AN [ZODIAC SIGN]. -->
+        <span id="heroUserName">SEEKER</span>, THE COSMOS SEES YOU AS <span id="heroArticle">A</span> <span class="gold-highlight-sign" id="heroZodiacSign">STARS</span>.
+      </h1>
+      <div class="snapshot-subtitle" id="heroSubtitle">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+        <span id="heroBirthDetails">Born -- at -- · --</span>
+      </div>
+
+      <div class="snapshot-actions">
+        <button type="button" class="pill-btn pill-btn-gold" id="btnSaveReading" onclick="handleSaveReading()">
+          <i class="fa-solid fa-file-pdf"></i> Download PDF Reading
+        </button>
+        <button type="button" class="pill-btn pill-btn-ghost" id="btnShareReading" onclick="handleShareReading()">
+          <i class="fa-solid fa-share-nodes"></i> Share
+        </button>
+        <a href="/predict" class="pill-btn pill-btn-ghost" id="btnNewReading">
+          <i class="fa-solid fa-rotate-left"></i> New Reading
+        </a>
+      </div>
+    </header>
+
+    <!-- ========================================================
+         2. CORE NUMBER HIGHLIGHT CARDS (STACKED FULL-WIDTH)
+         ======================================================== -->
+    <section class="core-highlight-stack" aria-label="Core Numbers Highlight">
+      <!-- LIFE PATH -->
+      <div class="core-highlight-card">
+        <div class="core-highlight-label">LIFE PATH</div>
+        <div class="core-highlight-numeral" id="coreLifePathNumeral">-</div>
+        <div class="core-highlight-subtitle" id="coreLifePathArchetype">-</div>
+      </div>
+      <!-- DESTINY -->
+      <div class="core-highlight-card">
+        <div class="core-highlight-label">DESTINY</div>
+        <div class="core-highlight-numeral" id="coreDestinyNumeral">-</div>
+        <div class="core-highlight-subtitle" id="coreDestinyArchetype">-</div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         3. ZODIAC OVERVIEW
+         ======================================================== -->
+    <h2 class="cosmic-section-header">ZODIAC OVERVIEW</h2>
+    <div class="cosmic-card zodiac-centered-card">
+      <div class="zodiac-emblem-badge" id="zodiacEmblem">-</div>
+      <div class="zodiac-name-serif" id="zodiacSignName">-</div>
+      <div class="zodiac-meta-pill" id="zodiacElementRuling">-</div>
+
+      <div class="zodiac-below-block">
+        <p class="zodiac-core-desc" id="zodiacTagline">-</p>
+        <div class="zodiac-trait-row">
+          <strong>Strengths ·</strong>
+          <span id="zodiacStrengthsText">-</span>
+        </div>
+        <div class="zodiac-trait-row">
+          <strong>Today's energy ·</strong>
+          <span id="zodiacEnergyText">-</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================
+         4. NUMEROLOGY SUMMARY
+         ======================================================== -->
+    <h2 class="cosmic-section-header">NUMEROLOGY SUMMARY</h2>
+    <div class="num-summary-grid">
+      <!-- Life Path Detail Card -->
+      <div class="cosmic-card num-summary-card">
+        <div class="solid-gold-circle-badge" id="summaryLifePathBadge">-</div>
+        <div class="num-summary-content">
+          <div class="num-summary-label">LIFE PATH</div>
+          <div class="num-summary-archetype" id="summaryLifePathArchetype">-</div>
+          <div class="num-summary-text" id="summaryLifePathDesc">-</div>
+        </div>
+      </div>
+
+      <!-- Destiny Detail Card -->
+      <div class="cosmic-card num-summary-card">
+        <div class="solid-gold-circle-badge" id="summaryDestinyBadge">-</div>
+        <div class="num-summary-content">
+          <div class="num-summary-label">DESTINY</div>
+          <div class="num-summary-archetype" id="summaryDestinyArchetype">-</div>
+          <div class="num-summary-text" id="summaryDestinyDesc">-</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================
+         5. CAREER TENDENCIES
+         ======================================================== -->
+    <h2 class="cosmic-section-header">CAREER TENDENCIES</h2>
+    <div class="cosmic-card career-insight-card">
+      <p class="career-insight-para" id="careerInsightPara">-</p>
+      <div class="career-meta-row">
+        <strong>Roles to explore ·</strong>
+        <span id="careerRolesText">-</span>
+      </div>
+      <div class="career-meta-row">
+        <strong>Learning style ·</strong>
+        <span id="careerLearningText">-</span>
+      </div>
+    </div>
+
+    <!-- ========================================================
+         6. LIFE PATH INDICATORS (ACCORDION)
+         ======================================================== -->
+    <h2 class="cosmic-section-header">LIFE PATH INDICATORS</h2>
+    <div class="cosmic-card accordion-card" id="indicatorsAccordion">
+      <!-- STRENGTHS -->
+      <div class="accordion-item active" id="accItemStrengths">
+        <button type="button" class="accordion-trigger" onclick="toggleAccordion('accItemStrengths')">
+          <span>STRENGTHS</span>
+          <i class="fa-solid fa-chevron-down accordion-chevron"></i>
+        </button>
+        <div class="accordion-content">
+          <ul class="accordion-list" id="accordionStrengthsList"></ul>
+        </div>
+      </div>
+
+      <!-- GROWTH AREAS -->
+      <div class="accordion-item" id="accItemGrowth">
+        <button type="button" class="accordion-trigger" onclick="toggleAccordion('accItemGrowth')">
+          <span>GROWTH AREAS</span>
+          <i class="fa-solid fa-chevron-down accordion-chevron"></i>
+        </button>
+        <div class="accordion-content">
+          <ul class="accordion-list" id="accordionGrowthList"></ul>
+        </div>
+      </div>
+
+      <!-- ESSENCE -->
+      <div class="accordion-item" id="accItemEssence">
+        <button type="button" class="accordion-trigger" onclick="toggleAccordion('accItemEssence')">
+          <span>ESSENCE</span>
+          <i class="fa-solid fa-chevron-down accordion-chevron"></i>
+        </button>
+        <div class="accordion-content">
+          <p class="accordion-essence-text" id="accordionEssenceText">-</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================
+         7. LUCKY NUMBERS & COLORS
+         ======================================================== -->
+    <h2 class="cosmic-section-header">LUCKY NUMBERS & COLORS</h2>
+    <div class="lucky-grid">
+      <!-- Card 1: NUMBERS -->
+      <div class="cosmic-card lucky-card-inner">
+        <div class="lucky-card-title">NUMBERS</div>
+        <div class="lucky-numbers-wrap" id="luckyNumbersWrap">
+          <!-- 5 circular gradient gold pills -->
+        </div>
+      </div>
+
+      <!-- Card 2: COLORS -->
+      <div class="cosmic-card lucky-card-inner">
+        <div class="lucky-card-title">COLORS</div>
+        <div class="lucky-colors-list" id="luckyColorsList">
+          <!-- 3 lucky colors with matching dots -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================
+         8. PERSONALIZED GUIDANCE
+         ======================================================== -->
+    <h2 class="cosmic-section-header">PERSONALIZED GUIDANCE</h2>
+    <div class="cosmic-card guidance-card">
+      <div class="guidance-sparkle-icon">✦</div>
+      <div class="guidance-quote" id="guidanceQuote">-</div>
+    </div>
+
+    <!-- In-depth Consultation CTA -->
+    <div class="consultation-cta-card">
+      <h3 class="consultation-cta-title">Ready for Your <span>Full Astrological Blueprint</span>?</h3>
+      <p class="consultation-cta-desc">
+        Take your reading deeper with an individualized 1-on-1 consultation covering complete birth chart transits, planetary dasha periods, name vibration correction, and auspicious timing.
+      </p>
+      <a href="/#appointment" class="pill-btn pill-btn-gold">
+        <i class="fa-solid fa-calendar-check"></i> Book Master Consultation
+      </a>
+    </div>
+
+    <!-- ========================================================
+         9. FOOTER DISCLAIMER
+         ======================================================== -->
+    <footer class="results-disclaimer">
+      For entertainment and self-reflection only — not professional, medical, legal, or financial advice.
+    </footer>
+
+  </main>
+
+  <!-- Toast Notification Container -->
+  <div id="cosmicToast" class="cosmic-toast" role="alert" aria-live="assertive">
+    <i class="fa-solid fa-circle-check"></i>
+    <span id="toastMessage">Reading saved successfully!</span>
+  </div>
+
+  <!-- PDF Engine & Cosmic Calculation Engine -->
+  <script src="js/html2pdf.bundle.min.js"></script>
+  <script src="js/cosmic.js"></script>
+
+  <script>
+    let currentProfile = null;
+
+    // Toast Utility
+    function showToast(msg) {
+      const toast = document.getElementById('cosmicToast');
+      const text = document.getElementById('toastMessage');
+      text.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3200);
+    }
+
+    // Accordion Toggle
+    function toggleAccordion(itemId) {
+      const item = document.getElementById(itemId);
+      if (!item) return;
+      const isActive = item.classList.contains('active');
+      // Collapse others for clean accordion view or toggle current
+      item.classList.toggle('active', !isActive);
+    }
+
+    // Save Reading Handler (Downloads Full Styled PDF)
+    function handleSaveReading() {
+      if (!currentProfile) return;
+      const btn = document.getElementById('btnSaveReading');
+      if (window.CosmicEngine && typeof window.CosmicEngine.exportCosmicPdf === 'function') {
+        window.CosmicEngine.exportCosmicPdf(currentProfile, btn);
+      } else {
+        try {
+          // Generate clean downloadable summary
+          const summaryText = [
+            '====================================================',
+            '        V STAR NUMEROLOGY & ASTROLOGY',
+            '           YOUR COSMIC SNAPSHOT & READING',
+            '====================================================',
+            '',
+            `NAME: ${currentProfile.name.toUpperCase()}`,
+            `BIRTH DATA: Born ${currentProfile.formattedDate} at ${currentProfile.tob} · ${currentProfile.pob}`,
+            `SUN SIGN: ${currentProfile.zodiac.sign.toUpperCase()} (${currentProfile.zodiac.symbol})`,
+            `ELEMENT: ${currentProfile.zodiac.element} | RULING PLANET: ${currentProfile.zodiac.rulingPlanet}`,
+            `TAGLINE: "${currentProfile.zodiac.tagline}"`,
+            '',
+            '--- CORE NUMBERS ---',
+            `LIFE PATH NUMBER: ${currentProfile.lifePath.number} (${currentProfile.lifePath.archetype})`,
+            `DESTINY NUMBER:   ${currentProfile.destiny.number} (${currentProfile.destiny.archetype})`,
+            '',
+            '--- ZODIAC STRENGTHS & DAILY ENERGY ---',
+            `STRENGTHS: ${currentProfile.zodiac.strengths.join(' · ')}`,
+            `TODAY\'S ENERGY: ${currentProfile.zodiac.todayEnergy}`,
+            '',
+            '--- CAREER TENDENCIES ---',
+            `${currentProfile.career.insight}`,
+            `Roles to explore: ${currentProfile.career.roles.join(', ')}`,
+            `Learning style:   ${currentProfile.career.learningStyle}`,
+            '',
+            '--- LUCKY RESONANCE ---',
+            `Lucky Numbers: ${currentProfile.luckyNumbers.join(', ')}`,
+            `Lucky Colors:  ${currentProfile.luckyColors.map(c => c.name).join(', ')}`,
+            '',
+            '--- PERSONALIZED GUIDANCE ---',
+            `"${currentProfile.quote}"`,
+            '',
+            '====================================================',
+            'For entertainment and self-reflection only — not professional, medical, legal, or financial advice.',
+            'V STAR Numerology & Astrology · https://vstarnumerology.com'
+          ].join('\n');
+
+          const blob = new Blob([summaryText], { type: 'text/plain;charset=utf-8' });
+          const downloadUrl = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = downloadUrl;
+          a.download = `VSTAR_Cosmic_Snapshot_${currentProfile.name.replace(/\s+/g, '_')}.txt`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(downloadUrl);
+
+          showToast('Reading saved and downloaded successfully!');
+        } catch (err) {
+          showToast('Reading saved to your browser session.');
+        }
+      }
+    }
+
+    // Share Reading Handler
+    function handleShareReading() {
+      const shareUrl = window.location.href;
+      if (navigator.share) {
+        navigator.share({
+          title: `Cosmic Snapshot of ${currentProfile ? currentProfile.name : 'V STAR'}`,
+          text: `Check out my Cosmic Snapshot & Life Path Reading from V STAR Numerology!`,
+          url: shareUrl
+        }).catch(() => {
+          copyToClipboard(shareUrl);
+        });
+      } else {
+        copyToClipboard(shareUrl);
+      }
+    }
+
+    function copyToClipboard(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast('Shareable reading link copied to clipboard!');
+        }).catch(() => {
+          showToast('Share link copied!');
+        });
+      } else {
+        const dummy = document.createElement('input');
+        dummy.value = text;
+        document.body.appendChild(dummy);
+        dummy.select();
+        document.execCommand('copy');
+        document.body.removeChild(dummy);
+        showToast('Shareable reading link copied to clipboard!');
+      }
+    }
+
+    // Background starfield simulation
+    (function initStars() {
+      const canvas = document.getElementById('starsCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let stars = [];
+      let width = (canvas.width = window.innerWidth);
+      let height = (canvas.height = window.innerHeight);
+
+      function createStars() {
+        stars = [];
+        const count = Math.min(100, Math.floor((width * height) / 10000));
+        for (let i = 0; i < count; i++) {
+          stars.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            radius: Math.random() * 1.5 + 0.4,
+            alpha: Math.random() * 0.8 + 0.2,
+            speed: Math.random() * 0.25 + 0.05
+          });
+        }
+      }
+
+      function drawStars() {
+        ctx.clearRect(0, 0, width, height);
+        ctx.fillStyle = '#ffffff';
+        stars.forEach(s => {
+          ctx.beginPath();
+          ctx.globalAlpha = s.alpha;
+          ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+          ctx.fill();
+          s.y -= s.speed;
+          if (s.y < 0) {
+            s.y = height;
+            s.x = Math.random() * width;
+          }
+        });
+        requestAnimationFrame(drawStars);
+      }
+
+      window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+        createStars();
+      });
+
+      createStars();
+      drawStars();
+    })();
+
+    // Main Initialization & Route Guard
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const name = params.get('name');
+      const dob = params.get('dob');
+      const tob = params.get('tob') || '12:00';
+      const pob = params.get('pob');
+
+      // Requirement 4: If someone visits /results directly without birth data, redirect them smoothly to /predict
+      if (!name || !dob || !pob) {
+        window.location.replace('/predict');
+        return;
+      }
+
+      // Generate Cosmic Snapshot
+      if (!window.CosmicEngine || !window.CosmicEngine.generateCosmicProfile) {
+        console.error('Cosmic Engine not loaded');
+        return;
+      }
+
+      currentProfile = window.CosmicEngine.generateCosmicProfile(name, dob, tob, pob);
+      renderResults(currentProfile);
+    });
+
+    function renderResults(p) {
+      // 1. HERO HEADER
+      document.getElementById('heroHeadline').innerHTML = `
+        <span>${escapeHtml(p.name.toUpperCase())}</span>, THE COSMOS SEES YOU AS ${p.article} <span class="gold-highlight-sign">${p.zodiac.sign.toUpperCase()}</span>.
+      `;
+      document.getElementById('heroBirthDetails').textContent = 
+        `Born ${p.formattedDate} at ${p.tob} · ${p.pob}`;
+
+      // 2. CORE NUMBER HIGHLIGHT CARDS
+      document.getElementById('coreLifePathNumeral').textContent = p.lifePath.number;
+      document.getElementById('coreLifePathArchetype').textContent = p.lifePath.archetype;
+      document.getElementById('coreDestinyNumeral').textContent = p.destiny.number;
+      document.getElementById('coreDestinyArchetype').textContent = p.destiny.archetype;
+
+      // 3. ZODIAC OVERVIEW
+      document.getElementById('zodiacEmblem').textContent = p.zodiac.symbol;
+      document.getElementById('zodiacSignName').textContent = p.zodiac.sign;
+      document.getElementById('zodiacElementRuling').textContent = 
+        `${p.zodiac.element.toUpperCase()} · RULED BY ${p.zodiac.rulingPlanet.toUpperCase()}`;
+      document.getElementById('zodiacTagline').textContent = p.zodiac.tagline;
+      document.getElementById('zodiacStrengthsText').textContent = p.zodiac.strengths.join(' · ');
+      document.getElementById('zodiacEnergyText').textContent = p.zodiac.todayEnergy;
+
+      // 4. NUMEROLOGY SUMMARY
+      document.getElementById('summaryLifePathBadge').textContent = p.lifePath.number;
+      document.getElementById('summaryLifePathArchetype').textContent = p.lifePath.archetype;
+      document.getElementById('summaryLifePathDesc').textContent = p.lifePath.summary;
+
+      document.getElementById('summaryDestinyBadge').textContent = p.destiny.number;
+      document.getElementById('summaryDestinyArchetype').textContent = p.destiny.archetype;
+      document.getElementById('summaryDestinyDesc').textContent = p.destiny.description;
+
+      // 5. CAREER TENDENCIES
+      document.getElementById('careerInsightPara').textContent = p.career.insight;
+      document.getElementById('careerRolesText').textContent = p.career.roles.join(', ');
+      document.getElementById('careerLearningText').textContent = p.career.learningStyle;
+
+      // 6. LIFE PATH INDICATORS (ACCORDION)
+      const strengthsList = document.getElementById('accordionStrengthsList');
+      strengthsList.innerHTML = p.lifePath.strengths.map(s => `<li>${escapeHtml(s)}</li>`).join('');
+
+      const growthList = document.getElementById('accordionGrowthList');
+      growthList.innerHTML = p.lifePath.growthAreas.map(g => `<li>${escapeHtml(g)}</li>`).join('');
+
+      document.getElementById('accordionEssenceText').textContent = p.lifePath.essence;
+
+      // 7. LUCKY NUMBERS & COLORS
+      const numWrap = document.getElementById('luckyNumbersWrap');
+      numWrap.innerHTML = p.luckyNumbers.map(n => `
+        <div class="gold-gradient-pill" title="Lucky Cosmic Vibration">${n}</div>
+      `).join('');
+
+      const colorList = document.getElementById('luckyColorsList');
+      colorList.innerHTML = p.luckyColors.map(c => `
+        <div class="lucky-color-item">
+          <span class="color-swatch-dot" style="background-color: ${c.hex};"></span>
+          <span>${escapeHtml(c.name)}</span>
+        </div>
+      `).join('');
+
+      // 8. PERSONALIZED GUIDANCE
+      document.getElementById('guidanceQuote').textContent = `"${p.quote}"`;
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+  </script>
+</body>
+</html>

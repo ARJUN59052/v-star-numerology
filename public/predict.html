@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cosmic Snapshot & Birth Reading | V STAR Numerology & Astrology</title>
+  <meta name="description" content="Enter your birth coordinates to generate your personalized Cosmic Snapshot, Life Path number, Destiny alignment, and Zodiac insight.">
+
+  <!-- Google Fonts: DM Serif Display, Plus Jakarta Sans & Cinzel -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    .cosmic-predict-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      background: radial-gradient(ellipse at 50% 0%, #170d38 0%, #0a0618 65%, #05030b 100%);
+      color: #f1f3f9;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    .cosmic-main-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 20px 60px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .cosmic-card-wrapper {
+      max-width: 640px;
+      width: 100%;
+      background: rgba(18, 13, 43, 0.85);
+      border: 1px solid rgba(165, 140, 245, 0.22);
+      border-radius: 24px;
+      padding: 44px 38px;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      box-shadow: 0 24px 60px rgba(5, 2, 18, 0.7), 0 0 40px rgba(138, 75, 255, 0.15);
+      position: relative;
+    }
+
+    .cosmic-card-wrapper::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 15%;
+      right: 15%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(223, 184, 114, 0.8), transparent);
+    }
+
+    .predict-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(223, 184, 114, 0.12);
+      border: 1px solid rgba(223, 184, 114, 0.35);
+      color: #dfb872;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 999px;
+      margin-bottom: 18px;
+    }
+
+    .predict-title {
+      font-family: 'Cinzel', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.25;
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+    }
+
+    .predict-title span {
+      background: linear-gradient(135deg, #dfb872 0%, #f6deb4 50%, #c4994e 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .predict-desc {
+      color: rgba(220, 225, 245, 0.75);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    .form-group-predict {
+      margin-bottom: 22px;
+      text-align: left;
+    }
+
+    .form-group-predict label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #dfb872;
+      margin-bottom: 8px;
+    }
+
+    .input-icon-wrap {
+      position: relative;
+    }
+
+    .input-icon-wrap i {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(165, 140, 245, 0.6);
+      font-size: 0.95rem;
+      pointer-events: none;
+    }
+
+    .input-icon-wrap input {
+      width: 100%;
+      background: rgba(10, 6, 26, 0.75);
+      border: 1px solid rgba(165, 140, 245, 0.22);
+      border-radius: 12px;
+      padding: 14px 16px 14px 44px;
+      color: #ffffff;
+      font-size: 0.95rem;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: all 0.25s ease;
+      outline: none;
+      box-sizing: border-box;
+    }
+
+    .input-icon-wrap input:focus {
+      border-color: #dfb872;
+      box-shadow: 0 0 15px rgba(223, 184, 114, 0.25);
+      background: rgba(14, 9, 36, 0.9);
+    }
+
+    .input-icon-wrap input::placeholder {
+      color: rgba(160, 168, 195, 0.45);
+    }
+
+    .form-row-predict {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 600px) {
+      .form-row-predict {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+      .cosmic-card-wrapper {
+        padding: 32px 22px;
+      }
+      .predict-title {
+        font-size: 1.6rem;
+      }
+    }
+
+    .btn-generate-reading {
+      width: 100%;
+      background: linear-gradient(135deg, #e06d2d 0%, #f08c35 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: 14px;
+      padding: 16px 24px;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      box-shadow: 0 10px 25px rgba(224, 109, 45, 0.35);
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+
+    .btn-generate-reading:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 32px rgba(224, 109, 45, 0.5);
+      background: linear-gradient(135deg, #e77533 0%, #f79946 100%);
+    }
+
+    .btn-generate-reading:active {
+      transform: translateY(0);
+    }
+
+    .guarantee-micro-note {
+      margin-top: 20px;
+      font-size: 0.8rem;
+      color: rgba(220, 225, 245, 0.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .guarantee-micro-note i {
+      color: #dfb872;
+    }
+
+    /* Error alert banner */
+    .form-error-banner {
+      display: none;
+      background: rgba(220, 53, 69, 0.15);
+      border: 1px solid rgba(220, 53, 69, 0.4);
+      color: #ff858d;
+      font-size: 0.85rem;
+      padding: 10px 14px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+  </style>
+</head>
+<body class="mystic-theme cosmic-predict-page">
+
+  <!-- Ambient Starry Background -->
+  <canvas id="starsCanvas"></canvas>
+  <div class="celestial-ambient-glow glow-top"></div>
+  <div class="celestial-ambient-glow glow-bottom"></div>
+
+  <!-- Navigation Bar -->
+  <header class="navbar" id="mainNavbar">
+    <div class="container nav-container">
+      <a href="/" class="brand-logo" aria-label="V STAR Numerology &amp; Astrology">
+        <div class="logo-symbol">
+          <img src="images/vstar-zodiac-logo.png" alt="V STAR Zodiac Sun Emblem" class="brand-logo-emblem">
+        </div>
+        <div class="logo-text">
+          <span class="brand-name">V STAR NUMEROLOGY</span>
+          <span class="brand-tag">&amp; ASTROLOGY</span>
+        </div>
+      </a>
+
+      <nav class="nav-links">
+        <a href="/"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="/#zodiac-belt"><i class="fa-solid fa-certificate"></i> Zodiac</a>
+        <a href="/#calculator"><i class="fa-solid fa-calculator"></i> Life Path</a>
+        <a href="/#services"><i class="fa-solid fa-shapes"></i> Services</a>
+        <a href="/#destiny"><i class="fa-solid fa-compass"></i> Destiny</a>
+        <a href="/#faq"><i class="fa-solid fa-circle-question"></i> FAQ</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="/#appointment" class="btn-nav-book"><i class="fa-solid fa-calendar-check"></i> Book Consultation</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Predict Form Section -->
+  <main class="cosmic-main-container">
+    <div class="cosmic-card-wrapper">
+      
+      <div class="predict-badge">
+        <i class="fa-solid fa-wand-magic-sparkles"></i> Natal Cosmic Reading
+      </div>
+
+      <h1 class="predict-title">
+        Reveal Your <span>Cosmic Blueprint</span>
+      </h1>
+      
+      <p class="predict-desc">
+        Enter your birth coordinates accurately to generate your personalized Cosmic Snapshot — uncovering your true Sun Sign energy, Life Path archetype, Destiny vibration, lucky resonance, and career path.
+      </p>
+
+      <div id="formErrorBanner" class="form-error-banner"></div>
+
+      <form id="predictForm" autocomplete="off" onsubmit="handlePredictSubmit(event)">
+        <!-- Full Name -->
+        <div class="form-group-predict">
+          <label for="fullNameInput"><i class="fa-solid fa-user"></i> Full Name</label>
+          <div class="input-icon-wrap">
+            <i class="fa-solid fa-signature"></i>
+            <input type="text" id="fullNameInput" name="cb_full_name" placeholder="e.g. Eleanor Vance" required autocomplete="new-password" data-lpignore="true" data-form-type="other" spellcheck="false" onpaste="return false;" oncopy="return false;" oncut="return false;" ondrop="return false;" readonly onfocus="this.removeAttribute('readonly');">
+          </div>
+        </div>
+
+        <!-- Date & Time Row -->
+        <div class="form-row-predict">
+          <div class="form-group-predict">
+            <label for="dobInput"><i class="fa-solid fa-calendar-day"></i> Date of Birth</label>
+            <div class="input-icon-wrap">
+              <i class="fa-solid fa-calendar"></i>
+              <input type="date" id="dobInput" name="dob" required onpaste="return false;">
+            </div>
+          </div>
+
+          <div class="form-group-predict">
+            <label for="tobInput"><i class="fa-solid fa-clock"></i> Time of Birth</label>
+            <div class="input-icon-wrap">
+              <i class="fa-solid fa-stopwatch"></i>
+              <input type="time" id="tobInput" name="tob" value="12:00" onpaste="return false;">
+            </div>
+          </div>
+        </div>
+
+        <!-- Segmented Birth Place: Country, State, District with Smart Suggestions (No browser saved info / No copy-paste) -->
+        <div class="inline-pob-section" style="margin-bottom: 22px;">
+          <label class="inline-pob-main-label" style="font-size: 0.82rem; margin-bottom: 8px;">
+            <i class="fa-solid fa-location-dot"></i> Birth Place (Country, State, District)
+          </label>
+          
+          <div class="inline-pob-grid">
+            <!-- 1. Country Box -->
+            <div class="inline-pob-col">
+              <label for="predictCountry" class="inline-pob-sublabel">Country</label>
+              <div class="input-icon-wrap pob-autocomplete-wrap">
+                <i class="fa-solid fa-earth-americas"></i>
+                <input type="text" id="predictCountry" name="cb_predict_country" class="pob-input no-paste" placeholder="e.g. India" value="" required autocomplete="new-password" data-lpignore="true" data-form-type="other" spellcheck="false" onpaste="return false;" oncopy="return false;" oncut="return false;" ondrop="return false;" readonly onfocus="this.removeAttribute('readonly');">
+                <div id="predictCountrySuggestions" class="pob-suggestions-dropdown"></div>
+              </div>
+            </div>
+
+            <!-- 2. State Box -->
+            <div class="inline-pob-col">
+              <label for="predictState" class="inline-pob-sublabel">State</label>
+              <div class="input-icon-wrap pob-autocomplete-wrap">
+                <i class="fa-solid fa-map-location-dot"></i>
+                <input type="text" id="predictState" name="cb_predict_state" class="pob-input no-paste" placeholder="e.g. Tamil Nadu" value="" required autocomplete="new-password" data-lpignore="true" data-form-type="other" spellcheck="false" onpaste="return false;" oncopy="return false;" oncut="return false;" ondrop="return false;" readonly onfocus="this.removeAttribute('readonly');">
+                <div id="predictStateSuggestions" class="pob-suggestions-dropdown"></div>
+              </div>
+            </div>
+
+            <!-- 3. District / City Box -->
+            <div class="inline-pob-col">
+              <label for="predictDistrict" class="inline-pob-sublabel">District / City</label>
+              <div class="input-icon-wrap pob-autocomplete-wrap">
+                <i class="fa-solid fa-city"></i>
+                <input type="text" id="predictDistrict" name="cb_predict_district" class="pob-input no-paste" placeholder="e.g. Chennai" value="" required autocomplete="new-password" data-lpignore="true" data-form-type="other" spellcheck="false" onpaste="return false;" oncopy="return false;" oncut="return false;" ondrop="return false;" readonly onfocus="this.removeAttribute('readonly');">
+                <div id="predictDistrictSuggestions" class="pob-suggestions-dropdown"></div>
+              </div>
+            </div>
+          </div>
+
+          <input type="hidden" id="pobInput" name="pob" value="">
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn-generate-reading" id="btnSubmitReading">
+          <span>Generate Cosmic Snapshot</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+
+        <div class="guarantee-micro-note">
+          <i class="fa-solid fa-lock"></i>
+          <span>Instant calculation based on Pythagorean numerology and planetary ephemeris.</span>
+        </div>
+      </form>
+
+    </div>
+  </main>
+
+  <script src="js/pob-autocomplete.js"></script>
+  <script>
+    // Background starfield simulation
+    (function initStars() {
+      const canvas = document.getElementById('starsCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let stars = [];
+      let width = (canvas.width = window.innerWidth);
+      let height = (canvas.height = window.innerHeight);
+
+      function createStars() {
+        stars = [];
+        const count = Math.min(100, Math.floor((width * height) / 10000));
+        for (let i = 0; i < count; i++) {
+          stars.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            radius: Math.random() * 1.5 + 0.4,
+            alpha: Math.random() * 0.8 + 0.2,
+            speed: Math.random() * 0.25 + 0.05
+          });
+        }
+      }
+
+      function drawStars() {
+        ctx.clearRect(0, 0, width, height);
+        ctx.fillStyle = '#ffffff';
+        stars.forEach(s => {
+          ctx.beginPath();
+          ctx.globalAlpha = s.alpha;
+          ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+          ctx.fill();
+          s.y -= s.speed;
+          if (s.y < 0) {
+            s.y = height;
+            s.x = Math.random() * width;
+          }
+        });
+        requestAnimationFrame(drawStars);
+      }
+
+      window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+        createStars();
+      });
+
+      createStars();
+      drawStars();
+    })();
+
+    // Initialize Autocomplete & Reset form on load (no old data restored)
+    window.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('predictForm');
+      if (form) form.reset();
+
+      if (typeof window.initPobAutocomplete === 'function') {
+        window.initPobAutocomplete({
+          countryInputId: 'predictCountry',
+          countryDropdownId: 'predictCountrySuggestions',
+          stateInputId: 'predictState',
+          stateDropdownId: 'predictStateSuggestions',
+          districtInputId: 'predictDistrict',
+          districtDropdownId: 'predictDistrictSuggestions',
+          hiddenPobId: 'pobInput'
+        });
+      }
+    });
+
+    window.addEventListener('pageshow', () => {
+      const form = document.getElementById('predictForm');
+      if (form) form.reset();
+    });
+
+    function getPredictPob() {
+      const country = document.getElementById('predictCountry').value.trim();
+      const state = document.getElementById('predictState').value.trim();
+      const district = document.getElementById('predictDistrict').value.trim();
+      const parts = [district, state, country].filter(Boolean);
+      const combined = parts.join(', ');
+      const hiddenPob = document.getElementById('pobInput');
+      if (hiddenPob) hiddenPob.value = combined;
+      return combined;
+    }
+
+    function handlePredictSubmit(e) {
+      e.preventDefault();
+      const errBanner = document.getElementById('formErrorBanner');
+      errBanner.style.display = 'none';
+
+      const name = document.getElementById('fullNameInput').value.trim();
+      const dob = document.getElementById('dobInput').value;
+      const tob = document.getElementById('tobInput').value || '12:00';
+      const country = document.getElementById('predictCountry').value.trim();
+      const state = document.getElementById('predictState').value.trim();
+      const district = document.getElementById('predictDistrict').value.trim();
+      const pob = getPredictPob();
+
+      if (!name) {
+        errBanner.textContent = 'Please enter your full name.';
+        errBanner.style.display = 'block';
+        return;
+      }
+      if (!dob) {
+        errBanner.textContent = 'Please select your date of birth.';
+        errBanner.style.display = 'block';
+        return;
+      }
+      if (!country) {
+        errBanner.textContent = 'Please enter or select your Country.';
+        errBanner.style.display = 'block';
+        return;
+      }
+      if (!state) {
+        errBanner.textContent = 'Please enter or select your State.';
+        errBanner.style.display = 'block';
+        return;
+      }
+      if (!district) {
+        errBanner.textContent = 'Please enter or select your District / City.';
+        errBanner.style.display = 'block';
+        return;
+      }
+
+      const btn = document.getElementById('btnSubmitReading');
+      btn.disabled = true;
+      btn.innerHTML = '<span>Aligning Celestial Energies...</span> <i class="fa-solid fa-spinner fa-spin"></i>';
+
+      const query = new URLSearchParams({
+        name: name,
+        dob: dob,
+        tob: tob,
+        pob: pob
+      }).toString();
+
+      setTimeout(() => {
+        window.location.href = '/results?' + query;
+      }, 400);
+    }
+  </script>
+</body>
+</html>
