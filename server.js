@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
+const os = require('os');
 const crypto = require('crypto');
 const ExcelJS = require('exceljs');
 const nodemailer = require('nodemailer');
@@ -15,6 +16,17 @@ const PORT = process.env.PORT || 3000;
 // Security: Disable Express fingerprinting header & trust reverse proxy (Checklist: Infrastructure Security)
 app.disable('x-powered-by');
 app.set('trust proxy', 1);
+
+// Serverless & Reverse Proxy Request Normalizer (Guarantees safe socket & IP resolution across all environments)
+app.use((req, res, next) => {
+  if (!req.socket) req.socket = {};
+  if (!req.connection) req.connection = req.socket;
+  if (!req.socket.remoteAddress) {
+    const forwarded = req.headers['x-forwarded-for'];
+    req.socket.remoteAddress = (typeof forwarded === 'string' ? forwarded.split(',')[0].trim() : '') || '127.0.0.1';
+  }
+  next();
+});
 
 // Operational Monitoring: Active Requests & Security Event Tracker (Checklist: Monitoring & Alerting)
 let totalRequestsCount = 0;
@@ -32,21 +44,49 @@ function getMaintenanceMode() {
   return isMaintenanceMode;
 }
 
-// Ensure data folder and backup folder exist
-const DATA_DIR = path.join(__dirname, 'data');
+// Ensure data folder and backup folder exist (Serverless / Vercel compatible)
+const isVercel = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
+const DATA_DIR = isVercel ? path.join(os.tmpdir(), 'vstar-data') : path.join(__dirname, 'data');
 const BACKUP_DIR = path.join(DATA_DIR, 'backups');
-if (!fs.existsSync(DATA_DIR)) {
-  fs.mkdirSync(DATA_DIR, { recursive: true });
+
+try {
+  if (!fs.existsSync(DATA_DIR)) {
+    fs.mkdirSync(DATA_DIR, { recursive: true });
+  }
+  if (!fs.existsSync(BACKUP_DIR)) {
+    fs.mkdirSync(BACKUP_DIR, { recursive: true });
+  }
+} catch (err) {
+  console.warn('[STORAGE] Note: Operating in ephemeral /tmp storage:', err.message);
 }
-if (!fs.existsSync(BACKUP_DIR)) {
-  fs.mkdirSync(BACKUP_DIR, { recursive: true });
-}
+
 const EXCEL_FILE_PATH = path.join(DATA_DIR, 'appointments.xlsx');
+
+// On serverless cold start, seed initial Excel if available in bundled read-only workspace
+if (isVercel) {
+  try {
+    const bundledExcel = path.join(__dirname, 'data', 'appointments.xlsx');
+    if (!fs.existsSync(EXCEL_FILE_PATH) && fs.existsSync(bundledExcel)) {
+      fs.copyFileSync(bundledExcel, EXCEL_FILE_PATH);
+    }
+  } catch (err) {
+    console.warn('[STORAGE] Could not seed Excel file to /tmp:', err.message);
+  }
+}
+
+// Static Public Directory Resolution (Local & Serverless Compatible)
+const PUBLIC_DIR = fs.existsSync(path.join(__dirname, 'public'))
+  ? path.join(__dirname, 'public')
+  : path.join(process.cwd(), 'public');
 
 // 1. Force HTTPS Enforcement in Production
 app.use((req, res, next) => {
-  const isHttps = req.secure || req.headers['x-forwarded-proto'] === 'https';
-  if (!isHttps && process.env.NODE_ENV === 'production') {
+  const isHttps = Boolean(
+    req.headers['x-forwarded-proto'] === 'https' ||
+    (req.connection && req.connection.encrypted) ||
+    (req.socket && req.socket.encrypted)
+  );
+  if (!isHttps && process.env.NODE_ENV === 'production' && req.headers.host) {
     return res.redirect(301, `https://${req.headers.host}${req.url}`);
   }
   next();
@@ -93,11 +133,19 @@ app.use((req, res, next) => {
 });
 
 // 4. Application-Level Rate Limiting (DDoS & Brute-Force Defense)
+const getClientIpKey = (req) => {
+  const forwarded = req.headers['x-forwarded-for'];
+  return (typeof forwarded === 'string' ? forwarded.split(',')[0].trim() : '') ||
+    (req.socket && req.socket.remoteAddress) ||
+    '127.0.0.1';
+};
+
 const generalApiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 150,
   standardHeaders: true,
   legacyHeaders: false,
+  keyGenerator: getClientIpKey,
   message: { success: false, message: 'Too many requests from this IP. Please try again after 15 minutes.' }
 });
 
@@ -106,6 +154,7 @@ const appointmentBookingLimiter = rateLimit({
   max: 10,                  // 10 appointments per hour per IP
   standardHeaders: true,
   legacyHeaders: false,
+  keyGenerator: getClientIpKey,
   message: { success: false, message: 'Appointment booking rate limit reached. Please wait before submitting another appointment.' }
 });
 
@@ -114,6 +163,7 @@ const adminAuthLimiter = rateLimit({
   max: 10,                  // Lockout after 10 attempts
   standardHeaders: true,
   legacyHeaders: false,
+  keyGenerator: getClientIpKey,
   message: { success: false, message: 'Too many administrative requests. Locked out for 15 minutes.' }
 });
 
@@ -129,7 +179,7 @@ app.use((req, res, next) => {
   res.on('finish', () => {
     const duration = Date.now() - start;
     const forwarded = req.headers['x-forwarded-for'];
-    const ip = (typeof forwarded === 'string' ? forwarded.split(',')[0].trim() : '') || req.socket.remoteAddress || '-';
+    const ip = (typeof forwarded === 'string' ? forwarded.split(',')[0].trim() : '') || (req.socket && req.socket.remoteAddress) || '-';
     
     // Automated alerting on operational anomalies & security violations
     if (res.statusCode >= 500) {
@@ -218,7 +268,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json({ limit: '100kb' })); // Body size limit to prevent Denial of Service
 app.use(express.urlencoded({ extended: true, limit: '100kb' }));
-app.use(express.static(path.join(__dirname, 'public'), { dotfiles: 'deny' }));
+app.use(express.static(PUBLIC_DIR, { dotfiles: 'deny' }));
 
 // Security: In-Memory Sliding-Window Rate Limiter (Checklist: Verify rate limiting)
 const rateLimitMap = new Map();
@@ -226,7 +276,7 @@ const rateLimitMap = new Map();
 function createRateLimiter({ windowMs, maxRequests, message }) {
   return function rateLimitMiddleware(req, res, next) {
     const forwarded = req.headers['x-forwarded-for'];
-    const ip = (typeof forwarded === 'string' ? forwarded.split(',')[0].trim() : '') || req.socket.remoteAddress || 'unknown-client';
+    const ip = (typeof forwarded === 'string' ? forwarded.split(',')[0].trim() : '') || (req.socket && req.socket.remoteAddress) || 'unknown-client';
     const key = `${req.baseUrl || req.path}:${ip}`;
     const now = Date.now();
 
@@ -1031,11 +1081,15 @@ app.get('/api/status', async (req, res) => {
 
 // Cosmic Insights Routes
 app.get('/predict', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'predict.html'));
+  res.sendFile(path.join(PUBLIC_DIR, 'predict.html'), (err) => {
+    if (err && !res.headersSent) res.status(404).send('Predict page not found');
+  });
 });
 
 app.get('/results', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'results.html'));
+  res.sendFile(path.join(PUBLIC_DIR, 'results.html'), (err) => {
+    if (err && !res.headersSent) res.status(404).send('Results page not found');
+  });
 });
 
 // 404 Handler for API routes (Checklist: Check server errors & 404 handling)
@@ -1049,7 +1103,9 @@ app.use('/api', (req, res) => {
 // Serve frontend for all other routes
 app.use((req, res, next) => {
   if (req.method === 'GET') {
-    return res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    return res.sendFile(path.join(PUBLIC_DIR, 'index.html'), (err) => {
+      if (err && !res.headersSent) res.status(404).send('Home page not found');
+    });
   }
   next();
 });
@@ -1069,20 +1125,20 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Export for testing & modularity
-module.exports = {
-  app,
-  appendAppointmentToExcel,
-  readAppointmentsFromExcel,
-  sendConfirmationEmail,
-  createBackup,
-  listBackups,
-  restoreBackup,
-  setMaintenanceMode,
-  getMaintenanceMode,
-  EXCEL_FILE_PATH,
-  BACKUP_DIR
-};
+// Export for Vercel Serverless & Testing / Modularity
+app.app = app;
+app.appendAppointmentToExcel = appendAppointmentToExcel;
+app.readAppointmentsFromExcel = readAppointmentsFromExcel;
+app.sendConfirmationEmail = sendConfirmationEmail;
+app.createBackup = createBackup;
+app.listBackups = listBackups;
+app.restoreBackup = restoreBackup;
+app.setMaintenanceMode = setMaintenanceMode;
+app.getMaintenanceMode = getMaintenanceMode;
+app.EXCEL_FILE_PATH = EXCEL_FILE_PATH;
+app.BACKUP_DIR = BACKUP_DIR;
+
+module.exports = app;
 
 // Start Server if executed directly
 if (require.main === module) {
