@@ -1111,76 +1111,12 @@ const MOBILE_BRANCHES = {
 
 function initMobileBranching() {
   const branchBar = document.getElementById('mobileBranchBar');
-  const branchBarTitle = document.getElementById('branchBarTitle');
-  const branchBackBtn = document.getElementById('branchBackBtn');
-  const branchBookBtn = document.getElementById('branchBookBtn');
+  if (branchBar) branchBar.style.display = 'none';
 
   window.setMobileBranch = function(targetKey, scrollTarget = null) {
     let key = (targetKey || 'home').toLowerCase().replace('#', '');
     if (MOBILE_BRANCHES[key] && MOBILE_BRANCHES[key].aliasOf) {
       key = MOBILE_BRANCHES[key].aliasOf;
-    }
-
-    if (window.innerWidth > 768) {
-      // Desktop: normal scroll behavior
-      if (key === 'home') {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else {
-        const dest = document.getElementById(key) || document.getElementById(scrollTarget);
-        if (dest) {
-          const headerOffset = 76;
-          const pos = dest.getBoundingClientRect().top + window.pageYOffset - headerOffset;
-          window.scrollTo({ top: pos, behavior: 'smooth' });
-        }
-      }
-      return;
-    }
-
-    // Mobile: Branch routing
-    const isHomeFlow = (key === 'home' || key === 'appointment' || !MOBILE_BRANCHES[key]);
-
-    if (isHomeFlow) {
-      document.body.setAttribute('data-mobile-branch', 'home');
-      if (branchBar) branchBar.style.display = 'none';
-
-      // Update URL hash safely without jump
-      if (history.pushState) {
-        history.pushState(null, null, key === 'appointment' ? '#appointment' : '#home');
-      }
-
-      if (key === 'appointment' || scrollTarget === 'appointment') {
-        setTimeout(() => {
-          const apt = document.getElementById('appointment');
-          if (apt) {
-            const headerOffset = 65;
-            const pos = apt.getBoundingClientRect().top + window.pageYOffset - headerOffset;
-            window.scrollTo({ top: pos, behavior: 'smooth' });
-          }
-        }, 80);
-      } else {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-    } else {
-      // It is an active branch page
-      document.body.setAttribute('data-mobile-branch', key);
-      if (branchBar && branchBarTitle) {
-        branchBarTitle.textContent = MOBILE_BRANCHES[key].title;
-        branchBar.style.display = 'flex';
-      }
-
-      if (history.pushState) {
-        history.pushState(null, null, `#${key}`);
-      }
-
-      // Ensure elements inside the newly visible branch section are visible (reveal animations)
-      const activeSection = document.getElementById(key);
-      if (activeSection) {
-        activeSection.querySelectorAll('.reveal-init').forEach(el => {
-          el.classList.add('reveal-visible');
-        });
-      }
-
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     // Close mobile nav drawer if open
@@ -1193,62 +1129,58 @@ function initMobileBranching() {
         toggle.innerHTML = '<i class="fa-solid fa-bars"></i>';
       }
     }
+
+    if (key === 'home') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (history.pushState) history.pushState(null, null, '#home');
+      return;
+    }
+
+    const dest = document.getElementById(key) || document.getElementById(scrollTarget);
+    if (dest) {
+      const headerOffset = window.innerWidth <= 768 ? 68 : 76;
+      const pos = Math.max(0, dest.getBoundingClientRect().top + window.pageYOffset - headerOffset);
+      window.scrollTo({ top: pos, behavior: 'smooth' });
+      if (history.pushState) history.pushState(null, null, `#${key}`);
+    }
   };
 
-  // Branch Bar buttons
-  if (branchBackBtn) {
-    branchBackBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      window.setMobileBranch('home');
-    });
-  }
-
-  if (branchBookBtn) {
-    branchBookBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      window.setMobileBranch('home', 'appointment');
-    });
-  }
-
-  // Handle browser back and forward buttons
-  window.addEventListener('popstate', () => {
-    if (window.innerWidth <= 768) {
-      const hash = window.location.hash.replace('#', '');
-      window.setMobileBranch(hash || 'home');
-    }
-  });
-
-  // Logo click on mobile returns to home
+  // Logo click returns to top
   document.querySelectorAll('.brand-logo').forEach(logo => {
     logo.addEventListener('click', (e) => {
-      if (window.innerWidth <= 768) {
-        e.preventDefault();
-        window.setMobileBranch('home');
-      }
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (history.pushState) history.pushState(null, null, '#home');
     });
+  });
+
+  // Handle browser back/forward buttons
+  window.addEventListener('popstate', () => {
+    const hash = window.location.hash.replace('#', '');
+    if (hash) {
+      const dest = document.getElementById(hash);
+      if (dest) {
+        const headerOffset = window.innerWidth <= 768 ? 68 : 76;
+        const pos = Math.max(0, dest.getBoundingClientRect().top + window.pageYOffset - headerOffset);
+        window.scrollTo({ top: pos, behavior: 'smooth' });
+      }
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   });
 
   // Check initial hash on load
-  if (window.innerWidth <= 768) {
-    const initialHash = window.location.hash.replace('#', '');
-    if (initialHash && MOBILE_BRANCHES[initialHash]) {
-      window.setMobileBranch(initialHash);
-    } else if (initialHash === 'appointment') {
-      window.setMobileBranch('home', 'appointment');
-    } else {
-      window.setMobileBranch('home');
-    }
+  const initialHash = window.location.hash.replace('#', '');
+  if (initialHash && initialHash !== 'home') {
+    setTimeout(() => {
+      const dest = document.getElementById(initialHash);
+      if (dest) {
+        const headerOffset = window.innerWidth <= 768 ? 68 : 76;
+        const pos = Math.max(0, dest.getBoundingClientRect().top + window.pageYOffset - headerOffset);
+        window.scrollTo({ top: pos, behavior: 'smooth' });
+      }
+    }, 200);
   }
-
-  // Handle screen resize
-  window.addEventListener('resize', () => {
-    if (window.innerWidth > 768) {
-      if (branchBar) branchBar.style.display = 'none';
-    } else {
-      const currentBranch = document.body.getAttribute('data-mobile-branch') || 'home';
-      window.setMobileBranch(currentBranch);
-    }
-  });
 }
 
 /* ==========================================================================
@@ -1694,44 +1626,91 @@ function escapeHtmlInline(str) {
 /* ==========================================================================
    PRIVACY & COOKIE CONSENT BANNER & MODALS
    ========================================================================== */
-document.addEventListener('DOMContentLoaded', () => {
-  const consent = localStorage.getItem('vstar_cookie_consent');
+function getStoredCookieConsent() {
+  try {
+    const val = localStorage.getItem('vstar_cookie_consent');
+    if (val) return val;
+  } catch (e) {}
+  try {
+    const val = sessionStorage.getItem('vstar_cookie_consent');
+    if (val) return val;
+  } catch (e) {}
+  try {
+    const match = document.cookie.match(/vstar_cookie_consent=([^;]+)/);
+    if (match) return match[1];
+  } catch (e) {}
+  return null;
+}
+
+window.handleCookieChoice = function(accepted) {
+  const choice = accepted ? 'granted' : 'denied';
+  try { localStorage.setItem('vstar_cookie_consent', choice); } catch (e) {}
+  try { sessionStorage.setItem('vstar_cookie_consent', choice); } catch (e) {}
+  try { document.cookie = `vstar_cookie_consent=${choice}; path=/; max-age=31536000; SameSite=Lax`; } catch (e) {}
+
+  const banner = document.getElementById('vstarCookieBanner');
+  if (banner) {
+    banner.style.display = 'none';
+    banner.classList.remove('active');
+  }
+
+  try {
+    if (typeof showToast === 'function') {
+      if (accepted) {
+        showToast('Preferences saved: Essential storage active.', 'success');
+      } else {
+        showToast('Preferences saved: Non-essential storage disabled.', 'info');
+      }
+    }
+  } catch (e) {}
+};
+
+function initCookieConsent() {
+  const consent = getStoredCookieConsent();
   const banner = document.getElementById('vstarCookieBanner');
   if (!consent && banner) {
-    // Show banner after short 1s delay for smooth entrance
     setTimeout(() => {
       banner.style.display = 'flex';
-    }, 1000);
+      banner.classList.add('active');
+    }, 800);
   }
-});
 
-function handleCookieChoice(accepted) {
-  localStorage.setItem('vstar_cookie_consent', accepted ? 'granted' : 'denied');
-  const banner = document.getElementById('vstarCookieBanner');
-  if (banner) banner.style.display = 'none';
-  if (accepted) {
-    showToast('Preferences saved: Essential storage active.', 'success');
-  } else {
-    showToast('Preferences saved: Non-essential storage disabled.', 'info');
+  const acceptBtn = document.getElementById('btnCookieAccept');
+  const declineBtn = document.getElementById('btnCookieDecline');
+  const closeBtn = document.getElementById('btnCookieClose');
+
+  if (acceptBtn) {
+    acceptBtn.addEventListener('click', (e) => { e.preventDefault(); window.handleCookieChoice(true); });
+    acceptBtn.addEventListener('touchend', (e) => { e.preventDefault(); window.handleCookieChoice(true); });
+  }
+  if (declineBtn) {
+    declineBtn.addEventListener('click', (e) => { e.preventDefault(); window.handleCookieChoice(false); });
+    declineBtn.addEventListener('touchend', (e) => { e.preventDefault(); window.handleCookieChoice(false); });
+  }
+  if (closeBtn) {
+    closeBtn.addEventListener('click', (e) => { e.preventDefault(); window.handleCookieChoice(true); });
+    closeBtn.addEventListener('touchend', (e) => { e.preventDefault(); window.handleCookieChoice(true); });
   }
 }
 
-function openPrivacyModal() {
+document.addEventListener('DOMContentLoaded', initCookieConsent);
+
+window.openPrivacyModal = function() {
   const modal = document.getElementById('privacyModal');
   if (modal) modal.classList.add('active');
-}
+};
 
-function closePrivacyModal() {
+window.closePrivacyModal = function() {
   const modal = document.getElementById('privacyModal');
   if (modal) modal.classList.remove('active');
-}
+};
 
-function openTermsModal() {
+window.openTermsModal = function() {
   const modal = document.getElementById('termsModal');
   if (modal) modal.classList.add('active');
-}
+};
 
-function closeTermsModal() {
+window.closeTermsModal = function() {
   const modal = document.getElementById('termsModal');
   if (modal) modal.classList.remove('active');
-}
+};

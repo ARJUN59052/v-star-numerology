@@ -2976,52 +2976,28 @@ select.form-control option {
 
 @media (max-width: 768px) {
   /* ==========================================================================
-     MOBILE BRANCHED NAVIGATION ARCHITECTURE
-     Default (Home): Landing Page (Hero) + Booking Page (Appointment) + Address End Page (Footer)
-     Tapping any tab branches directly to that specific section until return / book.
+     MOBILE CONTINUOUS NATURAL SCROLLING & TOUCH FLOW
+     All sections flow seamlessly in order so the user can swipe and explore the whole website.
      ========================================================================== */
-  body:not([data-mobile-branch]) .branch-section,
-  body[data-mobile-branch="home"] .branch-section {
-    display: none !important;
-  }
-
-  body:not([data-mobile-branch]) .mobile-branch-bar,
-  body[data-mobile-branch="home"] .mobile-branch-bar {
-    display: none !important;
-  }
-
-  body:not([data-mobile-branch]) .hero-section,
-  body[data-mobile-branch="home"] .hero-section {
+  .branch-section {
     display: block !important;
   }
 
-  body:not([data-mobile-branch]) #appointment,
-  body[data-mobile-branch="home"] #appointment {
-    display: block !important;
-  }
-
-  /* When a specific branch is active on mobile:
-     Hide the Hero section and Appointment section; hide other branch sections;
-     Show active branch section, Mobile Branch Bar, and Footer */
-  body[data-mobile-branch]:not([data-mobile-branch="home"]) .hero-section,
-  body[data-mobile-branch]:not([data-mobile-branch="home"]) #appointment,
-  body[data-mobile-branch]:not([data-mobile-branch="home"]) .branch-section {
+  .mobile-branch-bar {
     display: none !important;
   }
 
-  body[data-mobile-branch="services"] #services,
-  body[data-mobile-branch="zodiac-belt"] #zodiac-belt,
-  body[data-mobile-branch="transformation"] #transformation,
-  body[data-mobile-branch="destiny"] #destiny,
-  body[data-mobile-branch="calculator"] #calculator,
-  body[data-mobile-branch="philosophy"] #philosophy,
-  body[data-mobile-branch="testimonials"] #testimonials,
-  body[data-mobile-branch="faq"] #faq {
+  .hero-section,
+  #appointment {
     display: block !important;
   }
 
-  body[data-mobile-branch]:not([data-mobile-branch="home"]) .mobile-branch-bar {
-    display: flex !important;
+  /* Ensure cards and text are fully visible on mobile scroll */
+  .reveal-init {
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+    transition: opacity 0.3s ease !important;
   }
 
   /* Container & global paddings */
@@ -5485,11 +5461,12 @@ button:active, .btn-primary-radiant:active, .btn-nav-book:active {
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  z-index: 99999;
+  z-index: 100001;
   box-shadow: 0 16px 45px rgba(0, 0, 0, 0.85), 0 0 20px rgba(223, 184, 114, 0.15);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   animation: slideUpConsent 0.4s ease-out;
+  pointer-events: auto;
 }
 
 @keyframes slideUpConsent {
@@ -5502,6 +5479,7 @@ button:active, .btn-primary-radiant:active, .btn-nav-book:active {
   align-items: center;
   gap: 14px;
   flex: 1;
+  position: relative;
 }
 
 .cookie-icon-wrap {
@@ -5528,6 +5506,23 @@ button:active, .btn-primary-radiant:active, .btn-nav-book:active {
   color: var(--gold-champagne, #ecd39d);
 }
 
+.cookie-close-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.5rem;
+  line-height: 1;
+  padding: 4px 8px;
+  cursor: pointer;
+  margin-left: 8px;
+  transition: color 0.2s ease;
+  pointer-events: auto;
+}
+
+.cookie-close-btn:hover {
+  color: var(--gold, #dfb872);
+}
+
 .cookie-buttons {
   display: flex;
   gap: 10px;
@@ -5545,6 +5540,8 @@ button:active, .btn-primary-radiant:active, .btn-nav-book:active {
   font-weight: 700;
   cursor: pointer;
   transition: all 0.22s ease;
+  pointer-events: auto;
+  touch-action: manipulation;
 }
 
 .btn-cookie-accept:hover {
@@ -5563,6 +5560,8 @@ button:active, .btn-primary-radiant:active, .btn-nav-book:active {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.22s ease;
+  pointer-events: auto;
+  touch-action: manipulation;
 }
 
 .btn-cookie-decline:hover {
@@ -5572,17 +5571,79 @@ button:active, .btn-primary-radiant:active, .btn-nav-book:active {
 
 @media (max-width: 768px) {
   .cookie-consent-bar {
-    flex-direction: column;
-    text-align: center;
-    padding: 18px 16px;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    border-radius: 18px 18px 0 0 !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: none !important;
+    border-top: 1.5px solid rgba(223, 184, 114, 0.45) !important;
+    background: rgba(13, 16, 26, 0.98) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+    padding: 14px 16px calc(14px + env(safe-area-inset-bottom, 0px)) !important;
+    flex-direction: column !important;
+    text-align: left !important;
+    gap: 12px !important;
+    z-index: 100001 !important;
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.75) !important;
+    pointer-events: auto !important;
   }
+
   .cookie-content {
-    flex-direction: column;
-    text-align: center;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+    width: 100% !important;
+    text-align: left !important;
   }
+
+  .cookie-icon-wrap {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    font-size: 0.9rem !important;
+    margin-top: 2px !important;
+  }
+
+  .cookie-text {
+    font-size: 0.78rem !important;
+    line-height: 1.4 !important;
+    color: #cbd5e1 !important;
+    padding-right: 28px !important;
+  }
+
+  .cookie-close-btn {
+    position: absolute !important;
+    top: -4px !important;
+    right: -4px !important;
+    padding: 6px 10px !important;
+    font-size: 1.5rem !important;
+  }
+
   .cookie-buttons {
-    width: 100%;
-    justify-content: center;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 8px !important;
+  }
+
+  .btn-cookie-accept,
+  .btn-cookie-decline {
+    flex: 1 !important;
+    padding: 11px 12px !important;
+    font-size: 0.82rem !important;
+    text-align: center !important;
+    justify-content: center !important;
+    border-radius: 8px !important;
+    min-height: 42px !important;
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
   }
 }
 

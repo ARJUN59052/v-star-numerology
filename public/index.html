@@ -1920,18 +1920,19 @@
   </div>
 
   <!-- Privacy & Cookie Consent Banner (GDPR / CCPA Compliant) -->
-  <div id="vstarCookieBanner" class="cookie-consent-bar" style="display: none;">
+  <div id="vstarCookieBanner" class="cookie-consent-bar" style="display: none;" role="dialog" aria-labelledby="cookieConsentHeading" aria-describedby="cookieConsentDesc">
     <div class="cookie-content">
       <div class="cookie-icon-wrap">
         <i class="fa-solid fa-shield-halved"></i>
       </div>
-      <div class="cookie-text">
-        <strong>Privacy &amp; Cookie Consent:</strong> We use strictly essential cookies and secure storage to process consultation requests and maintain appointment security in compliance with GDPR and CCPA.
+      <div class="cookie-text" id="cookieConsentDesc">
+        <strong id="cookieConsentHeading">Privacy &amp; Cookie Consent:</strong> We use strictly essential cookies and secure storage to process consultation requests and maintain appointment security in compliance with GDPR and CCPA.
       </div>
+      <button type="button" class="cookie-close-btn" id="btnCookieClose" onclick="handleCookieChoice(true)" aria-label="Close cookie consent">&times;</button>
     </div>
     <div class="cookie-buttons">
-      <button class="btn-cookie-decline" onclick="handleCookieChoice(false)">Decline Non-Essential</button>
-      <button class="btn-cookie-accept" onclick="handleCookieChoice(true)">Accept All</button>
+      <button type="button" id="btnCookieDecline" class="btn-cookie-decline" onclick="handleCookieChoice(false)">Decline Non-Essential</button>
+      <button type="button" id="btnCookieAccept" class="btn-cookie-accept" onclick="handleCookieChoice(true)">Accept All</button>
     </div>
   </div>
 
