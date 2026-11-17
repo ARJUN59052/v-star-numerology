@@ -5302,17 +5302,26 @@ button:active, .btn-primary-radiant:active, .btn-nav-book:active {
   color: #ffffff;
   cursor: pointer;
   outline: none;
-  transition: color 0.2s;
+  transition: color 0.2s, background-color 0.2s;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .inline-acc-btn:hover, .inline-acc-item.active .inline-acc-btn {
   color: var(--gold-champagne, #ecd39d) !important;
+  background-color: rgba(223, 184, 114, 0.05);
 }
 
 .inline-acc-btn i {
   font-size: 0.8rem;
   transition: transform 0.25s ease;
   color: var(--gold-primary, #dfb872) !important;
+  pointer-events: none;
+}
+
+.inline-acc-btn span {
+  pointer-events: none;
 }
 
 .inline-acc-item.active .inline-acc-btn i {
@@ -5322,14 +5331,16 @@ button:active, .btn-primary-radiant:active, .btn-nav-book:active {
 .inline-acc-body {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.3s ease, padding 0.3s ease;
+  transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1), padding 0.3s ease, opacity 0.25s ease;
   padding: 0 18px;
   text-align: left;
+  opacity: 0;
 }
 
 .inline-acc-item.active .inline-acc-body {
-  max-height: 250px;
-  padding-bottom: 18px;
+  max-height: 350px !important;
+  padding-bottom: 18px !important;
+  opacity: 1 !important;
 }
 
 .inline-acc-body ul {

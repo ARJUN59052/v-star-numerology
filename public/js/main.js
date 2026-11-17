@@ -76,6 +76,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize Cosmic Snapshot Submit and Button Listeners
   initInlineSnapshot();
 
+  // Initialize Cosmic Snapshot Accordion (Strengths, Growth Areas, Essence)
+  initInlineAccordion();
+
   // Ensure form is fresh & clean on initial page load (no old cached data)
   resetCosmicForm();
 });
@@ -1559,12 +1562,16 @@ function initInlineSnapshot() {
       handleInlineShareReading();
     });
   }
+
+  // Initialize Accordion within Snapshot
+  initInlineAccordion();
 }
 
 // Global window bindings for inline HTML attributes
 window.handleInlineSnapshotSubmit = handleInlineSnapshotSubmit;
 window.updateInlineSnapshot = updateInlineSnapshot;
 window.initInlineSnapshot = initInlineSnapshot;
+window.initInlineAccordion = initInlineAccordion;
 window.toggleInlineAcc = toggleInlineAcc;
 window.handleInlineSaveReading = handleInlineSaveReading;
 window.handleInlineShareReading = handleInlineShareReading;
@@ -1572,7 +1579,41 @@ window.handleInlineShareReading = handleInlineShareReading;
 function toggleInlineAcc(id) {
   const item = document.getElementById(id);
   if (!item) return;
-  item.classList.toggle('active');
+
+  const accordion = item.closest('.inline-accordion') || document.querySelector('.inline-accordion');
+  const wasActive = item.classList.contains('active');
+
+  if (accordion) {
+    accordion.querySelectorAll('.inline-acc-item').forEach(i => i.classList.remove('active'));
+  }
+
+  if (!wasActive) {
+    item.classList.add('active');
+  }
+}
+
+function initInlineAccordion() {
+  const accordion = document.querySelector('.inline-accordion');
+  if (!accordion) return;
+
+  const items = accordion.querySelectorAll('.inline-acc-item');
+  items.forEach(item => {
+    const btn = item.querySelector('.inline-acc-btn');
+    if (!btn) return;
+
+    // Remove any previously attached duplicate listeners by cloning or direct reference
+    btn.onclick = function(e) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      const wasActive = item.classList.contains('active');
+      items.forEach(i => i.classList.remove('active'));
+      if (!wasActive) {
+        item.classList.add('active');
+      }
+    };
+  });
 }
 
 function handleInlineSaveReading() {
