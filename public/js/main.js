@@ -73,6 +73,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Initialize Cosmic Snapshot Submit and Button Listeners
+  initInlineSnapshot();
+
   // Ensure form is fresh & clean on initial page load (no old cached data)
   resetCosmicForm();
 });
@@ -1318,7 +1321,10 @@ function updateInlineSnapshot() {
   const tobEl = document.getElementById('inlineTob');
 
   const name = nameEl ? nameEl.value.trim() : '';
-  const dob = dobEl ? dobEl.value : '';
+  let dob = dobEl ? dobEl.value : '';
+  if (!dob && dobEl) {
+    dob = dobEl.getAttribute('value') || '';
+  }
   const tob = tobEl && tobEl.value ? tobEl.value : '12:00';
   const pob = getInlinePob();
 
@@ -1419,7 +1425,10 @@ function updateInlineSnapshot() {
 }
 
 function handleInlineSnapshotSubmit(e) {
-  if (e) e.preventDefault();
+  if (e) {
+    if (typeof e.preventDefault === 'function') e.preventDefault();
+    if (typeof e.stopPropagation === 'function') e.stopPropagation();
+  }
   
   const nameEl = document.getElementById('inlineName');
   const dobEl = document.getElementById('inlineDob');
@@ -1429,7 +1438,10 @@ function handleInlineSnapshotSubmit(e) {
   const districtEl = document.getElementById('inlineDistrict');
 
   const name = nameEl ? nameEl.value.trim() : '';
-  const dob = dobEl ? dobEl.value : '';
+  let dob = dobEl ? dobEl.value : '';
+  if (!dob && dobEl) {
+    dob = dobEl.getAttribute('value') || '';
+  }
   const tob = tobEl ? tobEl.value : '12:00';
   const country = countryEl ? countryEl.value.trim() : '';
   const state = stateEl ? stateEl.value.trim() : '';
@@ -1469,30 +1481,71 @@ function handleInlineSnapshotSubmit(e) {
   }
 
   setTimeout(() => {
-    // Reveal Results Card and expand into 2-sided view
-    const resultsCard = document.getElementById('inlineResultsCard');
-    const wrapper = document.getElementById('cosmicSnapshotWrapper');
-    if (resultsCard) {
-      resultsCard.style.display = 'block';
-    }
-    if (wrapper) {
-      wrapper.classList.add('has-results');
-    }
+    try {
+      // Reveal Results Card and expand into 2-sided view
+      const resultsCard = document.getElementById('inlineResultsCard');
+      const wrapper = document.getElementById('cosmicSnapshotWrapper');
+      if (resultsCard) {
+        resultsCard.style.display = 'block';
+      }
+      if (wrapper) {
+        wrapper.classList.add('has-results');
+      }
 
-    updateInlineSnapshot();
+      updateInlineSnapshot();
 
-    if (btn) {
-      btn.disabled = false;
-      btn.innerHTML = '<span>Update Cosmic Snapshot</span> <i class="fa-solid fa-wand-magic-sparkles"></i>';
-    }
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = '<span>Update Cosmic Snapshot</span> <i class="fa-solid fa-wand-magic-sparkles"></i>';
+      }
 
-    showToast('Your Cosmic Snapshot has been generated!', 'success');
+      showToast('Your Cosmic Snapshot has been generated!', 'success');
 
-    if (resultsCard) {
-      resultsCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      if (resultsCard) {
+        setTimeout(() => {
+          resultsCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 80);
+      }
+    } catch (err) {
+      console.error('Error generating Cosmic Snapshot:', err);
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = '<span>Generate Cosmic Snapshot</span> <i class="fa-solid fa-wand-magic-sparkles"></i>';
+      }
+      showToast('Could not calculate reading. Please check your inputs.', 'error');
     }
   }, 350);
 }
+
+function initInlineSnapshot() {
+  const form = document.getElementById('inlineSnapshotForm');
+  const btn = document.getElementById('btnInlineGenerate');
+
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      handleInlineSnapshotSubmit(e);
+    });
+  }
+  if (btn) {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      handleInlineSnapshotSubmit(e);
+    });
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handleInlineSnapshotSubmit(e);
+    });
+  }
+}
+
+// Global window bindings for inline HTML attributes
+window.handleInlineSnapshotSubmit = handleInlineSnapshotSubmit;
+window.updateInlineSnapshot = updateInlineSnapshot;
+window.initInlineSnapshot = initInlineSnapshot;
+window.toggleInlineAcc = toggleInlineAcc;
+window.handleInlineSaveReading = handleInlineSaveReading;
+window.handleInlineShareReading = handleInlineShareReading;
 
 function toggleInlineAcc(id) {
   const item = document.getElementById(id);

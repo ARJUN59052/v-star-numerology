@@ -428,18 +428,56 @@
     return quotes[idx];
   }
 
+  function parseDateCoordinates(dobString) {
+    let year = 1995, month = 11, day = 14;
+    if (!dobString) return { year, month, day };
+
+    const str = String(dobString).trim();
+    // Match any 3 groups of digits (e.g. 2005-01-20, 01/20/2005, 20/01/2005, 2005.01.20)
+    const nums = str.match(/\d+/g);
+    if (nums && nums.length >= 3) {
+      const n0 = parseInt(nums[0], 10);
+      const n1 = parseInt(nums[1], 10);
+      const n2 = parseInt(nums[2], 10);
+
+      if (n0 > 31) {
+        // Format: YYYY-MM-DD or YYYY/MM/DD
+        year = n0;
+        month = n1;
+        day = n2;
+      } else if (n2 > 31) {
+        // Format with Year at end (e.g. DD/MM/YYYY or MM/DD/YYYY)
+        year = n2;
+        if (n0 > 12) {
+          // First number is definitely Day (e.g. 20/01/2005)
+          day = n0;
+          month = n1;
+        } else if (n1 > 12) {
+          // Second number is definitely Day (e.g. 01/20/2005)
+          month = n0;
+          day = n1;
+        } else {
+          // Ambiguous (both <= 12): check standard US mm/dd/yyyy vs dd/mm/yyyy
+          month = n0;
+          day = n1;
+        }
+      } else {
+        year = n0;
+        month = n1;
+        day = n2;
+      }
+    }
+
+    if (isNaN(year) || year < 1850 || year > 2150) year = 1995;
+    if (isNaN(month) || month < 1 || month > 12) month = 11;
+    if (isNaN(day) || day < 1 || day > 31) day = 14;
+
+    return { year, month, day };
+  }
+
   function generateCosmicProfile(name, dobString, tobString, pobString) {
     const cleanName = (name || 'Cosmic Traveler').trim();
-    const parts = (dobString || '1995-11-14').split('-');
-    let year = parseInt(parts[0], 10);
-    let month = parseInt(parts[1], 10);
-    let day = parseInt(parts[2], 10);
-
-    if (isNaN(year) || isNaN(month) || isNaN(day)) {
-      year = 1995;
-      month = 11;
-      day = 14;
-    }
+    const { year, month, day } = parseDateCoordinates(dobString);
 
     const zodiac = getZodiacSign(month, day);
     const article = /^[AEIOU]/i.test(zodiac.sign) ? 'AN' : 'A';

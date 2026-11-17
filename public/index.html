@@ -524,7 +524,7 @@
                 Fill in your full birth coordinates to generate your complete multi-dimensional reading — uncovering your Sun Sign, Pythagorean Destiny frequency, Career alignment, and Lucky numbers.
               </p>
 
-              <form id="inlineSnapshotForm" autocomplete="off" onsubmit="handleInlineSnapshotSubmit(event)">
+              <form id="inlineSnapshotForm" autocomplete="off" novalidate onsubmit="handleInlineSnapshotSubmit(event)">
                 <div class="inline-form-group">
                   <label for="inlineName"><i class="fa-solid fa-user"></i> FULL NAME</label>
                   <div class="inline-input-wrap">
@@ -593,7 +593,7 @@
                   <input type="hidden" id="inlinePob" value="">
                 </div>
 
-                <button type="submit" class="btn-generate-inline" id="btnInlineGenerate">
+                <button type="button" class="btn-generate-inline" id="btnInlineGenerate" onclick="handleInlineSnapshotSubmit(event)">
                   <span>Generate Cosmic Snapshot</span>
                   <i class="fa-solid fa-wand-magic-sparkles"></i>
                 </button>
