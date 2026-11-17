@@ -386,8 +386,8 @@ function escapeHtml(str) {
 
 // Configure Nodemailer Transporter
 function getEmailTransporter() {
-  const user = process.env.SMTP_USER;
-  const rawPass = process.env.SMTP_PASS || '';
+  const user = process.env.SMTP_USER || 'vstarnumerology@gmail.com';
+  const rawPass = process.env.SMTP_PASS || 'cyfgozgdyakszvqq';
   const pass = rawPass.replace(/\s+/g, '');
 
   if (!user || !pass) {
@@ -396,7 +396,7 @@ function getEmailTransporter() {
   }
 
   const host = process.env.SMTP_HOST || 'smtp.gmail.com';
-  const port = parseInt(process.env.SMTP_PORT || (host === 'smtp.gmail.com' ? '465' : '587'), 10);
+  const port = parseInt(process.env.SMTP_PORT || '465', 10);
   const secure = process.env.SMTP_SECURE === 'true' || port === 465;
 
   // Use Gmail service preset for optimal Google Cloud / Vercel deliverability
@@ -1059,7 +1059,7 @@ app.post('/api/admin/maintenance', adminRateLimiter, requireAdminAuth, (req, res
 
 // 8. Server Health, Telemetry & Status Check (Checklist: Monitoring & Alerting)
 app.get('/api/status', async (req, res) => {
-  const hasSmtp = Boolean(process.env.SMTP_USER && process.env.SMTP_PASS);
+  const hasSmtp = Boolean((process.env.SMTP_USER || 'vstarnumerology@gmail.com') && (process.env.SMTP_PASS || 'cyfgozgdyakszvqq'));
   const memory = process.memoryUsage();
   let appointmentsCount = 0;
   try {
