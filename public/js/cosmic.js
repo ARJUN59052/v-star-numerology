@@ -536,20 +536,46 @@
     }
 
     try {
-      // Create PDF HTML container with safe offscreen positioning
+      // Visual feedback overlay so user sees active generation
+      var overlay = document.createElement('div');
+      overlay.id = 'vstar-pdf-overlay';
+      overlay.style.position = 'fixed';
+      overlay.style.top = '0';
+      overlay.style.left = '0';
+      overlay.style.width = '100vw';
+      overlay.style.height = '100vh';
+      overlay.style.backgroundColor = 'rgba(5, 3, 15, 0.78)';
+      overlay.style.backdropFilter = 'blur(6px)';
+      overlay.style.zIndex = '999998';
+      overlay.style.display = 'flex';
+      overlay.style.flexDirection = 'column';
+      overlay.style.alignItems = 'center';
+      overlay.style.justifyContent = 'center';
+      overlay.style.color = '#dfb872';
+      overlay.style.fontFamily = "'Cinzel', Georgia, serif";
+      overlay.innerHTML = `
+        <div style="text-align: center; padding: 24px;">
+          <div style="font-size: 38px; color: #dfb872; margin-bottom: 14px; animation: pulse 1.5s infinite;">✦ ◈ ✦</div>
+          <div style="font-size: 17px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;">GENERATING SACRED BLUEPRINT</div>
+          <div style="font-size: 13px; color: #a2acc7; margin-top: 10px; font-family: 'Plus Jakarta Sans', sans-serif;">Formatting planetary ephemeris houses &amp; high-res PDF...</div>
+        </div>
+      `;
+      document.body.appendChild(overlay);
+
+      // Create PDF HTML container directly at (0, 0)
       var container = document.createElement('div');
       container.id = 'vstar-pdf-render-box';
-      container.style.position = 'absolute';
+      container.style.position = 'fixed';
       container.style.left = '0';
-      container.style.top = (window.pageYOffset || document.documentElement.scrollTop || 0) + 'px';
-      container.style.width = '740px';
+      container.style.top = '0';
+      container.style.width = '750px';
       container.style.backgroundColor = '#0b0f19';
       container.style.color = '#f1f3f9';
       container.style.fontFamily = "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif";
       container.style.padding = '0';
       container.style.margin = '0';
       container.style.boxSizing = 'border-box';
-      container.style.zIndex = '-9999';
+      container.style.zIndex = '999997'; // In front of document, behind overlay
       container.style.pointerEvents = 'none';
 
       var currentDate = new Date().toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
@@ -796,19 +822,32 @@
 
       document.body.appendChild(container);
 
-      // PDF options
+      function cleanupPdfDom() {
+        if (overlay && document.body.contains(overlay)) {
+          document.body.removeChild(overlay);
+        }
+        if (container && document.body.contains(container)) {
+          document.body.removeChild(container);
+        }
+        if (btnElement) {
+          btnElement.disabled = false;
+          btnElement.innerHTML = originalBtnHtml;
+        }
+      }
+
+      // PDF options with absolute (0,0) canvas capture
       var filename = 'VSTAR_Cosmic_Reading_' + (p.name ? p.name.trim().replace(/\s+/g, '_') : 'Seeker') + '.pdf';
       var opt = {
         margin: [4, 4, 4, 4],
         filename: filename,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: {
-          scale: 1.5,
+          scale: 2,
           useCORS: true,
           allowTaint: true,
           scrollX: 0,
           scrollY: 0,
-          windowWidth: 760,
+          windowWidth: 750,
           backgroundColor: '#0b0f19',
           logging: false
         },
@@ -824,9 +863,7 @@
       var timeoutTimer = setTimeout(function() {
         if (!isFinished) {
           isFinished = true;
-          if (container && document.body.contains(container)) {
-            document.body.removeChild(container);
-          }
+          cleanupPdfDom();
           fallbackPrintPdf(p, btnElement, originalBtnHtml);
         }
       }, 7000);
@@ -836,13 +873,7 @@
           if (isFinished) return;
           isFinished = true;
           clearTimeout(timeoutTimer);
-          if (container && document.body.contains(container)) {
-            document.body.removeChild(container);
-          }
-          if (btnElement) {
-            btnElement.disabled = false;
-            btnElement.innerHTML = originalBtnHtml;
-          }
+          cleanupPdfDom();
           if (typeof window.showToast === 'function') {
             window.showToast('Your Cosmic Reading PDF has been downloaded successfully!', 'success');
           }
@@ -851,17 +882,17 @@
           isFinished = true;
           clearTimeout(timeoutTimer);
           console.error('html2pdf generation error:', err);
-          if (container && document.body.contains(container)) {
-            document.body.removeChild(container);
-          }
+          cleanupPdfDom();
           fallbackPrintPdf(p, btnElement, originalBtnHtml);
         });
       } else {
         clearTimeout(timeoutTimer);
+        cleanupPdfDom();
         fallbackPrintPdf(p, btnElement, originalBtnHtml);
       }
     } catch (err) {
       console.error('exportCosmicPdf caught error:', err);
+      if (typeof cleanupPdfDom === 'function') cleanupPdfDom();
       fallbackPrintPdf(p, btnElement, originalBtnHtml);
     }
   }
