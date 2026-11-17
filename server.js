@@ -386,26 +386,36 @@ function escapeHtml(str) {
 
 // Configure Nodemailer Transporter
 function getEmailTransporter() {
-  const host = process.env.SMTP_HOST || 'smtp.gmail.com';
   const user = process.env.SMTP_USER;
   const rawPass = process.env.SMTP_PASS || '';
   const pass = rawPass.replace(/\s+/g, '');
-  const port = parseInt(process.env.SMTP_PORT || '587', 10);
+
+  if (!user || !pass) {
+    // Return null if not yet configured, to handle test/simulated mode gracefully
+    return null;
+  }
+
+  const host = process.env.SMTP_HOST || 'smtp.gmail.com';
+  const port = parseInt(process.env.SMTP_PORT || (host === 'smtp.gmail.com' ? '465' : '587'), 10);
   const secure = process.env.SMTP_SECURE === 'true' || port === 465;
 
-  if (host && user && pass) {
+  // Use Gmail service preset for optimal Google Cloud / Vercel deliverability
+  if (host.includes('gmail.com')) {
     return nodemailer.createTransport({
-      host,
-      port,
-      secure,
-      auth: { user, pass },
-      tls: {
-        rejectUnauthorized: false
-      }
+      service: 'gmail',
+      auth: { user, pass }
     });
   }
-  // Return null if not yet configured, to handle test/simulated mode gracefully
-  return null;
+
+  return nodemailer.createTransport({
+    host,
+    port,
+    secure,
+    auth: { user, pass },
+    tls: {
+      rejectUnauthorized: false
+    }
+  });
 }
 
 // Concurrency Control: Asynchronous Mutex Queue for Excel Operations

@@ -639,7 +639,11 @@ function initAppointmentForm() {
         
         const emailStatusEl = document.getElementById('modalEmailStatus');
         if (data.emailMode === 'smtp' || (data.emailStatus && data.emailStatus.includes('Live SMTP'))) {
-          emailStatusEl.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Confirmation Email Sent to Inbox';
+          emailStatusEl.innerHTML = '<i class="fa-solid fa-paper-plane" style="color: #10b981;"></i> Confirmation Email Sent to Inbox';
+        } else if (data.emailMode === 'simulated' || (data.emailStatus && data.emailStatus.includes('Simulated'))) {
+          emailStatusEl.innerHTML = '<i class="fa-solid fa-circle-info" style="color: #f59e0b;"></i> Pending (SMTP Setup Required in Vercel)';
+        } else if (data.emailMode === 'smtp_error') {
+          emailStatusEl.innerHTML = '<i class="fa-solid fa-triangle-exclamation" style="color: #ef4444;"></i> Email Failed: ' + (data.emailStatus || 'Check SMTP');
         } else {
           emailStatusEl.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Confirmation Email Dispatched';
         }
