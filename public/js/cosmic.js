@@ -568,13 +568,13 @@
       wrapper.style.position = 'absolute';
       wrapper.style.left = '0';
       wrapper.style.top = '-99999px';
-      wrapper.style.width = '750px';
+      wrapper.style.width = '794px';
       wrapper.style.height = 'auto';
       wrapper.style.overflow = 'hidden';
 
       var container = document.createElement('div');
       container.id = 'vstar-pdf-render-box';
-      container.style.width = '740px';
+      container.style.width = '794px';
       container.style.position = 'relative';
       container.style.backgroundColor = '#0b0f19';
       container.style.color = '#f1f3f9';
@@ -589,241 +589,264 @@
       var currentDate = new Date().toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
 
       container.innerHTML = `
-        <div style="background: #0b0f19; color: #f1f3f9; box-sizing: border-box; width: 740px; margin: 0; padding: 0;">
-          <!-- PAGE 1 -->
-          <div style="box-sizing: border-box; width: 740px; padding: 26px 30px; background: #0b0f19;">
-            <div>
-              <!-- HEADER BAR -->
-              <table style="width: 100%; border-bottom: 2px solid #dfb872; padding-bottom: 14px; margin-bottom: 18px; border-collapse: collapse;">
-                <tr>
-                  <td style="vertical-align: middle;">
-                    <div style="font-family: 'Cinzel', Georgia, serif; font-size: 21px; font-weight: 800; letter-spacing: 2px; color: #dfb872; text-transform: uppercase;">
-                      V STAR NUMEROLOGY &amp; ASTROLOGY
-                    </div>
-                    <div style="font-size: 11px; letter-spacing: 1.5px; color: #c8d0e7; text-transform: uppercase; margin-top: 4px;">
-                      Sacred Numerology Blueprint &middot; Ephemeris Astrological Report
-                    </div>
-                  </td>
-                  <td style="text-align: right; vertical-align: middle; font-size: 10px; color: #a2acc7; line-height: 1.5;">
-                    <div>Vivian Press Garden, Dindigul, Tamil Nadu 624001</div>
-                    <div><strong style="color: #dfb872;">+91 93608 81788</strong> | <strong style="color: #dfb872;">+91 74492 48588</strong></div>
-                    <div style="color: #dfb872;">www.vstarnumerology.com</div>
-                  </td>
-                </tr>
-              </table>
+        <div style="background: #0b0f19; color: #f1f3f9; box-sizing: border-box; width: 794px; margin: 0; padding: 0;">
+          <!-- PAGE 1 (Exact A4 1122px) -->
+          <div style="box-sizing: border-box; width: 794px; height: 1122px; padding: 38px 42px 28px 42px; background: #0b0f19; position: relative; overflow: hidden;">
+            <!-- TOP ACCENT BAR -->
+            <div style="height: 3px; background: linear-gradient(90deg, #dfb872 0%, #e06d2d 50%, #dfb872 100%); margin-bottom: 18px; border-radius: 2px;"></div>
 
-              <!-- HERO CLIENT BANNER -->
-              <div style="background: linear-gradient(135deg, rgba(223, 184, 114, 0.12) 0%, rgba(24, 29, 46, 0.95) 100%); border: 1px solid rgba(223, 184, 114, 0.4); border-radius: 12px; padding: 18px 22px; margin-bottom: 20px; text-align: center;">
-                <div style="font-size: 10px; font-weight: 700; letter-spacing: 3px; color: #dfb872; text-transform: uppercase; margin-bottom: 6px;">
-                  YOUR PERSONALIZED COSMIC SNAPSHOT
-                </div>
-                <div style="font-family: 'Cinzel', Georgia, serif; font-size: 22px; font-weight: 700; color: #ffffff; letter-spacing: 0.8px; margin-bottom: 6px;">
-                  <span style="color: #dfb872;">${escPdf(p.name.toUpperCase())}</span>, THE COSMOS SEES YOU AS ${p.article} <span style="color: #dfb872;">${p.zodiac.sign.toUpperCase()}</span>.
-                </div>
-                <div style="font-size: 12px; color: #c8d0e7;">
-                  Born <strong>${p.formattedDate}</strong> at <strong>${p.tob}</strong> &middot; <strong>${escPdf(p.pob)}</strong>
-                </div>
+            <!-- HEADER BAR -->
+            <table style="width: 100%; border-bottom: 1.5px solid rgba(223, 184, 114, 0.4); padding-bottom: 14px; margin-bottom: 20px; border-collapse: collapse;">
+              <tr>
+                <td style="vertical-align: middle;">
+                  <div style="font-family: 'Cinzel', Georgia, serif; font-size: 22px; font-weight: 800; letter-spacing: 2.2px; color: #dfb872; text-transform: uppercase;">
+                    V STAR NUMEROLOGY &amp; ASTROLOGY
+                  </div>
+                  <div style="font-size: 10.5px; letter-spacing: 2px; color: #b8c2df; text-transform: uppercase; margin-top: 5px; font-weight: 600;">
+                    Sacred Numerology Blueprint &middot; Ephemeris Astrological Report
+                  </div>
+                </td>
+                <td style="text-align: right; vertical-align: middle; font-size: 10px; color: #9aa5c4; line-height: 1.55;">
+                  <div>Vivian Press Garden, Dindigul, Tamil Nadu 624001</div>
+                  <div><strong style="color: #dfb872;">+91 93608 81788</strong> &middot; <strong style="color: #dfb872;">+91 74492 48588</strong></div>
+                  <div style="color: #dfb872; letter-spacing: 0.5px;">www.vstarnumerology.com</div>
+                </td>
+              </tr>
+            </table>
+
+            <!-- HERO CLIENT BANNER -->
+            <div style="background: linear-gradient(135deg, rgba(223, 184, 114, 0.15) 0%, rgba(20, 26, 44, 0.98) 100%); border: 1.5px solid rgba(223, 184, 114, 0.45); border-radius: 12px; padding: 20px 24px; margin-bottom: 22px; text-align: center;">
+              <div style="font-size: 10px; font-weight: 800; letter-spacing: 3.5px; color: #dfb872; text-transform: uppercase; margin-bottom: 7px;">
+                ✦ YOUR PERSONALIZED COSMIC SNAPSHOT ✦
               </div>
+              <div style="font-family: 'Cinzel', Georgia, serif; font-size: 23px; font-weight: 800; color: #ffffff; letter-spacing: 0.8px; margin-bottom: 7px;">
+                <span style="color: #dfb872;">${escPdf(p.name.toUpperCase())}</span>, THE COSMOS SEES YOU AS ${p.article} <span style="color: #dfb872;">${p.zodiac.sign.toUpperCase()}</span>.
+              </div>
+              <div style="font-size: 12px; color: #c8d2ec; letter-spacing: 0.3px;">
+                Born <strong style="color: #ffffff;">${p.formattedDate}</strong> at <strong style="color: #ffffff;">${p.tob}</strong> &middot; <strong style="color: #dfb872;">${escPdf(p.pob)}</strong>
+              </div>
+            </div>
 
-              <!-- CORE NUMBERS (2 COLUMNS) -->
-              <table style="width: 100%; border-collapse: separate; border-spacing: 12px; margin-left: -12px; margin-right: -12px; margin-bottom: 14px;">
+            <!-- CORE NUMBERS (2 COLUMNS) -->
+            <table style="width: 100%; border-collapse: separate; border-spacing: 14px; margin-left: -14px; margin-right: -14px; margin-bottom: 18px;">
+              <tr>
+                <!-- LIFE PATH -->
+                <td style="width: 50%; vertical-align: top; background: #111728; border: 1px solid rgba(223, 184, 114, 0.35); border-radius: 12px; padding: 20px;">
+                  <div style="font-size: 10px; font-weight: 800; letter-spacing: 2.2px; color: #dfb872; text-transform: uppercase; margin-bottom: 12px;">
+                    CORE LIFE PATH NUMBER
+                  </div>
+                  <table style="width: 100%; border-collapse: collapse;">
+                    <tr>
+                      <td style="width: 60px; vertical-align: top;">
+                        <div style="width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #dfb872 0%, #c4994e 100%); color: #0b071c; font-family: 'Cinzel', Georgia, serif; font-size: 26px; font-weight: 900; line-height: 52px; text-align: center;">
+                          ${p.lifePath.number}
+                        </div>
+                      </td>
+                      <td style="vertical-align: top; padding-left: 14px;">
+                        <div style="font-family: 'Cinzel', Georgia, serif; font-size: 14px; font-weight: 700; color: #ffffff;">
+                          ${p.lifePath.archetype}
+                        </div>
+                        <div style="font-size: 11.5px; color: #c4ceea; margin-top: 6px; line-height: 1.5;">
+                          ${p.lifePath.summary}
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <!-- DESTINY -->
+                <td style="width: 50%; vertical-align: top; background: #111728; border: 1px solid rgba(223, 184, 114, 0.35); border-radius: 12px; padding: 20px;">
+                  <div style="font-size: 10px; font-weight: 800; letter-spacing: 2.2px; color: #dfb872; text-transform: uppercase; margin-bottom: 12px;">
+                    DESTINY EXPRESSION NUMBER
+                  </div>
+                  <table style="width: 100%; border-collapse: collapse;">
+                    <tr>
+                      <td style="width: 60px; vertical-align: top;">
+                        <div style="width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #dfb872 0%, #c4994e 100%); color: #0b071c; font-family: 'Cinzel', Georgia, serif; font-size: 26px; font-weight: 900; line-height: 52px; text-align: center;">
+                          ${p.destiny.number}
+                        </div>
+                      </td>
+                      <td style="vertical-align: top; padding-left: 14px;">
+                        <div style="font-family: 'Cinzel', Georgia, serif; font-size: 14px; font-weight: 700; color: #ffffff;">
+                          ${p.destiny.archetype}
+                        </div>
+                        <div style="font-size: 11.5px; color: #c4ceea; margin-top: 6px; line-height: 1.5;">
+                          ${p.destiny.description}
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+
+            <!-- ZODIAC OVERVIEW CARD -->
+            <div style="background: #111728; border: 1px solid rgba(223, 184, 114, 0.35); border-radius: 12px; padding: 22px 24px; margin-bottom: 20px;">
+              <table style="width: 100%; border-collapse: collapse;">
                 <tr>
-                  <td style="width: 50%; vertical-align: top; background: #121727; border: 1px solid rgba(223, 184, 114, 0.3); border-radius: 10px; padding: 16px;">
-                    <div style="font-size: 10px; font-weight: 700; letter-spacing: 2px; color: #dfb872; text-transform: uppercase; margin-bottom: 10px;">
-                      CORE LIFE PATH NUMBER
+                  <td style="width: 70px; vertical-align: middle; text-align: center;">
+                    <div style="width: 60px; height: 60px; border-radius: 50%; border: 1.5px solid #dfb872; display: flex; align-items: center; justify-content: center; background: rgba(223, 184, 114, 0.08); font-size: 32px; color: #dfb872; line-height: 60px; margin: 0 auto;">
+                      ${p.zodiac.symbol}
                     </div>
-                    <table style="width: 100%; border-collapse: collapse;">
-                      <tr>
-                        <td style="width: 52px; vertical-align: top;">
-                          <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #dfb872 0%, #c4994e 100%); color: #0b071c; font-family: 'Cinzel', Georgia, serif; font-size: 24px; font-weight: 800; line-height: 48px; text-align: center;">
-                            ${p.lifePath.number}
-                          </div>
-                        </td>
-                        <td style="vertical-align: top; padding-left: 10px;">
-                          <div style="font-family: 'Cinzel', Georgia, serif; font-size: 13px; font-weight: 700; color: #ffffff;">
-                            ${p.lifePath.archetype}
-                          </div>
-                          <div style="font-size: 11px; color: #c8d0e7; margin-top: 4px; line-height: 1.4;">
-                            ${p.lifePath.summary}
-                          </div>
-                        </td>
-                      </tr>
-                    </table>
                   </td>
-                  <td style="width: 50%; vertical-align: top; background: #121727; border: 1px solid rgba(223, 184, 114, 0.3); border-radius: 10px; padding: 16px;">
-                    <div style="font-size: 10px; font-weight: 700; letter-spacing: 2px; color: #dfb872; text-transform: uppercase; margin-bottom: 10px;">
-                      DESTINY EXPRESSION NUMBER
+                  <td style="vertical-align: top; padding-left: 18px;">
+                    <div style="display: flex; align-items: baseline; gap: 12px;">
+                      <span style="font-family: 'Cinzel', Georgia, serif; font-size: 20px; font-weight: 800; color: #ffffff; letter-spacing: 1.2px;">
+                        ${p.zodiac.sign.toUpperCase()}
+                      </span>
+                      <span style="font-size: 11px; font-weight: 700; letter-spacing: 1.8px; color: #dfb872; text-transform: uppercase;">
+                        ${p.zodiac.element.toUpperCase()} &middot; RULED BY ${p.zodiac.rulingPlanet.toUpperCase()}
+                      </span>
                     </div>
-                    <table style="width: 100%; border-collapse: collapse;">
-                      <tr>
-                        <td style="width: 52px; vertical-align: top;">
-                          <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #dfb872 0%, #c4994e 100%); color: #0b071c; font-family: 'Cinzel', Georgia, serif; font-size: 24px; font-weight: 800; line-height: 48px; text-align: center;">
-                            ${p.destiny.number}
-                          </div>
-                        </td>
-                        <td style="vertical-align: top; padding-left: 10px;">
-                          <div style="font-family: 'Cinzel', Georgia, serif; font-size: 13px; font-weight: 700; color: #ffffff;">
-                            ${p.destiny.archetype}
-                          </div>
-                          <div style="font-size: 11px; color: #c8d0e7; margin-top: 4px; line-height: 1.4;">
-                            ${p.destiny.description}
-                          </div>
-                        </td>
-                      </tr>
-                    </table>
+                    <div style="font-style: italic; color: #f1f3f9; font-size: 13px; margin-top: 5px; margin-bottom: 10px;">
+                      "${p.zodiac.tagline}"
+                    </div>
+                    <div style="font-size: 12px; color: #c4ceea; margin-bottom: 6px;">
+                      <strong style="color: #dfb872;">Strengths &middot; </strong> ${p.zodiac.strengths.join(' &middot; ')}
+                    </div>
+                    <div style="font-size: 12px; color: #c4ceea; line-height: 1.5;">
+                      <strong style="color: #dfb872;">Planetary Alignment &middot; </strong> ${p.zodiac.todayEnergy}
+                    </div>
                   </td>
                 </tr>
               </table>
+            </div>
 
-              <!-- ZODIAC OVERVIEW CARD -->
-              <div style="background: #121727; border: 1px solid rgba(223, 184, 114, 0.3); border-radius: 10px; padding: 18px; margin-bottom: 16px;">
-                <table style="width: 100%; border-collapse: collapse;">
-                  <tr>
-                    <td style="width: 60px; vertical-align: top; text-align: center;">
-                      <div style="font-size: 40px; line-height: 44px; color: #dfb872;">${p.zodiac.symbol}</div>
-                    </td>
-                    <td style="vertical-align: top; padding-left: 14px;">
-                      <div style="display: flex; align-items: baseline; gap: 10px;">
-                        <span style="font-family: 'Cinzel', Georgia, serif; font-size: 18px; font-weight: 700; color: #ffffff; letter-spacing: 1px;">
-                          ${p.zodiac.sign.toUpperCase()}
-                        </span>
-                        <span style="font-size: 11px; font-weight: 700; letter-spacing: 1.5px; color: #dfb872; text-transform: uppercase;">
-                          ${p.zodiac.element.toUpperCase()} &middot; RULED BY ${p.zodiac.rulingPlanet.toUpperCase()}
-                        </span>
-                      </div>
-                      <div style="font-style: italic; color: #f1f3f9; font-size: 12px; margin-top: 4px; margin-bottom: 8px;">
-                        "${p.zodiac.tagline}"
-                      </div>
-                      <div style="font-size: 11px; color: #c8d0e7; margin-bottom: 5px;">
-                        <strong style="color: #dfb872;">Strengths &middot; </strong> ${p.zodiac.strengths.join(' &middot; ')}
-                      </div>
-                      <div style="font-size: 11px; color: #c8d0e7; line-height: 1.4;">
-                        <strong style="color: #dfb872;">Today's Planetary Energy &middot; </strong> ${p.zodiac.todayEnergy}
-                      </div>
-                    </td>
-                  </tr>
-                </table>
+            <!-- CELESTIAL SYNTHESIS SUMMARY CARD -->
+            <div style="background: linear-gradient(135deg, rgba(223, 184, 114, 0.08) 0%, rgba(20, 26, 44, 0.95) 100%); border: 1px solid rgba(223, 184, 114, 0.25); border-radius: 12px; padding: 18px 22px; margin-bottom: 24px;">
+              <div style="font-size: 10px; font-weight: 800; letter-spacing: 2.2px; color: #dfb872; text-transform: uppercase; margin-bottom: 7px;">
+                ✦ CELESTIAL FREQUENCY SYNTHESIS
+              </div>
+              <div style="font-size: 12px; color: #cdd5eb; line-height: 1.55;">
+                Your solar placement in <strong>${p.zodiac.sign}</strong> synergizes with Life Path <strong>${p.lifePath.number}</strong> and Destiny <strong>${p.destiny.number}</strong>. Governed by <strong>${p.zodiac.rulingPlanet}</strong>, your cosmic signature is endowed with structural mastery, executive fortitude, and the innate drive to manifest monumental achievements through disciplined vision.
               </div>
             </div>
 
             <!-- PAGE 1 FOOTER -->
-            <div style="border-top: 1px solid rgba(223, 184, 114, 0.25); padding-top: 12px; margin-top: 24px; font-size: 10px; color: #8893b0; display: table; width: 100%;">
-              <div style="display: table-cell; text-align: left; vertical-align: middle;">V STAR Numerology &amp; Astrology &middot; Confidential Snapshot</div>
-              <div style="display: table-cell; text-align: right; vertical-align: middle;">Document Page 1 of 2</div>
+            <div style="position: absolute; bottom: 26px; left: 42px; right: 42px; border-top: 1px solid rgba(223, 184, 114, 0.3); padding-top: 12px; font-size: 10px; color: #8c97b8; display: table; width: calc(100% - 84px);">
+              <div style="display: table-cell; text-align: left; vertical-align: middle;">
+                V STAR Numerology &amp; Astrology &middot; Sacred Confidential Blueprint
+              </div>
+              <div style="display: table-cell; text-align: right; vertical-align: middle; font-weight: 600; color: #dfb872;">
+                Document Page 1 of 2
+              </div>
             </div>
           </div>
 
-          <!-- HARD PAGE BREAK -->
-          <div class="html2pdf__page-break" style="page-break-before: always; height: 1px; line-height: 1px; margin: 0; padding: 0;"></div>
+          <!-- PAGE 2 (Exact A4 1122px) -->
+          <div style="box-sizing: border-box; width: 794px; height: 1122px; padding: 38px 42px 28px 42px; background: #0b0f19; position: relative; overflow: hidden;">
+            <!-- TOP ACCENT BAR -->
+            <div style="height: 3px; background: linear-gradient(90deg, #dfb872 0%, #e06d2d 50%, #dfb872 100%); margin-bottom: 18px; border-radius: 2px;"></div>
 
-          <!-- PAGE 2 -->
-          <div style="box-sizing: border-box; width: 740px; padding: 26px 30px; background: #0b0f19;">
-            <div>
-              <!-- PAGE 2 TOP BAR -->
-              <div style="border-bottom: 1px solid rgba(223, 184, 114, 0.25); padding-bottom: 10px; margin-bottom: 18px; display: table; width: 100%; font-size: 11px; color: #a2acc7;">
-                <div style="display: table-cell; text-align: left; vertical-align: middle;">
-                  <span style="font-family: 'Cinzel', Georgia, serif; font-weight: 700; color: #dfb872; letter-spacing: 1.5px;">
-                    V STAR &middot; DESTINY &amp; VOCATIONAL BLUEPRINT
-                  </span>
-                </div>
-                <div style="display: table-cell; text-align: right; vertical-align: middle;">
-                  Client: <strong style="color: #ffffff;">${escPdf(p.name)}</strong>
-                </div>
+            <!-- PAGE 2 TOP BAR -->
+            <table style="width: 100%; border-bottom: 1.5px solid rgba(223, 184, 114, 0.4); padding-bottom: 14px; margin-bottom: 20px; border-collapse: collapse;">
+              <tr>
+                <td style="vertical-align: middle;">
+                  <div style="font-family: 'Cinzel', Georgia, serif; font-size: 18px; font-weight: 800; letter-spacing: 1.8px; color: #dfb872; text-transform: uppercase;">
+                    DESTINY &amp; VOCATIONAL ARCHITECTURE
+                  </div>
+                  <div style="font-size: 10.5px; letter-spacing: 1.8px; color: #b8c2df; text-transform: uppercase; margin-top: 4px; font-weight: 600;">
+                    Planetary Houses &middot; Sacred Numerology Guidance
+                  </div>
+                </td>
+                <td style="text-align: right; vertical-align: middle; font-size: 11px; color: #c4ceea;">
+                  Client: <strong style="color: #ffffff; font-size: 13px;">${escPdf(p.name)}</strong> &middot; <span style="color: #dfb872;">${p.zodiac.sign}</span>
+                </td>
+              </tr>
+            </table>
+
+            <!-- CAREER TENDENCIES -->
+            <div style="background: #111728; border: 1px solid rgba(223, 184, 114, 0.35); border-radius: 12px; padding: 20px 22px; margin-bottom: 18px;">
+              <div style="font-size: 10px; font-weight: 800; letter-spacing: 2.2px; color: #dfb872; text-transform: uppercase; margin-bottom: 8px;">
+                CAREER TENDENCIES &amp; VOCATIONAL ALIGNMENT
               </div>
-
-              <!-- CAREER TENDENCIES -->
-              <div style="background: #121727; border: 1px solid rgba(223, 184, 114, 0.3); border-radius: 10px; padding: 18px; margin-bottom: 16px;">
-                <div style="font-size: 10px; font-weight: 700; letter-spacing: 2px; color: #dfb872; text-transform: uppercase; margin-bottom: 8px;">
-                  CAREER TENDENCIES &amp; VOCATIONAL ALIGNMENT
-                </div>
-                <p style="font-size: 12px; color: #e1e6f5; line-height: 1.55; margin: 0 0 10px 0;">
-                  ${p.career.insight}
-                </p>
-                <div style="font-size: 11px; color: #c8d0e7; margin-bottom: 5px;">
-                  <strong style="color: #dfb872;">Roles to Explore:</strong> ${p.career.roles.join(', ')}
-                </div>
-                <div style="font-size: 11px; color: #c8d0e7;">
-                  <strong style="color: #dfb872;">Learning &amp; Execution Style:</strong> ${p.career.learningStyle}
-                </div>
+              <p style="font-size: 12.5px; color: #e2e8f7; line-height: 1.6; margin: 0 0 10px 0;">
+                ${p.career.insight}
+              </p>
+              <div style="font-size: 12px; color: #c4ceea; margin-bottom: 6px;">
+                <strong style="color: #dfb872;">Strategic Roles to Explore:</strong> ${p.career.roles.join(', ')}
               </div>
-
-              <!-- LIFE PATH INDICATORS -->
-              <div style="background: #121727; border: 1px solid rgba(223, 184, 114, 0.3); border-radius: 10px; padding: 18px; margin-bottom: 16px;">
-                <div style="font-size: 10px; font-weight: 700; letter-spacing: 2px; color: #dfb872; text-transform: uppercase; margin-bottom: 10px;">
-                  LIFE PATH INDICATORS &amp; SACRED BLUEPRINT
-                </div>
-                <table style="width: 100%; border-collapse: collapse; font-size: 11px; line-height: 1.5;">
-                  <tr>
-                    <td style="width: 50%; vertical-align: top; padding-right: 14px;">
-                      <div style="color: #dfb872; font-weight: 700; text-transform: uppercase; font-size: 10px; margin-bottom: 5px;">
-                        Core Strengths:
-                      </div>
-                      ${p.lifePath.strengths.map(s => '<div style="margin-bottom: 4px; color: #c8d0e7;">✦ ' + escPdf(s) + '</div>').join('')}
-                    </td>
-                    <td style="width: 50%; vertical-align: top; padding-left: 14px; border-left: 1px solid rgba(223, 184, 114, 0.2);">
-                      <div style="color: #dfb872; font-weight: 700; text-transform: uppercase; font-size: 10px; margin-bottom: 5px;">
-                        Growth &amp; Expansion Areas:
-                      </div>
-                      ${p.lifePath.growthAreas.map(g => '<div style="margin-bottom: 4px; color: #c8d0e7;">✦ ' + escPdf(g) + '</div>').join('')}
-                    </td>
-                  </tr>
-                </table>
-                <div style="margin-top: 10px; padding-top: 8px; border-top: 1px solid rgba(223, 184, 114, 0.15); font-size: 11px; color: #c8d0e7;">
-                  <strong style="color: #dfb872;">Sacred Essence:</strong> ${p.lifePath.essence}
-                </div>
+              <div style="font-size: 12px; color: #c4ceea;">
+                <strong style="color: #dfb872;">Execution &amp; Learning Mastery:</strong> ${p.career.learningStyle}
               </div>
+            </div>
 
-              <!-- LUCKY NUMBERS & COLORS (2 COLUMNS) -->
-              <table style="width: 100%; border-collapse: separate; border-spacing: 12px; margin-left: -12px; margin-right: -12px; margin-bottom: 16px;">
+            <!-- LIFE PATH INDICATORS -->
+            <div style="background: #111728; border: 1px solid rgba(223, 184, 114, 0.35); border-radius: 12px; padding: 20px 22px; margin-bottom: 18px;">
+              <div style="font-size: 10px; font-weight: 800; letter-spacing: 2.2px; color: #dfb872; text-transform: uppercase; margin-bottom: 12px;">
+                LIFE PATH INDICATORS &amp; SOUL EVOLUTION
+              </div>
+              <table style="width: 100%; border-collapse: collapse; font-size: 12px; line-height: 1.55;">
                 <tr>
-                  <!-- LUCKY NUMBERS -->
-                  <td style="width: 50%; vertical-align: top; background: #121727; border: 1px solid rgba(223, 184, 114, 0.3); border-radius: 10px; padding: 16px;">
-                    <div style="font-size: 10px; font-weight: 700; letter-spacing: 2px; color: #dfb872; text-transform: uppercase; margin-bottom: 12px;">
-                      HARMONIOUS LUCKY NUMBERS
+                  <td style="width: 50%; vertical-align: top; padding-right: 16px;">
+                    <div style="color: #dfb872; font-weight: 700; text-transform: uppercase; font-size: 10.5px; margin-bottom: 7px; letter-spacing: 1px;">
+                      ✦ Core Strengths:
                     </div>
-                    <div style="display: flex; gap: 8px; justify-content: flex-start; flex-wrap: wrap;">
-                      ${p.luckyNumbers.map(n => `
-                        <div style="width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #dfb872 0%, #c4994e 100%); color: #0b071c; font-family: 'Cinzel', Georgia, serif; font-size: 17px; font-weight: 800; line-height: 36px; text-align: center;">
-                          ${n}
-                        </div>
-                      `).join('')}
-                    </div>
+                    ${p.lifePath.strengths.map(s => '<div style="margin-bottom: 6px; color: #c4ceea;">&bull; ' + escPdf(s) + '</div>').join('')}
                   </td>
-                  <!-- LUCKY COLORS -->
-                  <td style="width: 50%; vertical-align: top; background: #121727; border: 1px solid rgba(223, 184, 114, 0.3); border-radius: 10px; padding: 16px;">
-                    <div style="font-size: 10px; font-weight: 700; letter-spacing: 2px; color: #dfb872; text-transform: uppercase; margin-bottom: 10px;">
-                      SACRED RESONANCE COLORS
+                  <td style="width: 50%; vertical-align: top; padding-left: 16px; border-left: 1px solid rgba(223, 184, 114, 0.25);">
+                    <div style="color: #dfb872; font-weight: 700; text-transform: uppercase; font-size: 10.5px; margin-bottom: 7px; letter-spacing: 1px;">
+                      ✦ Growth &amp; Expansion Areas:
                     </div>
-                    <div style="font-size: 11px; line-height: 1.8;">
-                      ${p.luckyColors.map(c => `
-                        <div style="display: flex; align-items: center; gap: 8px;">
-                          <span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background-color: ${c.hex}; border: 1px solid #dfb872;"></span>
-                          <span style="color: #ffffff; font-weight: 500;">${escPdf(c.name)}</span>
-                        </div>
-                      `).join('')}
-                    </div>
+                    ${p.lifePath.growthAreas.map(g => '<div style="margin-bottom: 6px; color: #c4ceea;">&bull; ' + escPdf(g) + '</div>').join('')}
                   </td>
                 </tr>
               </table>
+              <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(223, 184, 114, 0.2); font-size: 12px; color: #c4ceea; line-height: 1.5;">
+                <strong style="color: #dfb872;">Sacred Essence:</strong> ${p.lifePath.essence}
+              </div>
+            </div>
 
-              <!-- PERSONALIZED GUIDANCE QUOTE -->
-              <div style="background: linear-gradient(135deg, rgba(224, 109, 45, 0.12) 0%, rgba(223, 184, 114, 0.12) 100%); border: 1px solid rgba(223, 184, 114, 0.4); border-radius: 10px; padding: 16px 20px; text-align: center; margin-bottom: 16px;">
-                <div style="font-size: 14px; color: #dfb872; margin-bottom: 4px;">✦ ◈ ✦</div>
-                <div style="font-family: 'Cinzel', Georgia, serif; font-size: 13px; font-style: italic; color: #ffffff; line-height: 1.5; letter-spacing: 0.3px;">
-                  "${p.quote}"
-                </div>
+            <!-- LUCKY NUMBERS & COLORS (2 COLUMNS) -->
+            <table style="width: 100%; border-collapse: separate; border-spacing: 14px; margin-left: -14px; margin-right: -14px; margin-bottom: 18px;">
+              <tr>
+                <!-- LUCKY NUMBERS -->
+                <td style="width: 50%; vertical-align: top; background: #111728; border: 1px solid rgba(223, 184, 114, 0.35); border-radius: 12px; padding: 18px 20px;">
+                  <div style="font-size: 10px; font-weight: 800; letter-spacing: 2px; color: #dfb872; text-transform: uppercase; margin-bottom: 12px;">
+                    HARMONIOUS LUCKY NUMBERS
+                  </div>
+                  <div style="display: flex; gap: 10px; justify-content: flex-start; flex-wrap: wrap;">
+                    ${p.luckyNumbers.map(n => `
+                      <div style="width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, #dfb872 0%, #c4994e 100%); color: #0b071c; font-family: 'Cinzel', Georgia, serif; font-size: 18px; font-weight: 900; line-height: 38px; text-align: center;">
+                        ${n}
+                      </div>
+                    `).join('')}
+                  </div>
+                </td>
+                <!-- LUCKY COLORS -->
+                <td style="width: 50%; vertical-align: top; background: #111728; border: 1px solid rgba(223, 184, 114, 0.35); border-radius: 12px; padding: 18px 20px;">
+                  <div style="font-size: 10px; font-weight: 800; letter-spacing: 2px; color: #dfb872; text-transform: uppercase; margin-bottom: 10px;">
+                    SACRED RESONANCE COLORS
+                  </div>
+                  <div style="font-size: 12px; line-height: 1.8;">
+                    ${p.luckyColors.map(c => `
+                      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 2px;">
+                        <span style="display: inline-block; width: 14px; height: 14px; border-radius: 50%; background-color: ${c.hex}; border: 1.5px solid #dfb872;"></span>
+                        <span style="color: #ffffff; font-weight: 600;">${escPdf(c.name)}</span>
+                      </div>
+                    `).join('')}
+                  </div>
+                </td>
+              </tr>
+            </table>
+
+            <!-- PERSONALIZED GUIDANCE QUOTE -->
+            <div style="background: linear-gradient(135deg, rgba(224, 109, 45, 0.14) 0%, rgba(223, 184, 114, 0.14) 100%); border: 1.5px solid rgba(223, 184, 114, 0.45); border-radius: 12px; padding: 16px 24px; text-align: center; margin-bottom: 20px;">
+              <div style="font-size: 14px; color: #dfb872; margin-bottom: 4px;">✦ ◈ ✦</div>
+              <div style="font-family: 'Cinzel', Georgia, serif; font-size: 13.5px; font-style: italic; color: #ffffff; line-height: 1.5; letter-spacing: 0.4px;">
+                "${p.quote}"
               </div>
             </div>
 
             <!-- PAGE 2 FOOTER & VERIFICATION -->
-            <div style="border-top: 1px solid rgba(223, 184, 114, 0.3); padding-top: 12px; margin-top: 20px; display: table; width: 100%;">
-              <div style="display: table-cell; vertical-align: top; font-size: 9px; color: #8893b0; line-height: 1.4;">
+            <div style="position: absolute; bottom: 26px; left: 42px; right: 42px; border-top: 1px solid rgba(223, 184, 114, 0.3); padding-top: 12px; display: table; width: calc(100% - 84px);">
+              <div style="display: table-cell; vertical-align: top; font-size: 9.5px; color: #8c97b8; line-height: 1.45;">
                 <strong>Disclaimer:</strong> For personal guidance and self-reflection only. Does not replace professional medical, legal, or financial counsel.<br>
                 Issued by <strong>V STAR Numerology &amp; Astrology</strong> &middot; Vivian Press Garden, Dindigul, Tamil Nadu 624001.
               </div>
-              <div style="display: table-cell; vertical-align: top; text-align: right; font-size: 9px; color: #dfb872; white-space: nowrap; padding-left: 16px;">
-                <div style="font-weight: 700; letter-spacing: 1px;">OFFICIALLY VERIFIED</div>
-                <div style="color: #8893b0;">Date: ${currentDate}</div>
+              <div style="display: table-cell; vertical-align: top; text-align: right; font-size: 9.5px; color: #dfb872; white-space: nowrap; padding-left: 20px;">
+                <div style="font-weight: 800; letter-spacing: 1.2px;">OFFICIALLY VERIFIED</div>
+                <div style="color: #8c97b8;">Date: ${currentDate}</div>
+                <div style="color: #dfb872; font-size: 9.5px; margin-top: 3px; font-weight: 600;">Document Page 2 of 2</div>
               </div>
             </div>
           </div>
@@ -843,10 +866,10 @@
         }
       }
 
-      // PDF options with high-resolution canvas capture
+      // PDF options with edge-to-edge luxury styling and exact 2 pages
       var filename = 'VSTAR_Cosmic_Reading_' + (p.name ? p.name.trim().replace(/\s+/g, '_') : 'Seeker') + '.pdf';
       var opt = {
-        margin: [4, 4, 4, 4],
+        margin: 0,
         filename: filename,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: {
@@ -863,7 +886,7 @@
           format: 'a4',
           orientation: 'portrait'
         },
-        pagebreak: { mode: ['css', 'legacy'] }
+        pagebreak: { mode: [] }
       };
 
       var isFinished = false;
