@@ -9,10 +9,12 @@
   <!-- Google Fonts: DM Serif Display, Plus Jakarta Sans & Cinzel -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"></noscript>
 
   <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
 
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -27,9 +29,9 @@
   <!-- Navigation Bar -->
   <header class="navbar" id="mainNavbar">
     <div class="container nav-container">
-      <a href="#" class="brand-logo" aria-label="V STAR Numerology &amp; Astrology">
+      <a href="/" class="brand-logo" aria-label="V STAR Numerology &amp; Astrology Home">
         <div class="logo-symbol">
-          <img src="images/vstar-zodiac-logo.png" alt="V STAR Zodiac Sun Emblem" class="brand-logo-emblem">
+          <img src="images/vstar-zodiac-logo.png" alt="V STAR Zodiac Sun Emblem" class="brand-logo-emblem" width="338" height="338">
         </div>
         <div class="logo-text">
           <span class="brand-name">V STAR NUMEROLOGY</span>
@@ -49,7 +51,7 @@
       </nav>
 
       <div class="nav-actions">
-        <a href="#appointment" class="btn-nav-book"><i class="fa-solid fa-calendar-check"></i> Book Now</a>
+        <a href="#appointment" class="btn-nav-book" aria-label="Book consultation via navigation bar"><i class="fa-solid fa-calendar-check"></i> Book Now</a>
         <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Navigation">
           <i class="fa-solid fa-bars"></i>
         </button>
@@ -59,7 +61,7 @@
     <!-- Mobile Compact Tabs Panel (2-column pill grid, non-intrusive overlay) -->
     <div class="mobile-nav" id="mobileNav">
       <a href="#home" class="mobile-link mobile-link-primary"><i class="fa-solid fa-house"></i> <span>Home</span></a>
-      <a href="#appointment" class="mobile-link mobile-link-primary"><i class="fa-solid fa-calendar-check"></i> <span>Book Now</span></a>
+      <a href="#appointment" class="mobile-link mobile-link-primary" aria-label="Book consultation via mobile menu"><i class="fa-solid fa-calendar-check"></i> <span>Book Now</span></a>
       <a href="#zodiac-belt" class="mobile-link"><i class="fa-solid fa-certificate"></i> <span>Zodiac</span></a>
       <a href="#calculator" class="mobile-link"><i class="fa-solid fa-calculator"></i> <span>Life Path</span></a>
       <a href="#services" class="mobile-link"><i class="fa-solid fa-shapes"></i> <span>Services</span></a>
@@ -81,7 +83,7 @@
       <span class="branch-current-name" id="branchBarTitle">Services</span>
       <span class="sparkle">✦</span>
     </div>
-    <a href="#appointment" class="btn-branch-book" id="branchBookBtn">
+    <a href="#appointment" class="btn-branch-book" id="branchBookBtn" aria-label="Book consultation for current branch">
       <i class="fa-solid fa-calendar-check"></i> <span>Book</span>
     </a>
   </div>
@@ -104,7 +106,7 @@
         </p>
 
         <div class="hero-cta-group">
-          <a href="#appointment" class="btn-primary-radiant">
+          <a href="#appointment" class="btn-primary-radiant" aria-label="Schedule an appointment with V STAR astrologer">
             <span>Get Appointment</span>
             <i class="fa-solid fa-arrow-right"></i>
           </a>
@@ -168,7 +170,7 @@
 
           <!-- Main Zodiac Mandala Card with Slow Celestial Rotation -->
           <div class="hero-mandala-frame">
-            <img src="images/zodiac-wheel-dark.jpg" alt="V STAR Sacred Astrological Zodiac Wheel" class="hero-zodiac-wheel-artwork">
+            <img src="images/zodiac-wheel-dark.jpg" alt="V STAR Sacred Astrological Zodiac Wheel" class="hero-zodiac-wheel-artwork" width="1024" height="1024" fetchpriority="high">
             <div class="mandala-radiance-glow"></div>
           </div>
 
@@ -626,7 +628,7 @@
                   <button type="button" class="pill-btn pill-btn-ghost" id="btnInlineShare" onclick="handleInlineShareReading()">
                     <i class="fa-solid fa-share-nodes"></i> Share
                   </button>
-                  <a href="#appointment" class="pill-btn pill-btn-orange">
+                  <a href="#appointment" class="pill-btn pill-btn-orange" aria-label="Book an in-depth consultation for this cosmic reading">
                     <i class="fa-solid fa-calendar-check"></i> Book Consultation
                   </a>
                 </div>
@@ -1047,7 +1049,7 @@
           <!-- Left Column: Sacred Numerology Mandala (Image 2) -->
           <div class="transformation-artwork-col">
             <div class="sacred-arch-frame dark-arch-frame">
-              <img src="images/numerology-sacred-mandala.jpg" alt="Sacred Numerology Cosmic Mandala" class="arch-artwork-img dark-arch-img">
+              <img src="images/numerology-sacred-mandala.jpg" alt="Sacred Numerology Cosmic Mandala" class="arch-artwork-img dark-arch-img" width="1024" height="1024" loading="lazy" decoding="async">
             </div>
           </div>
 
@@ -1071,7 +1073,7 @@
                 <span>Harmonizing birth day vibrations with active destiny numbers</span>
               </div>
             </div>
-            <a href="#appointment" class="btn-primary-radiant btn-transform-action">
+            <a href="#appointment" class="btn-primary-radiant btn-transform-action" aria-label="Start your transformation journey and book consultation">
               <span>Get started</span>
               <i class="fa-solid fa-arrow-right"></i>
             </a>
@@ -1141,7 +1143,11 @@
             <img src="images/zodiac-purple-wheel.png" 
                  srcset="images/zodiac-purple-wheel.png 1x, images/zodiac-purple-wheel-2x.png 2x" 
                  alt="V STAR Sacred Cosmic Zodiac Wheel" 
-                 class="destiny-purple-wheel">
+                 class="destiny-purple-wheel"
+                 width="342"
+                 height="342"
+                 loading="lazy"
+                 decoding="async">
           </div>
         </div>
 
@@ -1165,7 +1171,7 @@
         <p class="philosophy-text">
           The future is always in motion. Just remember, you're a master of the present moment when guided by authentic planetary calculations.
         </p>
-        <a href="#appointment" class="btn-primary-radiant">
+        <a href="#appointment" class="btn-primary-radiant" aria-label="Master your fate and schedule a consultation">
           <span>Get Started</span>
           <i class="fa-solid fa-arrow-right"></i>
         </a>
@@ -1238,7 +1244,7 @@
             </svg>
           </div>
           <div class="tenet-body">
-            <h4>100% Confidentiality &amp; Privacy</h4>
+            <h3>100% Confidentiality &amp; Privacy</h3>
             <p>Every birth chart, family detail, and consultation query remains strictly encrypted and confidential.</p>
           </div>
         </div>
@@ -1250,7 +1256,7 @@
             </svg>
           </div>
           <div class="tenet-body">
-            <h4>Mathematical Vedic Precision</h4>
+            <h3>Mathematical Vedic Precision</h3>
             <p>Authentic, scientific calculations using classical Ephemeris planetary degrees — zero superstitious dogma.</p>
           </div>
         </div>
@@ -1262,7 +1268,7 @@
             </svg>
           </div>
           <div class="tenet-body">
-            <h4>15+ Years Ephemeris Wisdom</h4>
+            <h3>15+ Years Ephemeris Wisdom</h3>
             <p>Certified master astrologers and numerologists with more than 500,000 satisfied client consultations.</p>
           </div>
         </div>
@@ -1752,7 +1758,7 @@
       <div class="footer-col brand-col">
         <div class="brand-logo footer-logo">
           <div class="logo-symbol">
-            <img src="images/vstar-zodiac-logo.png" alt="V STAR Zodiac Sun Emblem" class="brand-logo-emblem">
+            <img src="images/vstar-zodiac-logo.png" alt="V STAR Zodiac Sun Emblem" class="brand-logo-emblem" width="338" height="338" loading="lazy" decoding="async">
           </div>
           <div class="logo-text">
             <span class="brand-name">V STAR NUMEROLOGY</span>
@@ -1765,7 +1771,7 @@
       </div>
 
       <div class="footer-col">
-        <h4>Consultations</h4>
+        <h3>Consultations</h3>
         <ul class="footer-links-list">
           <li><a href="#appointment" onclick="chooseServiceAndScroll('Full Astrology & Numerology')">Full Astrology</a></li>
           <li><a href="#appointment" onclick="chooseServiceAndScroll('Only Name Numerology')">Name Correction</a></li>
@@ -1779,7 +1785,7 @@
       </div>
 
       <div class="footer-col">
-        <h4>Contact & Center</h4>
+        <h3>Contact & Center</h3>
         <ul class="footer-contact-list">
           <li class="footer-address-item"><i class="fa-solid fa-location-dot"></i> <span>14 Vivian Press Garden, Near Achyuta Public School, Thadikombu Road, Dindigul-1.</span></li>
           <li><i class="fa-solid fa-phone"></i> <span><a href="tel:+919942777999" class="footer-contact-link">99427 77999</a> / <a href="tel:+919842140995" class="footer-contact-link">98421 40995</a></span></li>
@@ -1794,9 +1800,9 @@
       <div class="container bottom-flex">
         <p>&copy; 2026 V STAR Numerology. All Rights Reserved. May the cosmos bless your path.</p>
         <div class="bottom-links">
-          <a href="#appointment">Book Consultation</a>
-          <a href="javascript:void(0)" onclick="openPrivacyModal()">Privacy Policy</a>
-          <a href="javascript:void(0)" onclick="openTermsModal()">Terms of Service</a>
+          <a href="#appointment" aria-label="Book your consultation via footer">Book Consultation</a>
+          <a href="#privacyModal" onclick="openPrivacyModal(event)">Privacy Policy</a>
+          <a href="#termsModal" onclick="openTermsModal(event)">Terms of Service</a>
         </div>
       </div>
     </div>
@@ -1910,7 +1916,7 @@
 
   <!-- Floating Utilities: Back to Top & Quick Book Pill -->
   <div class="floating-controls" id="floatingControls">
-    <a href="#appointment" class="floating-btn-book" title="Book Consultation">
+    <a href="#appointment" class="floating-btn-book" title="Book Consultation" aria-label="Quick book consultation floating button">
       <i class="fa-solid fa-calendar-check"></i>
       <span>Book Consultation</span>
     </a>

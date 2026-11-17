@@ -1,0 +1,24 @@
+{
+  "$schema": "https://agentic.org/schemas/ard-v1.json",
+  "name": "V STAR Numerology & Astrology",
+  "description": "Authentic Vedic astrology calculations, sacred Chaldean and Pythagorean numerology life-path engines, and consultation booking platform.",
+  "version": "1.0.0",
+  "url": "https://v-star-numerology.vercel.app/",
+  "documentation": "https://v-star-numerology.vercel.app/llms.txt",
+  "endpoints": {
+    "status": "https://v-star-numerology.vercel.app/api/status",
+    "appointment": "https://v-star-numerology.vercel.app/api/appointment",
+    "appointments": "https://v-star-numerology.vercel.app/api/appointments"
+  },
+  "capabilities": [
+    "cosmic-life-path-calculation",
+    "destiny-number-calculation",
+    "zodiac-sun-sign-mapping",
+    "astrological-consultation-booking"
+  ],
+  "contact": {
+    "organization": "V STAR Numerology & Astrology",
+    "email": "vstarnumerology@gmail.com",
+    "phone": "+91 97914 96944"
+  }
+}

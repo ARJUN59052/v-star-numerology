@@ -1,0 +1,34 @@
+# V STAR Numerology & Astrology
+
+> Authentic Vedic astrology and sacred Chaldean and Pythagorean numerology consultation platform, personalized birth chart ephemeris calculations, and cosmic life-path readings.
+
+V STAR Numerology & Astrology harmonizes celestial planetary degrees and ancient number vibrations to provide accurate life-path, destiny, career, business, marriage, relationship compatibility, health, and vasthu consultations.
+
+## Services Offered
+
+- **Full Astrology & Numerology**: Comprehensive natal chart Kundli generation, planetary transits, Chaldean name compound analysis, and personalized remedy consultation.
+- **Name Numerology & Correction**: Scientific name spelling alignment based on Cheiro and Chaldean vibration frequencies.
+- **Business Numerology**: Brand, company name, and launch date alignment for financial prosperity and enterprise expansion.
+- **Relationship & Marriage Compatibility**: Synastry Kundli matching, Porutham analysis, and planetary balance.
+- **Career, Wealth & Gemstone**: Identifying fortunate vocational cycles, wealth houses, and authentic gemstone recommendations.
+- **Vasthu & Space Energy Consultation**: Harmonizing physical living and commercial spaces with sacred cardinal directions.
+- **Health Astrology**: Identifying planetary sensitivities and constitutional Ayurvedic balance.
+
+## Core Features & Engines
+
+- **Cosmic Snapshot Engine**: Instant browser-side calculation of Western and Vedic Sun Signs, Life Path numbers, and Destiny vibrations with full high-resolution PDF download.
+- **Online Booking System**: Real-time consultation requests with encrypted Excel persistence and automatic confirmation emails.
+- **Global Place of Birth Lookup**: Built-in coordinates and timezone resolution for accurate birth chart alignment.
+
+## API & Endpoints
+
+- `GET /api/status`: Platform health check, runtime diagnostics, and SMTP status.
+- `POST /api/appointments`: Consultation appointment submission endpoint.
+- `GET /.well-known/ard.json`: Autonomous Resource Discovery (ARD) agent manifest.
+
+## Contact Information
+
+- **Organization**: V STAR Numerology & Astrology
+- **Email**: vstarnumerology@gmail.com
+- **Phone**: +91 97914 96944
+- **Center Locations**: Trichy, Madurai, Coimbatore, Chennai, Salem, Bangalore, India

@@ -99,6 +99,7 @@ app.use(
       directives: {
         defaultSrc: ["'self'"],
         scriptSrc: ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com"],
+        scriptSrcAttr: ["'unsafe-inline'"],
         styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://cdnjs.cloudflare.com"],
         fontSrc: ["'self'", "https://fonts.gstatic.com", "https://cdnjs.cloudflare.com", "data:"],
         imgSrc: ["'self'", "data:", "blob:", "https:"],
@@ -167,6 +168,7 @@ const adminAuthLimiter = rateLimit({
   message: { success: false, message: 'Too many administrative requests. Locked out for 15 minutes.' }
 });
 
+app.use('/api/appointment', appointmentBookingLimiter);
 app.use('/api/appointments', appointmentBookingLimiter);
 app.use('/api/admin', adminAuthLimiter);
 app.use('/api/', generalApiLimiter);
@@ -268,7 +270,28 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json({ limit: '100kb' })); // Body size limit to prevent Denial of Service
 app.use(express.urlencoded({ extended: true, limit: '100kb' }));
-app.use(express.static(PUBLIC_DIR, { dotfiles: 'deny' }));
+// SEO & Discovery Static Routes (Guaranteed resolution across serverless & local)
+app.get('/robots.txt', (req, res) => {
+  res.type('text/plain');
+  res.sendFile(path.join(PUBLIC_DIR, 'robots.txt'));
+});
+
+app.get('/sitemap.xml', (req, res) => {
+  res.type('application/xml');
+  res.sendFile(path.join(PUBLIC_DIR, 'sitemap.xml'));
+});
+
+app.get('/llms.txt', (req, res) => {
+  res.type('text/plain');
+  res.sendFile(path.join(PUBLIC_DIR, 'llms.txt'));
+});
+
+app.get('/.well-known/ard.json', (req, res) => {
+  res.type('application/json');
+  res.sendFile(path.join(PUBLIC_DIR, '.well-known', 'ard.json'));
+});
+
+app.use(express.static(PUBLIC_DIR, { dotfiles: 'ignore' }));
 
 // Security: In-Memory Sliding-Window Rate Limiter (Checklist: Verify rate limiting)
 const rateLimitMap = new Map();

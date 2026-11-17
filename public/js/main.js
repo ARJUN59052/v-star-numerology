@@ -1843,7 +1843,8 @@ function initCookieConsent() {
 
 document.addEventListener('DOMContentLoaded', initCookieConsent);
 
-window.openPrivacyModal = function() {
+window.openPrivacyModal = function(e) {
+  if (e && e.preventDefault) e.preventDefault();
   const modal = document.getElementById('privacyModal');
   if (modal) modal.classList.add('active');
 };
@@ -1853,7 +1854,8 @@ window.closePrivacyModal = function() {
   if (modal) modal.classList.remove('active');
 };
 
-window.openTermsModal = function() {
+window.openTermsModal = function(e) {
+  if (e && e.preventDefault) e.preventDefault();
   const modal = document.getElementById('termsModal');
   if (modal) modal.classList.add('active');
 };
