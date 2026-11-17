@@ -1520,6 +1520,8 @@ function handleInlineSnapshotSubmit(e) {
 function initInlineSnapshot() {
   const form = document.getElementById('inlineSnapshotForm');
   const btn = document.getElementById('btnInlineGenerate');
+  const savePdfBtn = document.getElementById('btnInlineSavePdf');
+  const shareBtn = document.getElementById('btnInlineShare');
 
   if (form) {
     form.addEventListener('submit', (e) => {
@@ -1535,6 +1537,26 @@ function initInlineSnapshot() {
     btn.addEventListener('touchend', (e) => {
       e.preventDefault();
       handleInlineSnapshotSubmit(e);
+    });
+  }
+  if (savePdfBtn) {
+    savePdfBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      handleInlineSaveReading();
+    });
+    savePdfBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handleInlineSaveReading();
+    });
+  }
+  if (shareBtn) {
+    shareBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      handleInlineShareReading();
+    });
+    shareBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handleInlineShareReading();
     });
   }
 }
@@ -1554,15 +1576,20 @@ function toggleInlineAcc(id) {
 }
 
 function handleInlineSaveReading() {
-  if (!currentInlineProfile) updateInlineSnapshot();
+  if (!currentInlineProfile) {
+    updateInlineSnapshot();
+  }
   const p = currentInlineProfile;
-  if (!p) return;
+  if (!p) {
+    showToast('Please generate your Cosmic Snapshot first.', 'warning');
+    return;
+  }
 
   const btn = document.getElementById('btnInlineSavePdf');
   if (window.CosmicEngine && typeof window.CosmicEngine.exportCosmicPdf === 'function') {
     window.CosmicEngine.exportCosmicPdf(p, btn);
   } else {
-    // Fallback if cosmic engine export is not ready
+    // Immediate clean fallback download
     const summary = [
       '====================================================',
       '        V STAR NUMEROLOGY & ASTROLOGY',
@@ -1596,7 +1623,7 @@ function handleInlineSaveReading() {
       `"${p.quote}"`,
       '',
       '====================================================',
-      'For entertainment and self-reflection only — not professional, medical, legal, or financial advice.',
+      'For personal reflection and entertainment only.',
       'V STAR Numerology & Astrology · https://vstarnumerology.com'
     ].join('\n');
 
@@ -1618,22 +1645,74 @@ function handleInlineSaveReading() {
 }
 
 function handleInlineShareReading() {
+  if (!currentInlineProfile) {
+    updateInlineSnapshot();
+  }
   const p = currentInlineProfile;
+  const name = p && p.name ? p.name : (document.getElementById('inlineName')?.value || 'Seeker');
+  const dob = p && p.dob ? p.dob : (document.getElementById('inlineDob')?.value || '');
+  const tob = p && p.tob ? p.tob : (document.getElementById('inlineTob')?.value || '12:00');
+  const pob = p && p.pob ? p.pob : getInlinePob();
+
   const shareUrl = window.location.origin + '/results?' + new URLSearchParams({
-    name: p ? p.name : 'Seeker',
-    dob: p ? p.dob : '2005-01-20',
-    tob: p ? p.tob : '12:00',
-    pob: p ? p.pob : 'Chennai, India'
+    name: name,
+    dob: dob,
+    tob: tob,
+    pob: pob
   }).toString();
 
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(shareUrl).then(() => {
-      showToast('Shareable reading link copied to clipboard!', 'success');
-    }).catch(() => {
-      showToast('Share link ready!', 'info');
+  const shareTitle = `V STAR Cosmic Reading - ${name}`;
+  const shareText = `✨ Discover ${name}'s Cosmic Blueprint on V STAR Numerology ✨\nSun Sign: ${p ? p.zodiac.sign.toUpperCase() : ''} (${p ? p.zodiac.symbol : ''})\nLife Path: ${p ? p.lifePath.number : ''}\nDestiny: ${p ? p.destiny.number : ''}\n\nExplore your reading here:`;
+
+  // Native Mobile Web Share API (WhatsApp, Instagram, Messages, etc.)
+  if (navigator.share && typeof navigator.share === 'function') {
+    navigator.share({
+      title: shareTitle,
+      text: shareText,
+      url: shareUrl
+    }).then(() => {
+      showToast('Reading shared successfully!', 'success');
+    }).catch((err) => {
+      if (!err || err.name !== 'AbortError') {
+        copyShareUrl(shareUrl);
+      }
     });
   } else {
-    showToast('Share link: ' + shareUrl, 'info');
+    copyShareUrl(shareUrl);
+  }
+}
+
+function copyShareUrl(url) {
+  if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+    navigator.clipboard.writeText(url).then(() => {
+      showToast('Shareable reading link copied to clipboard!', 'success');
+    }).catch(() => {
+      fallbackCopyText(url);
+    });
+  } else {
+    fallbackCopyText(url);
+  }
+}
+
+function fallbackCopyText(text) {
+  try {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.left = '-9999px';
+    ta.style.top = '0';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    const successful = document.execCommand('copy');
+    document.body.removeChild(ta);
+    if (successful) {
+      showToast('Shareable reading link copied to clipboard!', 'success');
+    } else {
+      window.prompt('Copy your Cosmic Reading link:', text);
+    }
+  } catch (err) {
+    window.prompt('Copy your Cosmic Reading link:', text);
   }
 }
 

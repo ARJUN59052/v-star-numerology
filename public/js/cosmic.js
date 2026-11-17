@@ -536,12 +536,12 @@
     }
 
     try {
-      // Create PDF HTML container
+      // Create PDF HTML container with safe offscreen positioning
       var container = document.createElement('div');
       container.id = 'vstar-pdf-render-box';
-      container.style.position = 'fixed';
-      container.style.left = '-9999px';
-      container.style.top = '0';
+      container.style.position = 'absolute';
+      container.style.left = '0';
+      container.style.top = (window.pageYOffset || document.documentElement.scrollTop || 0) + 'px';
       container.style.width = '740px';
       container.style.backgroundColor = '#0b0f19';
       container.style.color = '#f1f3f9';
@@ -549,7 +549,8 @@
       container.style.padding = '0';
       container.style.margin = '0';
       container.style.boxSizing = 'border-box';
-      container.style.zIndex = '-99999';
+      container.style.zIndex = '-9999';
+      container.style.pointerEvents = 'none';
 
       var currentDate = new Date().toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
 
@@ -802,9 +803,12 @@
         filename: filename,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: {
-          scale: 2,
+          scale: 1.5,
           useCORS: true,
-          letterRendering: true,
+          allowTaint: true,
+          scrollX: 0,
+          scrollY: 0,
+          windowWidth: 760,
           backgroundColor: '#0b0f19',
           logging: false
         },
@@ -816,9 +820,23 @@
         pagebreak: { mode: ['css', 'legacy'] }
       };
 
+      var isFinished = false;
+      var timeoutTimer = setTimeout(function() {
+        if (!isFinished) {
+          isFinished = true;
+          if (container && document.body.contains(container)) {
+            document.body.removeChild(container);
+          }
+          fallbackPrintPdf(p, btnElement, originalBtnHtml);
+        }
+      }, 7000);
+
       if (window.html2pdf) {
         window.html2pdf().set(opt).from(container).save().then(function() {
-          if (document.body.contains(container)) {
+          if (isFinished) return;
+          isFinished = true;
+          clearTimeout(timeoutTimer);
+          if (container && document.body.contains(container)) {
             document.body.removeChild(container);
           }
           if (btnElement) {
@@ -829,13 +847,17 @@
             window.showToast('Your Cosmic Reading PDF has been downloaded successfully!', 'success');
           }
         }).catch(function(err) {
+          if (isFinished) return;
+          isFinished = true;
+          clearTimeout(timeoutTimer);
           console.error('html2pdf generation error:', err);
-          if (document.body.contains(container)) {
+          if (container && document.body.contains(container)) {
             document.body.removeChild(container);
           }
           fallbackPrintPdf(p, btnElement, originalBtnHtml);
         });
       } else {
+        clearTimeout(timeoutTimer);
         fallbackPrintPdf(p, btnElement, originalBtnHtml);
       }
     } catch (err) {
@@ -849,68 +871,97 @@
       btnElement.disabled = false;
       btnElement.innerHTML = originalBtnHtml;
     }
-    // Fallback: Open formatted print window
-    var printWin = window.open('', '_blank');
-    if (!printWin) {
-      if (typeof window.showToast === 'function') {
-        window.showToast('Popup blocked. Please allow popups to download/print your PDF.', 'warning');
-      }
-      return;
+
+    // Try popup window first
+    var printWin = null;
+    try {
+      printWin = window.open('', '_blank');
+    } catch (e) {
+      printWin = null;
     }
 
-    printWin.document.write(`
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <title>V STAR Cosmic Reading - ${escPdf(p.name)}</title>
-        <style>
-          body { font-family: 'Plus Jakarta Sans', Arial, sans-serif; background: #0b0f19; color: #f1f3f9; padding: 24px; margin: 0; }
-          .pdf-wrap { max-width: 780px; margin: 0 auto; }
-          h1, h2, h3 { color: #dfb872; font-family: Georgia, serif; }
-          .card { background: #121727; border: 1px solid rgba(223, 184, 114, 0.4); border-radius: 8px; padding: 16px; margin-bottom: 16px; }
-          .badge { display: inline-block; width: 36px; height: 36px; border-radius: 50%; background: #dfb872; color: #0b071c; text-align: center; line-height: 36px; font-weight: bold; margin-right: 8px; }
-          @media print {
-            body { background: #ffffff !important; color: #111111 !important; }
-            .card { background: #fdfdfd !important; border: 1px solid #ccc !important; color: #111111 !important; }
-            h1, h2, h3 { color: #885e13 !important; }
-          }
-        </style>
-      </head>
-      <body>
-        <div class="pdf-wrap">
-          <h2>V STAR NUMEROLOGY & ASTROLOGY</h2>
-          <p>Personalized Cosmic Snapshot for <strong>${escPdf(p.name)}</strong></p>
-          <div class="card">
-            <h3>${p.article} ${p.zodiac.sign.toUpperCase()} (${p.zodiac.symbol})</h3>
-            <p><strong>Born:</strong> ${p.formattedDate} at ${p.tob} &middot; ${escPdf(p.pob)}</p>
-            <p><strong>Life Path:</strong> ${p.lifePath.number} &mdash; ${p.lifePath.archetype}</p>
-            <p><strong>Destiny:</strong> ${p.destiny.number} &mdash; ${p.destiny.archetype}</p>
-          </div>
-          <div class="card">
-            <h3>Career &amp; Vocational Alignment</h3>
-            <p>${p.career.insight}</p>
-            <p><strong>Roles:</strong> ${p.career.roles.join(', ')}</p>
-          </div>
-          <div class="card">
-            <h3>Lucky Resonance</h3>
-            <p><strong>Lucky Numbers:</strong> ${p.luckyNumbers.join(', ')}</p>
-            <p><strong>Lucky Colors:</strong> ${p.luckyColors.map(c => c.name).join(', ')}</p>
-          </div>
-          <div class="card">
-            <p><em>"${p.quote}"</em></p>
-          </div>
-        </div>
-        <script>
-          window.onload = function() {
-            setTimeout(function() {
-              window.print();
-            }, 300);
-          };
-        </script>
-      </body>
-      </html>
-    `);
-    printWin.document.close();
+    var reportHtml = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>V STAR Cosmic Reading - ${escPdf(p.name)}</title>
+  <style>
+    body { font-family: 'Plus Jakarta Sans', Arial, sans-serif; background: #0b0f19; color: #f1f3f9; padding: 24px; margin: 0; line-height: 1.6; }
+    .pdf-wrap { max-width: 780px; margin: 0 auto; }
+    h1, h2, h3 { color: #dfb872; font-family: Georgia, serif; }
+    .card { background: #121727; border: 1px solid rgba(223, 184, 114, 0.4); border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+    .badge { display: inline-block; width: 36px; height: 36px; border-radius: 50%; background: #dfb872; color: #0b071c; text-align: center; line-height: 36px; font-weight: bold; margin-right: 8px; }
+    .btn-print { display: inline-block; background: #dfb872; color: #0b0f19; padding: 10px 20px; font-weight: bold; border-radius: 6px; text-decoration: none; margin-bottom: 20px; cursor: pointer; border: none; }
+    @media print {
+      body { background: #ffffff !important; color: #111111 !important; }
+      .card { background: #fdfdfd !important; border: 1px solid #ccc !important; color: #111111 !important; }
+      h1, h2, h3 { color: #885e13 !important; }
+      .btn-print { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="pdf-wrap">
+    <button class="btn-print" onclick="window.print()">✦ Print / Save as PDF</button>
+    <h2>V STAR NUMEROLOGY & ASTROLOGY</h2>
+    <p>Personalized Cosmic Snapshot for <strong>${escPdf(p.name)}</strong></p>
+    <div class="card">
+      <h3>${p.article} ${p.zodiac.sign.toUpperCase()} (${p.zodiac.symbol})</h3>
+      <p><strong>Born:</strong> ${p.formattedDate} at ${p.tob} &middot; ${escPdf(p.pob)}</p>
+      <p><strong>Element & Ruler:</strong> ${p.zodiac.element} &middot; Ruled by ${p.zodiac.rulingPlanet}</p>
+      <p><strong>Life Path:</strong> ${p.lifePath.number} &mdash; ${p.lifePath.archetype}</p>
+      <p><strong>Destiny:</strong> ${p.destiny.number} &mdash; ${p.destiny.archetype}</p>
+    </div>
+    <div class="card">
+      <h3>Career &amp; Vocational Alignment</h3>
+      <p>${p.career.insight}</p>
+      <p><strong>Roles to explore:</strong> ${p.career.roles.join(', ')}</p>
+      <p><strong>Learning style:</strong> ${p.career.learningStyle}</p>
+    </div>
+    <div class="card">
+      <h3>Sacred Resonance</h3>
+      <p><strong>Lucky Numbers:</strong> ${p.luckyNumbers.join(', ')}</p>
+      <p><strong>Lucky Colors:</strong> ${p.luckyColors.map(c => c.name).join(', ')}</p>
+    </div>
+    <div class="card">
+      <p><em>"${p.quote}"</em></p>
+    </div>
+  </div>
+  <script>
+    window.onload = function() {
+      setTimeout(function() { window.print(); }, 400);
+    };
+  </script>
+</body>
+</html>`;
+
+    if (printWin) {
+      try {
+        printWin.document.write(reportHtml);
+        printWin.document.close();
+        return;
+      } catch (e) {}
+    }
+
+    // Direct HTML/Text download if popup is blocked
+    try {
+      var blob = new Blob([reportHtml], { type: 'text/html;charset=utf-8' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = 'VSTAR_Cosmic_Reading_' + (p.name ? p.name.trim().replace(/\s+/g, '_') : 'Seeker') + '.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      if (typeof window.showToast === 'function') {
+        window.showToast('Reading report downloaded! Open file to view & Save as PDF.', 'success');
+      }
+    } catch (err) {
+      if (typeof window.showToast === 'function') {
+        window.showToast('Please enable popups or downloads to save your PDF reading.', 'warning');
+      }
+    }
   }
 
   window.CosmicEngine = {

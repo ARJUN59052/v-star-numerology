@@ -623,7 +623,7 @@
                   <button type="button" class="pill-btn pill-btn-gold" id="btnInlineSavePdf" onclick="handleInlineSaveReading()">
                     <i class="fa-solid fa-file-pdf"></i> Download PDF Reading
                   </button>
-                  <button type="button" class="pill-btn pill-btn-ghost" onclick="handleInlineShareReading()">
+                  <button type="button" class="pill-btn pill-btn-ghost" id="btnInlineShare" onclick="handleInlineShareReading()">
                     <i class="fa-solid fa-share-nodes"></i> Share
                   </button>
                   <a href="#appointment" class="pill-btn pill-btn-orange">
@@ -2000,8 +2000,9 @@
   <!-- Toast Notification Container -->
   <div class="toast-container" id="toastContainer"></div>
 
-  <!-- JavaScript -->
-  <script src="js/html2pdf.bundle.min.js"></script>
+  <!-- JavaScript: High-Res PDF Generator & Cosmic Engines -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script>window.html2pdf || document.write('<script src="js/html2pdf.bundle.min.js"><\/script>');</script>
   <script src="js/pob-autocomplete.js"></script>
   <script src="js/cosmic.js"></script>
   <script src="js/main.js"></script>
