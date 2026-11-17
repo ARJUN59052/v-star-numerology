@@ -260,7 +260,7 @@ const corsOptions = {
     }
     return callback(new Error('Cross-Origin Request Blocked by CORS Policy'));
   },
-  methods: ['GET', 'POST', 'OPTIONS'],
+  methods: ['GET', 'POST', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Admin-Key'],
   credentials: true,
   maxAge: 86400 // 24 hours preflight cache
