@@ -562,28 +562,36 @@
       `;
       document.body.appendChild(overlay);
 
-      // Create PDF HTML container directly at (0, 0)
+      // Create hidden offscreen wrapper and in-flow PDF container
+      var wrapper = document.createElement('div');
+      wrapper.id = 'vstar-pdf-hidden-wrapper';
+      wrapper.style.position = 'absolute';
+      wrapper.style.left = '0';
+      wrapper.style.top = '-99999px';
+      wrapper.style.width = '750px';
+      wrapper.style.height = 'auto';
+      wrapper.style.overflow = 'hidden';
+
       var container = document.createElement('div');
       container.id = 'vstar-pdf-render-box';
-      container.style.position = 'fixed';
-      container.style.left = '0';
-      container.style.top = '0';
-      container.style.width = '750px';
+      container.style.width = '740px';
+      container.style.position = 'relative';
       container.style.backgroundColor = '#0b0f19';
       container.style.color = '#f1f3f9';
       container.style.fontFamily = "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif";
       container.style.padding = '0';
       container.style.margin = '0';
       container.style.boxSizing = 'border-box';
-      container.style.zIndex = '999997'; // In front of document, behind overlay
-      container.style.pointerEvents = 'none';
+
+      wrapper.appendChild(container);
+      document.body.appendChild(wrapper);
 
       var currentDate = new Date().toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
 
       container.innerHTML = `
-        <div style="background: #0b0f19; color: #f1f3f9; padding: 26px 30px; box-sizing: border-box; width: 740px;">
+        <div style="background: #0b0f19; color: #f1f3f9; box-sizing: border-box; width: 740px; margin: 0; padding: 0;">
           <!-- PAGE 1 -->
-          <div style="min-height: 980px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
+          <div style="box-sizing: border-box; width: 740px; padding: 26px 30px; background: #0b0f19;">
             <div>
               <!-- HEADER BAR -->
               <table style="width: 100%; border-bottom: 2px solid #dfb872; padding-bottom: 14px; margin-bottom: 18px; border-collapse: collapse;">
@@ -699,24 +707,28 @@
             </div>
 
             <!-- PAGE 1 FOOTER -->
-            <div style="border-top: 1px solid rgba(223, 184, 114, 0.25); padding-top: 10px; font-size: 9px; color: #8893b0; display: flex; justify-content: space-between; align-items: center;">
-              <span>V STAR Numerology &amp; Astrology &middot; Confidential Snapshot</span>
-              <span>Document Page 1 of 2</span>
+            <div style="border-top: 1px solid rgba(223, 184, 114, 0.25); padding-top: 12px; margin-top: 24px; font-size: 10px; color: #8893b0; display: table; width: 100%;">
+              <div style="display: table-cell; text-align: left; vertical-align: middle;">V STAR Numerology &amp; Astrology &middot; Confidential Snapshot</div>
+              <div style="display: table-cell; text-align: right; vertical-align: middle;">Document Page 1 of 2</div>
             </div>
           </div>
 
           <!-- HARD PAGE BREAK -->
-          <div class="html2pdf__page-break" style="page-break-before: always; height: 16px;"></div>
+          <div class="html2pdf__page-break" style="page-break-before: always; height: 1px; line-height: 1px; margin: 0; padding: 0;"></div>
 
           <!-- PAGE 2 -->
-          <div style="min-height: 980px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
+          <div style="box-sizing: border-box; width: 740px; padding: 26px 30px; background: #0b0f19;">
             <div>
               <!-- PAGE 2 TOP BAR -->
-              <div style="border-bottom: 1px solid rgba(223, 184, 114, 0.25); padding-bottom: 10px; margin-bottom: 18px; display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #a2acc7;">
-                <span style="font-family: 'Cinzel', Georgia, serif; font-weight: 700; color: #dfb872; letter-spacing: 1.5px;">
-                  V STAR &middot; DESTINY &amp; VOCATIONAL BLUEPRINT
-                </span>
-                <span>Client: <strong style="color: #ffffff;">${escPdf(p.name)}</strong></span>
+              <div style="border-bottom: 1px solid rgba(223, 184, 114, 0.25); padding-bottom: 10px; margin-bottom: 18px; display: table; width: 100%; font-size: 11px; color: #a2acc7;">
+                <div style="display: table-cell; text-align: left; vertical-align: middle;">
+                  <span style="font-family: 'Cinzel', Georgia, serif; font-weight: 700; color: #dfb872; letter-spacing: 1.5px;">
+                    V STAR &middot; DESTINY &amp; VOCATIONAL BLUEPRINT
+                  </span>
+                </div>
+                <div style="display: table-cell; text-align: right; vertical-align: middle;">
+                  Client: <strong style="color: #ffffff;">${escPdf(p.name)}</strong>
+                </div>
               </div>
 
               <!-- CAREER TENDENCIES -->
@@ -804,30 +816,26 @@
             </div>
 
             <!-- PAGE 2 FOOTER & VERIFICATION -->
-            <div>
-              <div style="border-top: 1px solid rgba(223, 184, 114, 0.3); padding-top: 10px; display: flex; justify-content: space-between; align-items: flex-end;">
-                <div style="font-size: 9px; color: #8893b0; max-width: 500px; line-height: 1.4;">
-                  <strong>Disclaimer:</strong> For personal guidance and self-reflection only. Does not replace professional medical, legal, or financial counsel.<br>
-                  Issued by <strong>V STAR Numerology &amp; Astrology</strong> &middot; Vivian Press Garden, Dindigul, Tamil Nadu 624001.
-                </div>
-                <div style="text-align: right; font-size: 9px; color: #dfb872;">
-                  <div style="font-weight: 700; letter-spacing: 1px;">OFFICIALLY VERIFIED</div>
-                  <div style="color: #8893b0;">Date: ${currentDate}</div>
-                </div>
+            <div style="border-top: 1px solid rgba(223, 184, 114, 0.3); padding-top: 12px; margin-top: 20px; display: table; width: 100%;">
+              <div style="display: table-cell; vertical-align: top; font-size: 9px; color: #8893b0; line-height: 1.4;">
+                <strong>Disclaimer:</strong> For personal guidance and self-reflection only. Does not replace professional medical, legal, or financial counsel.<br>
+                Issued by <strong>V STAR Numerology &amp; Astrology</strong> &middot; Vivian Press Garden, Dindigul, Tamil Nadu 624001.
+              </div>
+              <div style="display: table-cell; vertical-align: top; text-align: right; font-size: 9px; color: #dfb872; white-space: nowrap; padding-left: 16px;">
+                <div style="font-weight: 700; letter-spacing: 1px;">OFFICIALLY VERIFIED</div>
+                <div style="color: #8893b0;">Date: ${currentDate}</div>
               </div>
             </div>
           </div>
         </div>
       `;
 
-      document.body.appendChild(container);
-
       function cleanupPdfDom() {
         if (overlay && document.body.contains(overlay)) {
           document.body.removeChild(overlay);
         }
-        if (container && document.body.contains(container)) {
-          document.body.removeChild(container);
+        if (wrapper && document.body.contains(wrapper)) {
+          document.body.removeChild(wrapper);
         }
         if (btnElement) {
           btnElement.disabled = false;
@@ -835,7 +843,7 @@
         }
       }
 
-      // PDF options with absolute (0,0) canvas capture
+      // PDF options with high-resolution canvas capture
       var filename = 'VSTAR_Cosmic_Reading_' + (p.name ? p.name.trim().replace(/\s+/g, '_') : 'Seeker') + '.pdf';
       var opt = {
         margin: [4, 4, 4, 4],
@@ -845,10 +853,9 @@
           scale: 2,
           useCORS: true,
           allowTaint: true,
+          backgroundColor: '#0b0f19',
           scrollX: 0,
           scrollY: 0,
-          windowWidth: 750,
-          backgroundColor: '#0b0f19',
           logging: false
         },
         jsPDF: {
