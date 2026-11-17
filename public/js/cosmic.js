@@ -890,19 +890,42 @@
       };
 
       var isFinished = false;
+      // 35-second safety watchdog only in case a device completely hangs
       var timeoutTimer = setTimeout(function() {
         if (!isFinished) {
           isFinished = true;
           cleanupPdfDom();
           fallbackPrintPdf(p, btnElement, originalBtnHtml);
         }
-      }, 7000);
+      }, 35000);
 
       if (window.html2pdf) {
-        window.html2pdf().set(opt).from(container).save().then(function() {
+        var worker = window.html2pdf().set(opt).from(container);
+
+        worker.toPdf().get('pdf').then(function(pdf) {
           if (isFinished) return;
           isFinished = true;
           clearTimeout(timeoutTimer);
+
+          try {
+            var blob = pdf.output('blob');
+            if (blob && blob.size > 2000) {
+              var url = URL.createObjectURL(blob);
+              var a = document.createElement('a');
+              a.href = url;
+              a.download = filename;
+              document.body.appendChild(a);
+              a.click();
+              document.body.removeChild(a);
+              setTimeout(function() { URL.revokeObjectURL(url); }, 10000);
+            } else {
+              pdf.save(filename);
+            }
+          } catch (saveErr) {
+            console.warn('Direct blob download fallback to pdf.save:', saveErr);
+            pdf.save(filename);
+          }
+
           cleanupPdfDom();
           if (typeof window.showToast === 'function') {
             window.showToast('Your Cosmic Reading PDF has been downloaded successfully!', 'success');
