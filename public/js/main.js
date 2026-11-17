@@ -42,35 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize IntersectionObserver Scroll Reveal
   initScrollReveal();
 
-  // Prevent Copy-Paste and Browser Saved Info on Cosmic Snapshot Inputs
-  const noPasteInputs = document.querySelectorAll('#inlineSnapshotForm input');
-  noPasteInputs.forEach(input => {
-    ['paste', 'copy', 'cut', 'drop'].forEach(evt => {
-      input.addEventListener(evt, (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        if (evt === 'paste') {
-          showToast('Copy-paste is disabled. Please type or choose from suggestions.', 'warning');
-        }
-        return false;
-      });
-    });
-
-    input.addEventListener('keydown', (e) => {
-      if (((e.ctrlKey || e.metaKey) && (e.key === 'v' || e.key === 'V')) || (e.shiftKey && e.key === 'Insert')) {
-        e.preventDefault();
-        e.stopPropagation();
-        showToast('Copy-paste is disabled. Please type or choose from suggestions.', 'warning');
-        return false;
-      }
-      if ((e.ctrlKey || e.metaKey) && (e.key === 'c' || e.key === 'C' || e.key === 'x' || e.key === 'X')) {
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
-      }
-    });
-  });
-
   // Initialize Birth Place 3-Box Smart Autocomplete for both Cosmic Snapshot & Consultation Form
   if (typeof window.initPobAutocomplete === 'function') {
     // 1. Cosmic Snapshot Birth Place
