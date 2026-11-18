@@ -565,12 +565,14 @@
       // Create hidden offscreen wrapper and in-flow PDF container
       var wrapper = document.createElement('div');
       wrapper.id = 'vstar-pdf-hidden-wrapper';
-      wrapper.style.position = 'absolute';
+      wrapper.style.position = 'fixed';
       wrapper.style.left = '0';
-      wrapper.style.top = '-99999px';
+      wrapper.style.top = '0';
       wrapper.style.width = '794px';
       wrapper.style.height = 'auto';
-      wrapper.style.overflow = 'hidden';
+      wrapper.style.zIndex = '-9999';
+      wrapper.style.opacity = '0.001';
+      wrapper.style.pointerEvents = 'none';
 
       var container = document.createElement('div');
       container.id = 'vstar-pdf-render-box';
@@ -873,12 +875,10 @@
         filename: filename,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: {
-          scale: 2,
+          scale: 1.5,
           useCORS: true,
           allowTaint: true,
           backgroundColor: '#0b0f19',
-          scrollX: 0,
-          scrollY: 0,
           logging: false
         },
         jsPDF: {
@@ -886,58 +886,42 @@
           format: 'a4',
           orientation: 'portrait'
         },
-        pagebreak: { mode: [] }
+        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
       };
 
       var isFinished = false;
-      // 35-second safety watchdog only in case a device completely hangs
+      // 9-second safety watchdog
       var timeoutTimer = setTimeout(function() {
         if (!isFinished) {
           isFinished = true;
+          console.warn('html2pdf watchdog triggered, invoking fast document delivery');
           cleanupPdfDom();
           fallbackPrintPdf(p, btnElement, originalBtnHtml);
         }
-      }, 35000);
+      }, 9000);
 
       if (window.html2pdf) {
-        var worker = window.html2pdf().set(opt).from(container);
-
-        worker.toPdf().get('pdf').then(function(pdf) {
-          if (isFinished) return;
-          isFinished = true;
-          clearTimeout(timeoutTimer);
-
-          try {
-            var blob = pdf.output('blob');
-            if (blob && blob.size > 2000) {
-              var url = URL.createObjectURL(blob);
-              var a = document.createElement('a');
-              a.href = url;
-              a.download = filename;
-              document.body.appendChild(a);
-              a.click();
-              document.body.removeChild(a);
-              setTimeout(function() { URL.revokeObjectURL(url); }, 10000);
-            } else {
-              pdf.save(filename);
+        window.html2pdf()
+          .set(opt)
+          .from(container)
+          .save()
+          .then(function() {
+            if (isFinished) return;
+            isFinished = true;
+            clearTimeout(timeoutTimer);
+            cleanupPdfDom();
+            if (typeof window.showToast === 'function') {
+              window.showToast('Your Cosmic Reading PDF has been downloaded successfully!', 'success');
             }
-          } catch (saveErr) {
-            console.warn('Direct blob download fallback to pdf.save:', saveErr);
-            pdf.save(filename);
-          }
-
-          cleanupPdfDom();
-          if (typeof window.showToast === 'function') {
-            window.showToast('Your Cosmic Reading PDF has been downloaded successfully!', 'success');
-          }
-        }).catch(function(err) {
-          if (isFinished) return;
-          isFinished = true;
-          clearTimeout(timeoutTimer);
-          console.error('html2pdf generation error:', err);
-          cleanupPdfDom();
-          fallbackPrintPdf(p, btnElement, originalBtnHtml);
-        });
+          })
+          .catch(function(err) {
+            if (isFinished) return;
+            isFinished = true;
+            clearTimeout(timeoutTimer);
+            console.error('html2pdf generation error:', err);
+            cleanupPdfDom();
+            fallbackPrintPdf(p, btnElement, originalBtnHtml);
+          });
       } else {
         clearTimeout(timeoutTimer);
         cleanupPdfDom();
