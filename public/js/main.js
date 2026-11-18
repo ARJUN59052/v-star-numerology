@@ -116,17 +116,17 @@ function resetCosmicForm() {
 
   const resultsCard = document.getElementById('inlineResultsCard');
   if (resultsCard) {
-    resultsCard.style.display = 'none';
+    resultsCard.style.display = 'block';
   }
-  const wrapper = document.getElementById('cosmicSnapshotWrapper');
-  if (wrapper) {
-    wrapper.classList.remove('has-results');
+  const banner = document.getElementById('activeReadingBanner');
+  if (banner) {
+    banner.style.display = 'none';
   }
 
   const btn = document.getElementById('btnInlineGenerate');
   if (btn) {
     btn.disabled = false;
-    btn.innerHTML = '<span>Generate Cosmic Snapshot</span> <i class="fa-solid fa-wand-magic-sparkles"></i>';
+    btn.innerHTML = '<span>Generate Blueprint &amp; Sacred Remedies</span> <i class="fa-solid fa-wand-magic-sparkles"></i>';
   }
 
   currentInlineProfile = null;
@@ -1508,6 +1508,10 @@ function handleInlineRashiChange() {
 
 function openCosmicReadingModal() {
   const modal = document.getElementById('cosmicReadingModal');
+  const resultsCard = document.getElementById('inlineResultsCard');
+  if (resultsCard) {
+    resultsCard.style.display = 'block';
+  }
   if (modal) {
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';

@@ -6419,8 +6419,12 @@ button:active, .btn-primary-radiant:active, .btn-nav-book:active {
   position: relative;
 }
 
-.cosmic-modal-inner-reading {
-  display: block;
+.cosmic-modal-inner-reading,
+#inlineResultsCard {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: 100%;
 }
 
 .cosmic-reading-modal-card::-webkit-scrollbar {
