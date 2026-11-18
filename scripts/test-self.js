@@ -83,9 +83,11 @@ async function runTests() {
   assert('GET / returns 200 OK', homeRes.status === 200);
   const csp = homeRes.headers['content-security-policy'] || '';
   assert('CSP contains script-src-attr unsafe-inline', csp.includes("script-src-attr 'unsafe-inline'"));
+  assert("CSP script-src is strict 'self' (unsafe-inline removed)", csp.includes("script-src 'self'") && !csp.includes("script-src 'self' 'unsafe-inline'"));
   assert('HSTS header is enabled', Boolean(homeRes.headers['strict-transport-security']));
   assert('X-Content-Type-Options is nosniff', homeRes.headers['x-content-type-options'] === 'nosniff');
   assert('Permissions-Policy configured', Boolean(homeRes.headers['permissions-policy']));
+  assert('COEP is configured with credentialless', homeRes.headers['cross-origin-embedder-policy'] === 'credentialless');
 
   // 4. Cosmic Calculation Engine Logic Test
   console.log('\n--- 4. Cosmic Calculator Engine Logic ---');

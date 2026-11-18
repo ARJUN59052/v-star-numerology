@@ -98,7 +98,7 @@ app.use(
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        scriptSrc: ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com"],
+        scriptSrc: ["'self'"],
         scriptSrcAttr: ["'unsafe-inline'"],
         workerSrc: ["'self'", "blob:"],
         childSrc: ["'self'", "blob:"],
@@ -113,7 +113,7 @@ app.use(
         upgradeInsecureRequests: process.env.NODE_ENV === 'production' ? [] : null
       }
     },
-    crossOriginEmbedderPolicy: false,
+    crossOriginEmbedderPolicy: { policy: 'credentialless' },
     crossOriginResourcePolicy: { policy: 'same-origin' },
     hsts: {
       maxAge: 63072000,
