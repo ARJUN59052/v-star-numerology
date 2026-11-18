@@ -712,9 +712,9 @@
                   <button type="button" class="pill-btn pill-btn-ghost" id="btnInlineShare" onclick="handleInlineShareReading()">
                     <i class="fa-solid fa-share-nodes"></i> Share
                   </button>
-                  <a href="#appointment" class="pill-btn pill-btn-orange" aria-label="Book an in-depth consultation for this cosmic reading">
+                  <button type="button" class="pill-btn pill-btn-orange" onclick="if(typeof window.bookRatnaConsultation==='function'){window.bookRatnaConsultation();}else{closeCosmicReadingModal();location.hash='#appointment';}" aria-label="Book an in-depth consultation for this cosmic reading">
                     <i class="fa-solid fa-calendar-check"></i> Book Consultation
-                  </a>
+                  </button>
                 </div>
               </div>
 
@@ -911,10 +911,10 @@
           <i class="fa-solid fa-file-pdf"></i>
           <span>Save PDF</span>
         </button>
-        <a href="#appointment" class="btn-primary-radiant" onclick="closeCosmicReadingModal()" aria-label="Book In-Depth Consultation">
+        <button type="button" class="btn-primary-radiant" onclick="closeCosmicReadingModal(); if(typeof window.bookRatnaConsultation==='function'){window.bookRatnaConsultation();}else{location.hash='#appointment';}" aria-label="Book In-Depth Consultation">
           <i class="fa-solid fa-calendar-check"></i>
           <span>Book Consultation</span>
-        </a>
+        </button>
       </div>
 
     </div>

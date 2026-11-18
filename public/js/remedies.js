@@ -738,40 +738,74 @@
     const planet = p ? p.graha.planet : 'Sun';
     const rashi = p ? p.rashi.name : 'Makara';
     const intention = p ? p.intentionLabel : 'Wealth & Career';
+    const rudraksha = p ? p.rudraksha.mukhi : '5 Mukhi';
+    const yantra = p ? p.yantra.name : 'Shree Yantra';
+    const carats = p ? p.caratSize : '6.5';
 
     // 1. Pre-select service in form
     if (typeof window.chooseServiceAndScroll === 'function') {
       window.chooseServiceAndScroll('Career, Wealth & Gemstone Consultation');
     }
 
-    // 2. Pre-fill consultation notes
+    // 2. Pre-fill consultation notes with complete Cosmic & Remedy profile
     const notesEl = document.getElementById('notes');
     if (notesEl) {
-      notesEl.value = `[Sacred Remedy Request] Recommended Gemstone: ${stone} (${p ? p.caratSize : '6.5'} Carats). Life Path: ${lp} (${planet}), Rashi: ${rashi}, Focus: ${intention}. Please evaluate natal chart planetary degrees and verify gemstone/rudraksha suitability.`;
+      notesEl.value = `[Sacred Blueprint & Remedy Request] Recommended Gemstone: ${stone} (${carats} Carats) | Life Path: ${lp} (${planet}) | Rashi: ${rashi} | Rudraksha: ${rudraksha} | Yantra: ${yantra} | Intention: ${intention}. Please evaluate natal chart planetary degrees and verify gemstone/rudraksha suitability.`;
     }
 
-    // 3. Pre-fill name and dob if empty
+    // 3. Pre-fill name and dob
     const aptName = document.getElementById('fullName');
     const remName = document.getElementById('inlineName')?.value || document.getElementById('remedyName')?.value;
-    if (aptName && remName && !aptName.value) {
+    if (aptName && remName) {
       aptName.value = remName;
     }
+
     const aptDob = document.getElementById('dob');
     const remDob = document.getElementById('inlineDob')?.value || document.getElementById('remedyDob')?.value;
-    if (aptDob && remDob && !aptDob.value) {
+    if (aptDob && remDob) {
       aptDob.value = remDob;
     }
 
-    // 4. Smooth scroll to appointment section
+    // 4. Pre-fill birth time
+    const aptTob = document.getElementById('birthTime');
+    const remTob = document.getElementById('inlineTob')?.value;
+    if (aptTob && remTob) {
+      aptTob.value = remTob;
+    }
+
+    // 5. Pre-fill birth place components
+    const remCountry = document.getElementById('inlineCountry')?.value || '';
+    const remState = document.getElementById('inlineState')?.value || '';
+    const remDistrict = document.getElementById('inlineDistrict')?.value || '';
+    
+    const aptCountry = document.getElementById('aptCountry');
+    const aptState = document.getElementById('aptState');
+    const aptDistrict = document.getElementById('aptDistrict');
+    const aptBirthPlace = document.getElementById('birthPlace');
+
+    if (aptCountry && remCountry) aptCountry.value = remCountry;
+    if (aptState && remState) aptState.value = remState;
+    if (aptDistrict && remDistrict) aptDistrict.value = remDistrict;
+    
+    if (aptBirthPlace) {
+      const parts = [remDistrict, remState, remCountry].filter(Boolean);
+      if (parts.length > 0) {
+        aptBirthPlace.value = parts.join(', ');
+      }
+    }
+
+    // 6. Smooth scroll to appointment section
     const aptSection = document.getElementById('appointment');
     if (aptSection) {
       aptSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
     if (typeof window.showToast === 'function') {
-      window.showToast('Gemstone recommendation transferred to appointment booking!', 'success');
+      window.showToast('Your Sacred Blueprint & Remedy details have been transferred to the appointment booking form!', 'success');
     }
   }
+
+  window.bookRatnaConsultation = bookRatnaConsultation;
 
   // Modal Handlers for Ratna Store
   function openRatnaStoreModal() {

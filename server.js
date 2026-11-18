@@ -682,6 +682,7 @@ Here we got your data, we will check it out and we will confirm appointment and 
 • Time of Birth: ${clientData.birthTime || 'Not specified'}
 • Place of Birth: ${clientData.birthPlace}
 • Consultation Mode: ${clientData.consultationMode || 'Online'}
+${clientData.notes && clientData.notes !== 'None' ? `• Cosmic Blueprint & Sacred Remedies: ${clientData.notes}` : ''}
 
 Warm regards,
 V STAR Numerology & Astrology Center
@@ -755,6 +756,12 @@ Guiding your cosmic path through sacred numbers & planetary alignment.`;
             <td class="label">Consultation Mode:</td>
             <td class="val">${escapeHtml(clientData.consultationMode || 'Online Video Call')}</td>
           </tr>
+          ${clientData.notes && clientData.notes !== 'None' ? `
+          <tr>
+            <td class="label">Cosmic Blueprint &amp; Sacred Remedies:</td>
+            <td class="val" style="color: #dfb872; line-height: 1.5; font-size: 13.5px;">${escapeHtml(clientData.notes)}</td>
+          </tr>
+          ` : ''}
         </table>
       </div>
       <div class="footer">
