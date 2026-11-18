@@ -732,28 +732,41 @@
 
   // Monetization CTA: Book Consultation with prefilled metadata
   function bookRatnaConsultation() {
-    const p = currentRemedyProfile;
-    const stone = p ? p.graha.gemstone : 'Vedic Ratna';
-    const lp = p ? p.lifePath : '1';
-    const planet = p ? p.graha.planet : 'Sun';
-    const rashi = p ? p.rashi.name : 'Makara';
-    const intention = p ? p.intentionLabel : 'Wealth & Career';
-    const rudraksha = p ? p.rudraksha.mukhi : '5 Mukhi';
-    const yantra = p ? p.yantra.name : 'Shree Yantra';
-    const carats = p ? p.caratSize : '6.5';
-
-    // 1. Pre-select service in form
-    if (typeof window.chooseServiceAndScroll === 'function') {
-      window.chooseServiceAndScroll('Career, Wealth & Gemstone Consultation');
+    // 1. Close reading modal if open
+    if (typeof window.closeCosmicReadingModal === 'function') {
+      window.closeCosmicReadingModal();
     }
 
-    // 2. Pre-fill consultation notes with complete Cosmic & Remedy profile
+    const p = currentRemedyProfile;
+    const stone = (p && p.graha && p.graha.gemstone) ? p.graha.gemstone : 'Vedic Ratna';
+    const lp = (p && p.lifePath) ? p.lifePath : '1';
+    const planet = (p && p.graha && p.graha.planet) ? p.graha.planet : 'Sun';
+    const rashi = (p && p.rashi && p.rashi.name) ? p.rashi.name : 'Makara';
+    const intention = (p && p.intentionLabel) ? p.intentionLabel : 'Wealth & Career';
+    const rudraksha = (p && p.graha && p.graha.rudrakshaName) ? p.graha.rudrakshaName : '5 Mukhi Rudraksha';
+    const yantra = (p && p.graha && p.graha.yantra) ? p.graha.yantra : 'Shree Yantra';
+    const carats = (p && p.caratSize) ? p.caratSize : '6.5';
+
+    // 2. Select service in appointment form
+    const serviceName = 'Career, Wealth & Gemstone Consultation';
+    const radios = document.querySelectorAll('input[name="serviceType"]');
+    radios.forEach(radio => {
+      const parentCard = radio.closest('.radio-card');
+      if (radio.value === serviceName) {
+        radio.checked = true;
+        if (parentCard) parentCard.classList.add('selected');
+      } else {
+        if (parentCard) parentCard.classList.remove('selected');
+      }
+    });
+
+    // 3. Pre-fill consultation notes with complete Cosmic & Remedy profile
     const notesEl = document.getElementById('notes');
     if (notesEl) {
       notesEl.value = `[Sacred Blueprint & Remedy Request] Recommended Gemstone: ${stone} (${carats} Carats) | Life Path: ${lp} (${planet}) | Rashi: ${rashi} | Rudraksha: ${rudraksha} | Yantra: ${yantra} | Intention: ${intention}. Please evaluate natal chart planetary degrees and verify gemstone/rudraksha suitability.`;
     }
 
-    // 3. Pre-fill name and dob
+    // 4. Pre-fill name and dob
     const aptName = document.getElementById('fullName');
     const remName = document.getElementById('inlineName')?.value || document.getElementById('remedyName')?.value;
     if (aptName && remName) {
@@ -766,14 +779,14 @@
       aptDob.value = remDob;
     }
 
-    // 4. Pre-fill birth time
+    // 5. Pre-fill birth time
     const aptTob = document.getElementById('birthTime');
     const remTob = document.getElementById('inlineTob')?.value;
     if (aptTob && remTob) {
       aptTob.value = remTob;
     }
 
-    // 5. Pre-fill birth place components
+    // 6. Pre-fill birth place components
     const remCountry = document.getElementById('inlineCountry')?.value || '';
     const remState = document.getElementById('inlineState')?.value || '';
     const remDistrict = document.getElementById('inlineDistrict')?.value || '';
@@ -794,11 +807,18 @@
       }
     }
 
-    // 6. Smooth scroll to appointment section
-    const aptSection = document.getElementById('appointment');
-    if (aptSection) {
-      aptSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    // 7. Guaranteed smooth scroll to appointment booking section after modal close transition
+    setTimeout(function() {
+      const aptSection = document.getElementById('appointment');
+      if (aptSection) {
+        const headerOffset = window.innerWidth <= 768 ? 68 : 76;
+        const targetPos = Math.max(0, aptSection.getBoundingClientRect().top + window.pageYOffset - headerOffset);
+        window.scrollTo({ top: targetPos, behavior: 'smooth' });
+        if (history.pushState) {
+          history.pushState(null, null, '#appointment');
+        }
+      }
+    }, 120);
 
     if (typeof window.showToast === 'function') {
       window.showToast('Your Sacred Blueprint & Remedy details have been transferred to the appointment booking form!', 'success');

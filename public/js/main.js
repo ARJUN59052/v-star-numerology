@@ -502,12 +502,14 @@ function initServiceRadioCards() {
 window.chooseServiceAndScroll = function(serviceName) {
   selectServiceInForm(serviceName);
   if (window.innerWidth <= 768 && typeof window.setMobileBranch === 'function') {
-    window.setMobileBranch('home', 'appointment');
+    window.setMobileBranch('appointment');
     return;
   }
   const target = document.getElementById('appointment');
   if (target) {
-    target.scrollIntoView({ behavior: 'smooth' });
+    const headerOffset = 76;
+    const targetPos = Math.max(0, target.getBoundingClientRect().top + window.pageYOffset - headerOffset);
+    window.scrollTo({ top: targetPos, behavior: 'smooth' });
   }
 };
 
