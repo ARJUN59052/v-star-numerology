@@ -565,18 +565,20 @@
       // Create hidden offscreen wrapper and in-flow PDF container
       var wrapper = document.createElement('div');
       wrapper.id = 'vstar-pdf-hidden-wrapper';
-      wrapper.style.position = 'fixed';
+      wrapper.style.position = 'absolute';
       wrapper.style.left = '0';
       wrapper.style.top = '0';
       wrapper.style.width = '794px';
-      wrapper.style.height = 'auto';
-      wrapper.style.zIndex = '-9999';
+      wrapper.style.height = '2244px';
+      wrapper.style.overflow = 'hidden';
+      wrapper.style.zIndex = '-99999';
       wrapper.style.opacity = '0.001';
       wrapper.style.pointerEvents = 'none';
 
       var container = document.createElement('div');
       container.id = 'vstar-pdf-render-box';
       container.style.width = '794px';
+      container.style.height = '2244px';
       container.style.position = 'relative';
       container.style.backgroundColor = '#0b0f19';
       container.style.color = '#f1f3f9';
@@ -593,7 +595,7 @@
       container.innerHTML = `
         <div style="background: #0b0f19; color: #f1f3f9; box-sizing: border-box; width: 794px; margin: 0; padding: 0;">
           <!-- PAGE 1 (Exact A4 1122px) -->
-          <div style="box-sizing: border-box; width: 794px; height: 1122px; padding: 38px 42px 28px 42px; background: #0b0f19; position: relative; overflow: hidden;">
+          <div style="box-sizing: border-box; width: 794px; height: 1122px; padding: 38px 42px 28px 42px; background: #0b0f19; position: relative; overflow: hidden; page-break-after: always; break-after: page;">
             <!-- TOP ACCENT BAR -->
             <div style="height: 3px; background: linear-gradient(90deg, #dfb872 0%, #e06d2d 50%, #dfb872 100%); margin-bottom: 18px; border-radius: 2px;"></div>
 
@@ -735,7 +737,7 @@
           </div>
 
           <!-- PAGE 2 (Exact A4 1122px) -->
-          <div style="box-sizing: border-box; width: 794px; height: 1122px; padding: 38px 42px 28px 42px; background: #0b0f19; position: relative; overflow: hidden;">
+          <div style="box-sizing: border-box; width: 794px; height: 1122px; padding: 38px 42px 28px 42px; background: #0b0f19; position: relative; overflow: hidden; page-break-before: always; break-before: page;">
             <!-- TOP ACCENT BAR -->
             <div style="height: 3px; background: linear-gradient(90deg, #dfb872 0%, #e06d2d 50%, #dfb872 100%); margin-bottom: 18px; border-radius: 2px;"></div>
 
@@ -875,10 +877,16 @@
         filename: filename,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: {
-          scale: 1.5,
+          scale: 2,
           useCORS: true,
           allowTaint: true,
           backgroundColor: '#0b0f19',
+          scrollX: 0,
+          scrollY: 0,
+          x: 0,
+          y: 0,
+          width: 794,
+          height: 2244,
           logging: false
         },
         jsPDF: {
@@ -886,7 +894,7 @@
           format: 'a4',
           orientation: 'portrait'
         },
-        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+        pagebreak: { mode: ['css', 'legacy'] }
       };
 
       var isFinished = false;
