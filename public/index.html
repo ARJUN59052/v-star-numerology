@@ -43,6 +43,7 @@
         <div class="nav-active-pill" id="navActivePill"></div>
         <a href="#zodiac-belt"><i class="fa-solid fa-certificate"></i> Zodiac</a>
         <a href="#calculator"><i class="fa-solid fa-calculator"></i> Life Path</a>
+        <a href="#remedies"><i class="fa-solid fa-gem"></i> Remedies</a>
         <a href="#services"><i class="fa-solid fa-shapes"></i> Services</a>
         <a href="#transformation"><i class="fa-solid fa-gem"></i> Transformation</a>
         <a href="#destiny"><i class="fa-solid fa-compass"></i> Destiny</a>
@@ -64,6 +65,7 @@
       <a href="#appointment" class="mobile-link mobile-link-primary" aria-label="Book consultation via mobile menu"><i class="fa-solid fa-calendar-check"></i> <span>Book Now</span></a>
       <a href="#zodiac-belt" class="mobile-link"><i class="fa-solid fa-certificate"></i> <span>Zodiac</span></a>
       <a href="#calculator" class="mobile-link"><i class="fa-solid fa-calculator"></i> <span>Life Path</span></a>
+      <a href="#remedies" class="mobile-link"><i class="fa-solid fa-gem"></i> <span>Remedies</span></a>
       <a href="#services" class="mobile-link"><i class="fa-solid fa-shapes"></i> <span>Services</span></a>
       <a href="#transformation" class="mobile-link"><i class="fa-solid fa-gem"></i> <span>Transformation</span></a>
       <a href="#destiny" class="mobile-link"><i class="fa-solid fa-compass"></i> <span>Destiny</span></a>
@@ -787,6 +789,156 @@
           </div>
         </div>
       </div>
+  </section>
+
+  <!-- ==========================================================================
+       Sacred Remedy & Ratna Recommender Section (#remedies)
+       ========================================================================== -->
+  <section class="remedies-section branch-section" id="remedies">
+    <div class="container">
+      <div class="section-badge-center">
+        <span class="sparkle">✦</span> SACRED VEDIC RATNA &amp; REMEDY RECOMMENDER <span class="sparkle">✦</span>
+      </div>
+      <h2 class="section-title text-center">Harmonize Your Life Path With <br><span class="serif-italic-accent">Sacred Gemstones &amp; Graha Remedies</span></h2>
+      <p class="section-subtitle text-center">
+        Discover authentic Vedic Gemstones (Ratna), sacred Mukhi Rudrakshas, and consecrated Yantras mapped directly to your Life Path Graha, Pythagorean vibration, and Birth Rashi.
+      </p>
+
+      <div class="remedy-top-sync-bar">
+        <button type="button" class="btn-sync-blueprint" id="btnSyncRemedyBlueprint" onclick="syncRemedyWithBlueprint()">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+          <span>Auto-fill from Cosmic Blueprint</span>
+        </button>
+        <span class="sync-status-hint" id="remedySyncHint">Enter coordinates below or sync from active reading</span>
+      </div>
+
+      <div class="remedy-engine-grid" id="remedyEngineGrid">
+        
+        <!-- SIDE 1: Left Column (Remedy Alignment Inputs) -->
+        <div class="cosmic-side-card remedy-side-inputs" id="remedyInputCard">
+          <div class="side-eyebrow"><i class="fa-solid fa-compass"></i> SIDE 1 · REMEDY ALIGNMENT</div>
+          <h3 class="side-title">ENTER YOUR <span>COSMIC ATTRIBUTES</span></h3>
+          <p class="side-desc">
+            Provide your coordinates to evaluate planetary friendship, gemstone compatibility, and consecrated spiritual shields.
+          </p>
+
+          <form id="remedyForm" autocomplete="off" onsubmit="handleRemedySubmit(event)">
+            
+            <div class="inline-form-group">
+              <label for="remedyName"><i class="fa-solid fa-user"></i> FULL NAME</label>
+              <div class="inline-input-wrap">
+                <i class="fa-solid fa-signature"></i>
+                <input type="text" id="remedyName" placeholder="e.g. Eleanor Vance" required autocomplete="off" spellcheck="false">
+              </div>
+            </div>
+
+            <div class="inline-form-row">
+              <div class="inline-form-group">
+                <label for="remedyDob"><i class="fa-solid fa-calendar-day"></i> DATE OF BIRTH</label>
+                <div class="inline-input-wrap">
+                  <i class="fa-solid fa-calendar"></i>
+                  <input type="date" id="remedyDob" required>
+                </div>
+              </div>
+
+              <div class="inline-form-group">
+                <label for="remedyWeight"><i class="fa-solid fa-weight-scale"></i> BODY WEIGHT (KG)</label>
+                <div class="inline-input-wrap">
+                  <i class="fa-solid fa-scale-balanced"></i>
+                  <input type="number" id="remedyWeight" min="30" max="150" value="65" placeholder="e.g. 65" title="Used to calculate authentic Carat/Ratti size (Weight ÷ 10)">
+                </div>
+              </div>
+            </div>
+
+            <div class="inline-form-group">
+              <label for="remedyRashi"><i class="fa-solid fa-moon"></i> BIRTH RASHI / MOON SIGN</label>
+              <div class="inline-input-wrap select-wrap">
+                <i class="fa-solid fa-certificate"></i>
+                <select id="remedyRashi" class="remedy-select" required>
+                  <option value="Capricorn">Makara (Capricorn) · Ruled by Saturn</option>
+                  <option value="Aries">Mesha (Aries) · Ruled by Mars</option>
+                  <option value="Taurus">Vrishabha (Taurus) · Ruled by Venus</option>
+                  <option value="Gemini">Mithuna (Gemini) · Ruled by Mercury</option>
+                  <option value="Cancer">Karka (Cancer) · Ruled by Moon</option>
+                  <option value="Leo">Simha (Leo) · Ruled by Sun</option>
+                  <option value="Virgo">Kanya (Virgo) · Ruled by Mercury</option>
+                  <option value="Libra">Tula (Libra) · Ruled by Venus</option>
+                  <option value="Scorpio">Vrischika (Scorpio) · Ruled by Mars</option>
+                  <option value="Sagittarius">Dhanu (Sagittarius) · Ruled by Jupiter</option>
+                  <option value="Aquarius">Kumbha (Aquarius) · Ruled by Saturn</option>
+                  <option value="Pisces">Meena (Pisces) · Ruled by Jupiter</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="inline-form-group">
+              <label><i class="fa-solid fa-bullseye"></i> PRIMARY INTENTION / FOCUS</label>
+              <div class="remedy-intention-pills">
+                <button type="button" class="intention-pill active" data-intention="wealth">
+                  <i class="fa-solid fa-coins"></i> Wealth &amp; Career
+                </button>
+                <button type="button" class="intention-pill" data-intention="love">
+                  <i class="fa-solid fa-heart"></i> Love &amp; Harmony
+                </button>
+                <button type="button" class="intention-pill" data-intention="health">
+                  <i class="fa-solid fa-shield-heart"></i> Health &amp; Protection
+                </button>
+                <button type="button" class="intention-pill" data-intention="spiritual">
+                  <i class="fa-solid fa-om"></i> Spiritual Growth
+                </button>
+              </div>
+              <input type="hidden" id="remedyIntention" value="wealth">
+            </div>
+
+            <button type="submit" class="btn-primary-radiant btn-remedy-calc" id="btnCalculateRemedy">
+              <span>Prescribe Sacred Remedies</span>
+              <i class="fa-solid fa-gem"></i>
+            </button>
+
+          </form>
+        </div>
+
+        <!-- SIDE 2: Right Column (Prescription Results Card) -->
+        <div class="cosmic-side-card remedy-side-results" id="remedyResultsCard">
+          <div class="remedy-results-header">
+            <div class="side-eyebrow"><i class="fa-solid fa-wand-magic-sparkles"></i> SIDE 2 · YOUR VEDIC REMEDY PRESCRIPTION</div>
+            <h3 class="prescription-headline">Prescription for <span class="gold-gradient-text" id="remedyPrescriptionName">Seeker</span></h3>
+          </div>
+
+          <!-- Harmonic Planetary Compatibility Check Banner -->
+          <div class="remedy-synergy-banner synergy-high" id="remedySynergyBox">
+            <div class="synergy-badge-pill">
+              <i class="fa-solid fa-wand-magic-sparkles"></i> High Planetary Synergy
+            </div>
+            <div class="synergy-details-text">
+              Evaluating your planetary friendship alliance...
+            </div>
+          </div>
+
+          <!-- 3-Pillar Vedic Prescription Grid -->
+          <div class="remedy-prescription-grid">
+            
+            <!-- Pillar 1: Primary Ratna -->
+            <div class="prescription-pillar-card" id="remedyGemCard">
+              <!-- Dynamically populated by JS -->
+            </div>
+
+            <!-- Pillar 2: Rudraksha & Yantra -->
+            <div class="prescription-pillar-card" id="remedyRudraCard">
+              <!-- Dynamically populated by JS -->
+            </div>
+
+            <!-- Pillar 3: Consultation & Energized Store CTA -->
+            <div class="prescription-pillar-card prescription-cta-pillar" id="remedyCtaCard">
+              <!-- Dynamically populated by JS -->
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
   </section>
 
   <!-- Services Section: 8 Specialized Areas (Matching Reference Editorial Layout) -->
@@ -2003,6 +2155,61 @@
     </div>
   </div>
 
+  <!-- Lab-Certified Gemstones & Yantras Modal -->
+  <div class="modal-overlay" id="ratnaStoreModal">
+    <div class="modal-card ratna-modal-card">
+      <button class="modal-close" onclick="closeRatnaStoreModal()" aria-label="Close modal">&times;</button>
+      <div class="modal-icon-header">
+        <div class="glow-check-circle" style="border-color: var(--gold, #dfb872); color: var(--gold, #dfb872);">
+          <i class="fa-solid fa-gem"></i>
+        </div>
+      </div>
+      <div class="modal-badge">✦ 100% NATURAL · LAB-CERTIFIED · VEDIC CONSECRATED ✦</div>
+      <h3 class="modal-title">Sacred Ratna &amp; Yantra Procurement</h3>
+      
+      <p class="modal-desc-text">
+        Every gemstone sourced through V STAR Numerology undergoes rigorous gemological testing and sacred Vedic consecration before it reaches your hands.
+      </p>
+
+      <div class="ratna-store-grid">
+        <div class="ratna-pillar-box">
+          <div class="pillar-box-icon"><i class="fa-solid fa-certificate"></i></div>
+          <h4>Govt &amp; IGI Accredited Lab Report</h4>
+          <p>Every stone includes an individual thermal, optical, and microscopic analysis certifying 100% natural, unheated &amp; untreated origin with zero glass filling.</p>
+        </div>
+
+        <div class="ratna-pillar-box">
+          <div class="pillar-box-icon"><i class="fa-solid fa-fire-flame-curved"></i></div>
+          <h4>Vedic Prana Pratishtha Consecration</h4>
+          <p>Consecrated in sacred copper yantras through authentic 1,008 Vedic Beej mantra chants performed during your auspicious planetary hora and birth Nakshatra.</p>
+        </div>
+
+        <div class="ratna-pillar-box">
+          <div class="pillar-box-icon"><i class="fa-solid fa-award"></i></div>
+          <h4>Astrologer Natal Degree Verification</h4>
+          <p>Certified V STAR astrologers inspect your Kundli chart to ensure the gemstone’s planetary degree harmonizes with your active Mahadasha cycles.</p>
+        </div>
+
+        <div class="ratna-pillar-box">
+          <div class="pillar-box-icon"><i class="fa-solid fa-shield-check"></i></div>
+          <h4>Lifetime Authenticity Guarantee</h4>
+          <p>Ethically mined gemstones from Ceylon (Sri Lanka), Burma, and Colombia crafted in BIS-hallmarked 22K Gold, Panchdhatu, or 925 Pure Silver.</p>
+        </div>
+      </div>
+
+      <div class="modal-actions ratna-modal-actions">
+        <a href="https://wa.me/919942777999?text=Namaste%20V%20STAR%20Numerology,%20I%20would%20like%20to%20inquire%20about%20lab-certified%20energized%20gemstones%20and%20yantras." target="_blank" rel="noopener noreferrer" class="btn-primary-radiant full-width" aria-label="Inquire via WhatsApp">
+          <i class="fa-brands fa-whatsapp"></i>
+          <span>Inquire &amp; Order via WhatsApp (+91 99427 77999)</span>
+        </a>
+        <button type="button" class="btn-secondary-outline full-width" onclick="bookRatnaConsultation(); closeRatnaStoreModal();">
+          <i class="fa-solid fa-calendar-check"></i>
+          <span>Schedule Kundli Verification First</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Toast Notification Container -->
   <div class="toast-container" id="toastContainer"></div>
 
@@ -2011,6 +2218,7 @@
   <script>window.html2pdf || document.write('<script src="js/html2pdf.bundle.min.js"><\/script>');</script>
   <script src="js/pob-autocomplete.js"></script>
   <script src="js/cosmic.js"></script>
+  <script src="js/remedies.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

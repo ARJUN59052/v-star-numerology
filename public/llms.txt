@@ -17,6 +17,7 @@ V STAR Numerology & Astrology harmonizes celestial planetary degrees and ancient
 ## Core Features & Engines
 
 - **Cosmic Snapshot Engine**: Instant browser-side calculation of Western and Vedic Sun Signs, Life Path numbers, and Destiny vibrations with full high-resolution PDF download.
+- **Sacred Remedy & Ratna Recommender**: Personalized Vedic gemstone (Ratna), Mukhi Rudraksha, and Yantra recommendation engine based on Life Path Graha, Birth Rashi, and Harmonic Planetary Synergy.
 - **Online Booking System**: Real-time consultation requests with encrypted Excel persistence and automatic confirmation emails.
 - **Global Place of Birth Lookup**: Built-in coordinates and timezone resolution for accurate birth chart alignment.
 

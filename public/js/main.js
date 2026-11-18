@@ -57,6 +57,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const resultsCard = document.getElementById('inlineResultsCard');
         if (resultsCard && resultsCard.style.display !== 'none') {
           updateInlineSnapshot();
+
+      if (typeof window.syncRemedyWithBlueprint === 'function') {
+        window.syncRemedyWithBlueprint(true);
+      }
         }
       }
     });
@@ -465,6 +469,10 @@ function initLifePathCalculator() {
         inlineDob.value = formattedIso;
         if (typeof updateInlineSnapshot === 'function') {
           updateInlineSnapshot();
+
+      if (typeof window.syncRemedyWithBlueprint === 'function') {
+        window.syncRemedyWithBlueprint(true);
+      }
         }
       }
     }
@@ -1085,6 +1093,7 @@ const MOBILE_BRANCHES = {
   'transformation': { title: 'Transformations' },
   'destiny': { title: 'Destiny Showcase' },
   'calculator': { title: 'Life Path Tool' },
+  'remedies': { title: 'Sacred Remedies & Ratna' },
   'philosophy': { title: 'Sacred Wisdom' },
   'testimonials': { title: 'Client Reviews' },
   'faq': { title: 'FAQ' }
@@ -1500,6 +1509,10 @@ function handleInlineSnapshotSubmit(e) {
       }
 
       updateInlineSnapshot();
+
+      if (typeof window.syncRemedyWithBlueprint === 'function') {
+        window.syncRemedyWithBlueprint(true);
+      }
 
       if (btn) {
         btn.disabled = false;

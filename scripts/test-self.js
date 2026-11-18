@@ -140,6 +140,30 @@ async function runTests() {
   assert('Email dispatched via live SMTP', bookJson.emailMode === 'smtp' && bookJson.emailStatus.includes('Sent'), 'emailStatus: ' + bookJson.emailStatus);
   assert('Confirmation message matches exact required wording', bookJson.message && bookJson.message.includes('Here we got your data'), 'Message: ' + bookJson.message);
 
+  // 7. Sacred Remedy & Ratna Recommender Verification
+  console.log('\n--- 7. Sacred Remedy & Ratna Recommender Engine ---');
+  const remediesPath = path.join(__dirname, '..', 'public', 'js', 'remedies.js');
+  const remediesCode = fs.readFileSync(remediesPath, 'utf8');
+  const remedyMockWin = { document: { readyState: 'complete' } };
+  const remSandbox = { window: remedyMockWin, console: console, document: remedyMockWin.document };
+  vm.createContext(remSandbox);
+  vm.runInContext(remediesCode, remSandbox);
+
+  const remProfile = remedyMockWin.RemedyEngine.prescribeVedicRemedies({
+    name: 'Arjun GS',
+    dob: '2005-01-20',
+    rashiName: 'Capricorn',
+    intention: 'wealth',
+    weightKg: 65
+  });
+
+  assert('Life Path 1 maps to Sun / Surya', remProfile.graha && remProfile.graha.planet === 'Sun');
+  assert('Primary Gemstone is Natural Ruby (Manikya)', remProfile.graha && remProfile.graha.gemstone === 'Natural Ruby');
+  assert('Recommended Carat formula calculates correctly (65kg / 10 = 6.5)', remProfile.caratSize === '6.5');
+  assert('Beej Mantra matches Surya Gayatri/Beej', remProfile.graha && remProfile.graha.beejMantra.includes('Om Hram Hreem'));
+  assert('Harmonic synergy detects Sun-Saturn friction', remProfile.synergy && remProfile.synergy.status === 'synergy-caution');
+  assert('Rudraksha and Yantra prescribed', remProfile.graha && remProfile.graha.rudraksha.includes('Mukhi') && remProfile.graha.yantra.includes('Surya Yantra'));
+
   console.log('\n=====================================================');
   console.log(`TOTAL AUDIT CHECKS: ${passed + failed} | PASSED: ${passed} | FAILED: ${failed}`);
   console.log('=====================================================');
