@@ -85,7 +85,6 @@ async function run() {
         document.getElementById('inlineCountry').value = 'India';
         document.getElementById('inlineState').value = 'Tamil Nadu';
         document.getElementById('inlineDistrict').value = 'Chennai';
-        document.getElementById('inlineWeight').value = '68';
         document.getElementById('inlineRashi').value = 'Aries';
         document.getElementById('btnInlineGenerate').click();
       })()`

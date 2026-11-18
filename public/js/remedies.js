@@ -395,9 +395,8 @@
     const rashiData = RASHI_DATABASE[rashiName] || RASHI_DATABASE['Capricorn'];
     const synergy = evaluateHarmonicSynergy(grahaData.planet, rashiData.ruler);
 
-    const safeWeight = Math.max(35, Math.min(150, parseFloat(weightKg) || 65));
-    const caratSize = (safeWeight / 10).toFixed(1);
-    const rattiSize = (caratSize * 1.09).toFixed(1);
+    const caratSize = '5.25 – 6.5';
+    const rattiSize = '4.75 – 6.0';
 
     const intentionKey = (intention || 'wealth').toLowerCase();
     const intentionBenefit = grahaData.intentions[intentionKey] || grahaData.intentions.wealth;
@@ -419,7 +418,7 @@
       synergy: synergy,
       caratSize: caratSize,
       rattiSize: rattiSize,
-      weightKg: safeWeight,
+      caratStandard: 'Auspicious Adult Standard (5.25 – 6.5 Carats)',
       intentionKey: intentionKey,
       intentionLabel: intentionLabels[intentionKey] || intentionLabels.wealth,
       benefit: intentionBenefit
@@ -474,7 +473,7 @@
           </div>
           <div class="spec-row">
             <span class="spec-label"><i class="fa-solid fa-scale-balanced"></i> Recommended Size</span>
-            <span class="spec-val highlight-val">${p.caratSize} Carats <small>(${p.rattiSize} Ratti · Body Wt ÷ 10)</small></span>
+            <span class="spec-val highlight-val">${p.caratSize} Carats <small>(${p.rattiSize} Ratti · Auspicious Vedic Standard)</small></span>
           </div>
           <div class="spec-row">
             <span class="spec-label"><i class="fa-solid fa-ring"></i> Consecrated Metal</span>

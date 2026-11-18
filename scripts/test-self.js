@@ -159,7 +159,7 @@ async function runTests() {
 
   assert('Life Path 1 maps to Sun / Surya', remProfile.graha && remProfile.graha.planet === 'Sun');
   assert('Primary Gemstone is Natural Ruby (Manikya)', remProfile.graha && remProfile.graha.gemstone === 'Natural Ruby');
-  assert('Recommended Carat formula calculates correctly (65kg / 10 = 6.5)', remProfile.caratSize === '6.5');
+  assert('Recommended Carat size adheres to auspicious Vedic standard', remProfile.caratSize && remProfile.caratSize.includes('5.25'));
   assert('Beej Mantra matches Surya Gayatri/Beej', remProfile.graha && remProfile.graha.beejMantra.includes('Om Hram Hreem'));
   assert('Harmonic synergy detects Sun-Saturn friction', remProfile.synergy && remProfile.synergy.status === 'synergy-caution');
   assert('Rudraksha and Yantra prescribed', remProfile.graha && remProfile.graha.rudraksha.includes('Mukhi') && remProfile.graha.yantra.includes('Surya Yantra'));
@@ -168,7 +168,7 @@ async function runTests() {
   console.log('\n--- 8. Unified Calculator & Remedy Card Integrity ---');
   const indexHtml = fs.readFileSync(path.join(__dirname, '..', 'public', 'index.html'), 'utf8');
   assert('Input form contains Full Name, DOB, TOB', indexHtml.includes('id="inlineName"') && indexHtml.includes('id="inlineDob"') && indexHtml.includes('id="inlineTob"'));
-  assert('Input form contains Body Weight (KG) for Carat formula', indexHtml.includes('id="inlineWeight"'));
+  assert('Input form streamlined: redundant weight input removed', !indexHtml.includes('id="inlineWeight"'));
   assert('Input form contains Birth Rashi / Moon Sign select', indexHtml.includes('id="inlineRashi"'));
   assert('Input form contains Primary Intention selector pills', indexHtml.includes('id="inlineIntentionPills"') && indexHtml.includes('data-intention="wealth"'));
   assert('Unified button: Generate Blueprint & Sacred Remedies', indexHtml.includes('Generate Blueprint &amp; Sacred Remedies') || indexHtml.includes('Generate Blueprint & Sacred Remedies'));
