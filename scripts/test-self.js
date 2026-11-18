@@ -164,6 +164,17 @@ async function runTests() {
   assert('Harmonic synergy detects Sun-Saturn friction', remProfile.synergy && remProfile.synergy.status === 'synergy-caution');
   assert('Rudraksha and Yantra prescribed', remProfile.graha && remProfile.graha.rudraksha.includes('Mukhi') && remProfile.graha.yantra.includes('Surya Yantra'));
 
+  // 8. Unified Calculator & Remedy Card Integrity Test
+  console.log('\n--- 8. Unified Calculator & Remedy Card Integrity ---');
+  const indexHtml = fs.readFileSync(path.join(__dirname, '..', 'public', 'index.html'), 'utf8');
+  assert('Input form contains Full Name, DOB, TOB', indexHtml.includes('id="inlineName"') && indexHtml.includes('id="inlineDob"') && indexHtml.includes('id="inlineTob"'));
+  assert('Input form contains Body Weight (KG) for Carat formula', indexHtml.includes('id="inlineWeight"'));
+  assert('Input form contains Birth Rashi / Moon Sign select', indexHtml.includes('id="inlineRashi"'));
+  assert('Input form contains Primary Intention selector pills', indexHtml.includes('id="inlineIntentionPills"') && indexHtml.includes('data-intention="wealth"'));
+  assert('Unified button: Generate Blueprint & Sacred Remedies', indexHtml.includes('Generate Blueprint &amp; Sacred Remedies') || indexHtml.includes('Generate Blueprint & Sacred Remedies'));
+  assert('Results card embeds Vedic Remedy prescription block', indexHtml.includes('id="remedySynergyBox"') && indexHtml.includes('id="remedyGemCard"') && indexHtml.includes('id="remedyRudraCard"'));
+  assert('Duplicate standalone remedies section removed', !indexHtml.includes('<section class="remedies-section branch-section" id="remedies">'));
+
   console.log('\n=====================================================');
   console.log(`TOTAL AUDIT CHECKS: ${passed + failed} | PASSED: ${passed} | FAILED: ${failed}`);
   console.log('=====================================================');

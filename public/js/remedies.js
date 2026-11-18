@@ -752,12 +752,12 @@
 
     // 3. Pre-fill name and dob if empty
     const aptName = document.getElementById('fullName');
-    const remName = document.getElementById('remedyName')?.value;
+    const remName = document.getElementById('inlineName')?.value || document.getElementById('remedyName')?.value;
     if (aptName && remName && !aptName.value) {
       aptName.value = remName;
     }
     const aptDob = document.getElementById('dob');
-    const remDob = document.getElementById('remedyDob')?.value;
+    const remDob = document.getElementById('inlineDob')?.value || document.getElementById('remedyDob')?.value;
     if (aptDob && remDob && !aptDob.value) {
       aptDob.value = remDob;
     }
@@ -788,14 +788,15 @@
   function initIntentionPills() {
     if (typeof document === 'undefined' || !document.querySelectorAll) return;
     const pills = document.querySelectorAll('.intention-pill');
-    const hiddenInput = document.getElementById('remedyIntention');
     pills.forEach(pill => {
       pill.addEventListener('click', () => {
         pills.forEach(p => p.classList.remove('active'));
         pill.classList.add('active');
-        if (hiddenInput) {
-          hiddenInput.value = pill.getAttribute('data-intention') || 'wealth';
-        }
+        const intention = pill.getAttribute('data-intention') || 'wealth';
+        const inlineHidden = document.getElementById('inlineIntention');
+        const remHidden = document.getElementById('remedyIntention');
+        if (inlineHidden) inlineHidden.value = intention;
+        if (remHidden) remHidden.value = intention;
       });
     });
   }

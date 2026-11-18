@@ -1438,6 +1438,88 @@ function updateInlineSnapshot() {
   // 8. Guidance Quote
   const quoteEl = document.getElementById('inlineGuidanceQuote');
   if (quoteEl) quoteEl.textContent = `"${p.quote}"`;
+
+  // 9. Sacred Vedic Remedy & Ratna Prescription (Unified Engine)
+  if (window.RemedyEngine && typeof window.RemedyEngine.prescribeVedicRemedies === 'function') {
+    const weightEl = document.getElementById('inlineWeight');
+    const rashiEl = document.getElementById('inlineRashi');
+    const intentionEl = document.getElementById('inlineIntention');
+
+    const weightVal = weightEl ? weightEl.value : '65';
+    let rashiVal = rashiEl ? rashiEl.value : '';
+    if (!rashiVal && p.zodiac && p.zodiac.sign) {
+      rashiVal = p.zodiac.sign;
+    }
+    const intentionVal = intentionEl ? intentionEl.value : 'wealth';
+
+    const prescription = window.RemedyEngine.prescribeVedicRemedies({
+      name: p.name,
+      dob: p.dob,
+      rashiName: rashiVal || 'Capricorn',
+      intention: intentionVal || 'wealth',
+      weightKg: weightVal || '65'
+    });
+
+    if (typeof window.RemedyEngine.renderRemedyPrescription === 'function') {
+      window.RemedyEngine.renderRemedyPrescription(prescription);
+    }
+  }
+}
+
+function handleInlineDobChange(dobVal) {
+  if (!dobVal) return;
+  try {
+    const parts = dobVal.split('-');
+    if (parts.length === 3) {
+      const m = parseInt(parts[1], 10);
+      const d = parseInt(parts[2], 10);
+      if (window.CosmicEngine && typeof window.CosmicEngine.getZodiacSign === 'function') {
+        const z = window.CosmicEngine.getZodiacSign(m, d);
+        if (z && z.sign) {
+          const rashiSelect = document.getElementById('inlineRashi');
+          const badge = document.getElementById('rashiDetectBadge');
+          if (rashiSelect) {
+            for (let i = 0; i < rashiSelect.options.length; i++) {
+              if (rashiSelect.options[i].value.toLowerCase() === z.sign.toLowerCase()) {
+                rashiSelect.selectedIndex = i;
+                if (badge) {
+                  badge.textContent = `Auto: ${z.sign}`;
+                  badge.style.display = 'inline-block';
+                }
+                break;
+              }
+            }
+          }
+        }
+      }
+    }
+  } catch (err) {
+    console.warn('Could not auto-detect Rashi from DOB:', err);
+  }
+}
+
+function handleInlineRashiChange() {
+  const badge = document.getElementById('rashiDetectBadge');
+  if (badge) {
+    badge.textContent = 'Custom Moon Sign';
+    badge.style.display = 'inline-block';
+  }
+}
+
+function scrollToRemedies(e) {
+  if (e && typeof e.preventDefault === 'function') e.preventDefault();
+  const resultsCard = document.getElementById('inlineResultsCard');
+  const remediesAnchor = document.getElementById('remedies');
+  if (resultsCard && resultsCard.style.display !== 'none' && remediesAnchor) {
+    remediesAnchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else {
+    const calcSection = document.getElementById('calculator');
+    if (calcSection) {
+      calcSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const nameInput = document.getElementById('inlineName');
+      if (nameInput) setTimeout(() => nameInput.focus(), 600);
+    }
+  }
 }
 
 function handleInlineSnapshotSubmit(e) {
@@ -1493,7 +1575,7 @@ function handleInlineSnapshotSubmit(e) {
   const btn = document.getElementById('btnInlineGenerate');
   if (btn) {
     btn.disabled = true;
-    btn.innerHTML = '<span>Aligning Celestial Vibrations...</span> <i class="fa-solid fa-spinner fa-spin"></i>';
+    btn.innerHTML = '<span>Aligning Celestial Vibrations &amp; Remedies...</span> <i class="fa-solid fa-spinner fa-spin"></i>';
   }
 
   setTimeout(() => {
@@ -1510,16 +1592,12 @@ function handleInlineSnapshotSubmit(e) {
 
       updateInlineSnapshot();
 
-      if (typeof window.syncRemedyWithBlueprint === 'function') {
-        window.syncRemedyWithBlueprint(true);
-      }
-
       if (btn) {
         btn.disabled = false;
-        btn.innerHTML = '<span>Update Cosmic Snapshot</span> <i class="fa-solid fa-wand-magic-sparkles"></i>';
+        btn.innerHTML = '<span>Update Blueprint &amp; Remedies</span> <i class="fa-solid fa-wand-magic-sparkles"></i>';
       }
 
-      showToast('Your Cosmic Snapshot has been generated!', 'success');
+      showToast('Your Cosmic Blueprint & Sacred Remedies have been generated!', 'success');
 
       if (resultsCard) {
         setTimeout(() => {
@@ -1530,7 +1608,7 @@ function handleInlineSnapshotSubmit(e) {
       console.error('Error generating Cosmic Snapshot:', err);
       if (btn) {
         btn.disabled = false;
-        btn.innerHTML = '<span>Generate Cosmic Snapshot</span> <i class="fa-solid fa-wand-magic-sparkles"></i>';
+        btn.innerHTML = '<span>Generate Blueprint &amp; Sacred Remedies</span> <i class="fa-solid fa-wand-magic-sparkles"></i>';
       }
       showToast('Could not calculate reading. Please check your inputs.', 'error');
     }
@@ -1592,6 +1670,9 @@ window.initInlineAccordion = initInlineAccordion;
 window.toggleInlineAcc = toggleInlineAcc;
 window.handleInlineSaveReading = handleInlineSaveReading;
 window.handleInlineShareReading = handleInlineShareReading;
+window.handleInlineDobChange = handleInlineDobChange;
+window.handleInlineRashiChange = handleInlineRashiChange;
+window.scrollToRemedies = scrollToRemedies;
 
 function toggleInlineAcc(id) {
   const item = document.getElementById(id);

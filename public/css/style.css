@@ -6363,3 +6363,44 @@ button:active, .btn-primary-radiant:active, .btn-nav-book:active {
   }
 }
 
+/* Unified Calculator & Sacred Remedy Additions */
+.auto-calc-tag {
+  display: inline-block;
+  margin-left: 6px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--gold-champagne, #ecd39d);
+  background: rgba(223, 184, 114, 0.15);
+  border: 1px solid rgba(223, 184, 114, 0.3);
+  padding: 1px 7px;
+  border-radius: 9999px;
+  vertical-align: middle;
+}
+
+.inline-remedies-anchor {
+  position: relative;
+  top: -10px;
+  height: 1px;
+  visibility: hidden;
+}
+
+.inline-remedy-prescription-container {
+  margin-top: 10px;
+  margin-bottom: 25px;
+}
+
+.inline-prescription-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 1200px) {
+  .inline-prescription-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
