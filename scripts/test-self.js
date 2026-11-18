@@ -174,6 +174,8 @@ async function runTests() {
   assert('Unified button: Generate Blueprint & Sacred Remedies', indexHtml.includes('Generate Blueprint &amp; Sacred Remedies') || indexHtml.includes('Generate Blueprint & Sacred Remedies'));
   assert('Results card embeds Vedic Remedy prescription block', indexHtml.includes('id="remedySynergyBox"') && indexHtml.includes('id="remedyGemCard"') && indexHtml.includes('id="remedyRudraCard"'));
   assert('Duplicate standalone remedies section removed', !indexHtml.includes('<section class="remedies-section branch-section" id="remedies">'));
+  assert('Top-slide Cosmic Reading Modal exists with close button and card', indexHtml.includes('id="cosmicReadingModal"') && indexHtml.includes('cosmic-reading-modal-card'));
+  assert('Active reading banner exists for quick reopen', indexHtml.includes('id="activeReadingBanner"') && indexHtml.includes('openCosmicReadingModal()'));
 
   console.log('\n=====================================================');
   console.log(`TOTAL AUDIT CHECKS: ${passed + failed} | PASSED: ${passed} | FAILED: ${failed}`);

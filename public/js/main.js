@@ -1506,12 +1506,34 @@ function handleInlineRashiChange() {
   }
 }
 
+function openCosmicReadingModal() {
+  const modal = document.getElementById('cosmicReadingModal');
+  if (modal) {
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    const card = modal.querySelector('.cosmic-reading-modal-card');
+    if (card) card.scrollTop = 0;
+  }
+}
+
+function closeCosmicReadingModal() {
+  const modal = document.getElementById('cosmicReadingModal');
+  if (modal) {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+}
+
 function scrollToRemedies(e) {
   if (e && typeof e.preventDefault === 'function') e.preventDefault();
-  const resultsCard = document.getElementById('inlineResultsCard');
-  const remediesAnchor = document.getElementById('remedies');
-  if (resultsCard && resultsCard.style.display !== 'none' && remediesAnchor) {
-    remediesAnchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  if (currentInlineProfile) {
+    openCosmicReadingModal();
+    const remediesAnchor = document.getElementById('remedies');
+    if (remediesAnchor) {
+      setTimeout(() => {
+        remediesAnchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 250);
+    }
   } else {
     const calcSection = document.getElementById('calculator');
     if (calcSection) {
@@ -1580,30 +1602,28 @@ function handleInlineSnapshotSubmit(e) {
 
   setTimeout(() => {
     try {
-      // Reveal Results Card and expand into 2-sided view
-      const resultsCard = document.getElementById('inlineResultsCard');
-      const wrapper = document.getElementById('cosmicSnapshotWrapper');
-      if (resultsCard) {
-        resultsCard.style.display = 'block';
-      }
-      if (wrapper) {
-        wrapper.classList.add('has-results');
-      }
-
       updateInlineSnapshot();
+
+      // Update active banner on the input card
+      const banner = document.getElementById('activeReadingBanner');
+      const activeNameEl = document.getElementById('activeReadingName');
+      const activeZodiacEl = document.getElementById('activeReadingZodiac');
+      if (banner && currentInlineProfile) {
+        if (activeNameEl) activeNameEl.textContent = currentInlineProfile.name;
+        if (activeZodiacEl) activeZodiacEl.textContent = currentInlineProfile.zodiac.sign;
+        banner.style.display = 'flex';
+      }
 
       if (btn) {
         btn.disabled = false;
         btn.innerHTML = '<span>Update Blueprint &amp; Remedies</span> <i class="fa-solid fa-wand-magic-sparkles"></i>';
       }
 
-      showToast('Your Cosmic Blueprint & Sacred Remedies have been generated!', 'success');
+      showToast('Your Sacred Blueprint & Remedies are ready!', 'success');
 
-      if (resultsCard) {
-        setTimeout(() => {
-          resultsCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 80);
-      }
+      // Open the top slide modal (matching Zodiac box UX)
+      openCosmicReadingModal();
+
     } catch (err) {
       console.error('Error generating Cosmic Snapshot:', err);
       if (btn) {
@@ -1658,11 +1678,28 @@ function initInlineSnapshot() {
     });
   }
 
+  // Reading Modal backdrop and keyboard dismiss
+  const readingModal = document.getElementById('cosmicReadingModal');
+  if (readingModal) {
+    readingModal.addEventListener('click', (e) => {
+      if (e.target === readingModal) {
+        closeCosmicReadingModal();
+      }
+    });
+  }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeCosmicReadingModal();
+    }
+  });
+
   // Initialize Accordion within Snapshot
   initInlineAccordion();
 }
 
 // Global window bindings for inline HTML attributes
+window.openCosmicReadingModal = openCosmicReadingModal;
+window.closeCosmicReadingModal = closeCosmicReadingModal;
 window.handleInlineSnapshotSubmit = handleInlineSnapshotSubmit;
 window.updateInlineSnapshot = updateInlineSnapshot;
 window.initInlineSnapshot = initInlineSnapshot;

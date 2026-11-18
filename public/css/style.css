@@ -6403,4 +6403,123 @@ button:active, .btn-primary-radiant:active, .btn-nav-book:active {
   }
 }
 
+/* ==========================================================================
+   COSMIC BLUEPRINT & SACRED REMEDIES READING MODAL (Top-Slide Modal UX)
+   ========================================================================== */
+.cosmic-reading-modal-card {
+  max-width: 960px;
+  width: 95%;
+  max-height: 92vh;
+  overflow-y: auto;
+  padding: 38px 32px;
+  background: linear-gradient(160deg, #181d2e 0%, #0d101c 100%);
+  border: 1.5px solid var(--gold-primary, #dfb872);
+  box-shadow: 0 25px 75px rgba(0, 0, 0, 0.9), 0 0 40px rgba(223, 184, 114, 0.22);
+  border-radius: 20px;
+  position: relative;
+}
+
+.cosmic-modal-inner-reading {
+  display: block;
+}
+
+.cosmic-reading-modal-card::-webkit-scrollbar {
+  width: 8px;
+}
+
+.cosmic-reading-modal-card::-webkit-scrollbar-track {
+  background: rgba(10, 12, 20, 0.6);
+  border-radius: 8px;
+}
+
+.cosmic-reading-modal-card::-webkit-scrollbar-thumb {
+  background: rgba(223, 184, 114, 0.35);
+  border-radius: 8px;
+}
+
+.cosmic-reading-modal-card::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-primary, #dfb872);
+}
+
+.modal-bottom-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 28px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(223, 184, 114, 0.2);
+  flex-wrap: wrap;
+}
+
+.modal-bottom-actions button,
+.modal-bottom-actions a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  font-size: 0.9rem;
+}
+
+/* Active Reading Banner in Input Card */
+.active-reading-banner {
+  background: linear-gradient(135deg, rgba(223, 184, 114, 0.12) 0%, rgba(230, 74, 25, 0.12) 100%);
+  border: 1px solid rgba(223, 184, 114, 0.35);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  animation: fadeInResults 0.35s ease forwards;
+}
+
+.active-reading-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.88rem;
+  color: #ffffff;
+}
+
+.btn-reopen-reading {
+  background: var(--gold-primary, #dfb872);
+  color: #0b0e17;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.22s ease;
+}
+
+.btn-reopen-reading:hover {
+  background: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(223, 184, 114, 0.4);
+}
+
+@media (max-width: 768px) {
+  .cosmic-reading-modal-card {
+    padding: 24px 18px;
+  }
+  .modal-bottom-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .modal-bottom-actions button,
+  .modal-bottom-actions a {
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+
 

@@ -522,7 +522,7 @@
           
           <!-- Side 1: Left Column (Combined Birth Coordinates & Sacred Remedy Alignment) -->
             <div class="cosmic-side-card cosmic-side-inputs" id="cosmicInputCard">
-              <div class="side-eyebrow"><i class="fa-solid fa-compass"></i> SIDE 1 · BIRTH COORDINATES &amp; REMEDY ALIGNMENT</div>
+              <div class="side-eyebrow"><i class="fa-solid fa-compass"></i> SACRED COSMIC &amp; REMEDY COORDINATES</div>
               <h3 class="side-title">ENTER YOUR <span>COSMIC DETAILS</span></h3>
               <p class="side-desc">
                 Fill in your birth coordinates to generate your complete multi-dimensional reading and personalized Vedic gemstone, Rudraksha, and Yantra prescriptions.
@@ -663,12 +663,37 @@
                   <i class="fa-solid fa-lock"></i>
                   <span>Deterministic Pythagorean Numerology, Ephemeris &amp; Vedic Ratna Pariksha.</span>
                 </div>
+
+                <!-- Active Reading Reopen Pill Banner (Shown when reading is generated) -->
+                <div class="active-reading-banner" id="activeReadingBanner" style="display: none;">
+                  <div class="active-reading-info">
+                    <i class="fa-solid fa-sparkles text-gold"></i>
+                    <span>Blueprint active for <strong id="activeReadingName">Seeker</strong> (<span id="activeReadingZodiac" class="gold-gradient-text">Sign</span>)</span>
+                  </div>
+                  <button type="button" class="btn-reopen-reading" onclick="openCosmicReadingModal()" aria-label="Open Cosmic Reading Modal">
+                    <span>View Reading &amp; Remedies</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                  </button>
+                </div>
               </form>
             </div>
 
-            <!-- Side 2: Right Column (Live 9-Section Cosmic Snapshot Reading - Shown on click) -->
-            <div class="cosmic-side-card cosmic-side-results" id="inlineResultsCard" style="display: none;">
-              <div class="side-eyebrow">SIDE 2 · YOUR COSMIC BLUEPRINT</div>
+          </div>
+        </div>
+      </div>
+  </section>
+
+  <!-- ==========================================================================
+       Interactive Cosmic Blueprint & Sacred Remedies Modal (#cosmicReadingModal)
+       Top-slide modal overlay matching Zodiac box UX
+       ========================================================================== -->
+  <div class="modal-overlay" id="cosmicReadingModal" role="dialog" aria-modal="true" aria-labelledby="inlineHeroHeadline">
+    <div class="modal-card cosmic-reading-modal-card">
+      <button class="modal-close" id="closeCosmicReadingModal" onclick="closeCosmicReadingModal()" aria-label="Close Cosmic Reading">&times;</button>
+      
+      <!-- Live 10-Section Cosmic Snapshot Reading & Sacred Remedies -->
+      <div class="cosmic-modal-inner-reading" id="inlineResultsCard">
+        <div class="side-eyebrow"><i class="fa-solid fa-wand-magic-sparkles"></i> YOUR SACRED COSMIC BLUEPRINT &amp; VEDIC REMEDIES</div>
               
               <!-- 1. Hero Header -->
               <div class="inline-hero-header">
@@ -874,12 +899,26 @@
                 For entertainment and self-reflection only — not professional, medical, legal, or financial advice.
               </footer>
 
-            </div>
-
-          </div>
-        </div>
       </div>
-  </section>
+
+      <!-- Modal Bottom Actions -->
+      <div class="modal-bottom-actions">
+        <button type="button" class="btn-secondary-outline" onclick="closeCosmicReadingModal()">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span>Modify Coordinates</span>
+        </button>
+        <button type="button" class="btn-secondary-outline" onclick="handleInlineSaveReading()">
+          <i class="fa-solid fa-file-pdf"></i>
+          <span>Save PDF</span>
+        </button>
+        <a href="#appointment" class="btn-primary-radiant" onclick="closeCosmicReadingModal()" aria-label="Book In-Depth Consultation">
+          <i class="fa-solid fa-calendar-check"></i>
+          <span>Book Consultation</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
 
   <!-- Services Section: 8 Specialized Areas (Matching Reference Editorial Layout) -->
   <section class="services-section branch-section" id="services">
